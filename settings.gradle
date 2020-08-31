@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "mega project 1337"
