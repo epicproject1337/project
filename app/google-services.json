@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "179242547298",
+    "firebase_url": "https://boket-a95ca.firebaseio.com",
+    "project_id": "boket-a95ca",
+    "storage_bucket": "boket-a95ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179242547298:android:e1a99bbdad028040b9393b",
+        "android_client_info": {
+          "package_name": "com.example.boket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "179242547298-qdcnf8oppgphqc3sn3tado0b9i3933rk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuvzT4vlepB-SrQdRplwnbymHhAp8edmk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "179242547298-qdcnf8oppgphqc3sn3tado0b9i3933rk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
