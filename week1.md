@@ -4,4 +4,4 @@
 * Hitta backends/APIs som skall användas
 * Allmänt greja lite med android studio
 # Resultat denna vecka  
-* INGET VI SUUUUGER  
+* INGET big rip  
