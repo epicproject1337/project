@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button createAccountButton = findViewById(R.id.createAccount);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginButton.setEnabled(true);
@@ -159,6 +160,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void creatAccountClicked(){
+
+    }
+
+
+
     private void updateUiWithUser(String displayName) {
         String welcome = "Welcome! " + displayName;
         // TODO : initiate successful logged in experience
@@ -167,6 +174,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 
     private void showLoginFailed(String errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
