@@ -11,5 +11,20 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:height">@color/colorWhite</item>
     </style>
+    <style name="LargeHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+    <style name="SmallestHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="IconButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:color">@color/colorPrimary</item>
+        <item name="android:background">@null</item>
+    </style>
 
 </resources>
