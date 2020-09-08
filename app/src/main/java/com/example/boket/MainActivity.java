@@ -28,7 +28,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }else{
-            Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
+            //TODO : Remove this. Only for testing purpose
+            mAuth.signOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            
+            //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
 
         setContentView(R.layout.activity_main);
