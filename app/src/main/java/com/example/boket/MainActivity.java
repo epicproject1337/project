@@ -23,11 +23,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+        //TODO : Remove this. Only for testing purpose
+        //mAuth.signOut();
+
         if(mAuth.getCurrentUser() == null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }else{
-            Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
 
         setContentView(R.layout.activity_main);

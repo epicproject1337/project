@@ -55,9 +55,11 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button createAccountButton = findViewById(R.id.createAccount);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginButton.setEnabled(true);
+        createAccountButton.setEnabled(true);
 
         /*loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -135,6 +137,13 @@ public class LoginActivity extends AppCompatActivity {
                 //        passwordEditText.getText().toString());
             }
         });
+
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUiWithSignup();
+            }
+        });
     }
 
     private void signIn(String email, String password){
@@ -159,6 +168,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void updateUiWithSignup(){
+        Intent intent = new Intent(this, SignupActivity.class);
+        startActivity(intent);
+    }
+
+
+
     private void updateUiWithUser(String displayName) {
         String welcome = "Welcome! " + displayName;
         // TODO : initiate successful logged in experience
@@ -167,6 +183,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 
     private void showLoginFailed(String errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
