@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -20,6 +22,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.w3c.dom.Text;
+
 public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -32,21 +36,23 @@ public class SignupActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_signup);
 
-        final EditText nameEditText = findViewById(R.id.name);
-        final EditText emailEditText = findViewById(R.id.email);
-        final EditText emailConfirmEditText = findViewById(R.id.emailConfirm);
-        final EditText passwordEditText = findViewById(R.id.password);
-        final EditText passwordConfirmEditText = findViewById(R.id.passwordConfirm);
+        final TextView nameTextView = findViewById(R.id.name);
+        final TextView emailTextView = findViewById(R.id.email);
+        final TextView emailConfirmTextView = findViewById(R.id.emailConfirm);
+        final TextView passwordTextView = findViewById(R.id.password);
+        final TextView passwordConfirmTextView = findViewById(R.id.passwordConfirm);
         final Button signupButton = findViewById(R.id.signup);
+        final Button goTologin = findViewById(R.id.goToLogin);
+
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                signup(nameEditText.getText().toString(), emailEditText.getText().toString(),
-                        emailConfirmEditText.getText().toString(), passwordEditText.getText().toString(),
-                        passwordConfirmEditText.getText().toString());
+                signup(nameTextView.getText().toString(), emailTextView.getText().toString(),
+                        emailConfirmTextView.getText().toString(), passwordTextView.getText().toString(),
+                        passwordConfirmTextView.getText().toString());
 
             }
         });

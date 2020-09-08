@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="50dp"
@@ -52,10 +52,10 @@
         android:layout_marginTop="16dp"
         android:text="E-post"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/email"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="50dp"
@@ -77,10 +77,10 @@
         android:layout_marginTop="16dp"
         android:text="Upprepa e-post"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/emailConfirm"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="50dp"
@@ -102,10 +102,10 @@
         android:layout_marginTop="16dp"
         android:text="Lösenord"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/emailConfirm" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/password"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="50dp"
@@ -128,10 +128,10 @@
         android:layout_marginTop="16dp"
         android:text="Upprepa lösenord"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/passwordConfirm"
         android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="50dp"
@@ -147,7 +147,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/signup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -158,10 +158,10 @@
         android:text="Skapa konto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordConfirm" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/goToLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -172,6 +172,6 @@
         android:text="Redan registrerad? Logga in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/signup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
