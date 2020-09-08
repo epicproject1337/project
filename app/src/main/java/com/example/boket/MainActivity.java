@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         if(mAuth.getCurrentUser() == null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }else{
             Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }

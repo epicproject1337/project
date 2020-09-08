@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginButton.setEnabled(true);
+        createAccountButton.setEnabled(true);
 
         /*loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -136,6 +137,13 @@ public class LoginActivity extends AppCompatActivity {
                 //        passwordEditText.getText().toString());
             }
         });
+
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUiWithSignup();
+            }
+        });
     }
 
     private void signIn(String email, String password){
@@ -160,8 +168,9 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void creatAccountClicked(){
-
+    private void updateUiWithSignup(){
+        Intent intent = new Intent(this, SignupActivity.class);
+        startActivity(intent);
     }
 
 
