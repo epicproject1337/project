@@ -70,7 +70,7 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-    private void signup(String name, String email, String emailConfirm, String password, String passwordConfirm){
+    private void signup(final String name, String email, String emailConfirm, String password, String passwordConfirm){
         //TODO: Validate email and password
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
