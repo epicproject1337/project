@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginRight="16dp">
+
+    <ImageView
+        android:id="@+id/bookimage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:background="#E60C0C"
+        android:cropToPadding="false"
+        android:scaleType="centerInside"
+        android:src="@drawable/diskmatte" />
+
+</FrameLayout>
