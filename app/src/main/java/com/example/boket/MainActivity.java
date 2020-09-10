@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.boket.ui.camera.BarcodeScannerActivity;
 import com.example.boket.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Intent intent = new Intent(this, BarcodeScannerActivity.class);
+        startActivity(intent);
+        /*
         mAuth = FirebaseAuth.getInstance();
         //TODO : Remove this. Only for testing purpose
         //mAuth.signOut();
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
 
+
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+         */
     }
 
 }
