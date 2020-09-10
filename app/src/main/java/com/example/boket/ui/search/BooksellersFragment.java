@@ -8,18 +8,24 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.boket.R;
 import com.example.boket.ui.login.LoginActivity;
 
-public class BooksellersFragment extends AppCompatActivity {
+public class BooksellersFragment extends AppCompatActivity{
 
     private static final String TAG =  BooksellersFragment.class.getName();
 
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
 
         final ImageView bookImageView = findViewById(R.id.bookImage);
         final TextView bookNameTextView = findViewById(R.id.bookName);
@@ -40,6 +46,7 @@ public class BooksellersFragment extends AppCompatActivity {
             }
         });
     }
+
 
 
 }
