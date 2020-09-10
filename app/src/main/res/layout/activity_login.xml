@@ -96,13 +96,10 @@
         android:id="@+id/textView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="105dp"
-        android:layout_marginLeft="105dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginRight="105dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginLeft="110dp"
         android:text="Made by Epic projcet 1337"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
