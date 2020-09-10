@@ -14,10 +14,10 @@ import com.example.boket.R;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class RandomNumListAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private Context context;
 
-    public RandomNumListAdapter(Context context) {
+    public ItemAdapter(Context context) {
         this.context = context;
     }
 

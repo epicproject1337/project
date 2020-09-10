@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 
 import com.example.boket.R;
 
-import java.util.ArrayList;
-
 public class ProfileFragment extends Fragment {
 
     private RecyclerView recyclerView;
@@ -44,7 +42,7 @@ public class ProfileFragment extends Fragment {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new RandomNumListAdapter(view.getContext()));
+        recyclerView.setAdapter(new ItemAdapter(view.getContext()));
         return view;
     }
 }
