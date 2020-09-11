@@ -4,4 +4,7 @@
 * Hitta backends/APIs som skall användas
 * Allmänt greja lite med android studio
 # Resultat denna vecka  
-* INGET big rip  
+* User stories framtaget för funktionaliteten vi vill ska finnas i första steget av applikationen
+* GUI prototyp i figma färdigställt [Figma prototyp](https://www.figma.com/file/ub4p7VO2umH5vCFawmdA98/Epic-project-1337?node-id=0%3A1)
+* Activities/fragments gjorda i Android Studio utefter prototyp
+* 
