@@ -12,4 +12,4 @@
 * Activities/fragments gjorda i Android Studio utefter prototyp (xml filer gjorda för alla sidor)
 * Backends/APIs - firebase, goodreads
 * Loginsystem fungerande
-* UML diagram för systemet
+* UML diagram för systemet [UML_diagram](https://app.lucidchart.com/documents/edit/a3cbd6fa-5d90-45ef-99a1-85fd5b4eac3f/YGcM5DNywbTK?shared=true)
