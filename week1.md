@@ -12,4 +12,4 @@
 * Activities/fragments gjorda i Android Studio utefter prototyp (xml filer gjorda för alla sidor)
 * Backends/APIs - firebase, goodreads
 * Loginsystem fungerande
-* 
+* UML diagram för systemet
