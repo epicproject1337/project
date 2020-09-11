@@ -14,7 +14,8 @@ import com.example.boket.R;
 
 public class ProfileFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView buyAds;
+    private RecyclerView sellAds;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -37,12 +38,19 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
 
         // Add the following lines to create RecyclerView
-        recyclerView = view.findViewById(R.id.recyclerview);
-        recyclerView.setHasFixedSize(true);
+        buyAds = view.findViewById(R.id.buyAds);
+        buyAds.setHasFixedSize(true);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new ItemAdapter(view.getContext()));
+        buyAds.setLayoutManager(layoutManager);
+        buyAds.setAdapter(new ItemAdapter(view.getContext()));
+
+        sellAds = view.findViewById(R.id.sellAds);
+        sellAds.setHasFixedSize(true);
+        LinearLayoutManager layoutManager2
+                = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        sellAds.setLayoutManager(layoutManager2);
+        sellAds.setAdapter(new ItemAdapter(view.getContext()));
         return view;
     }
 }
