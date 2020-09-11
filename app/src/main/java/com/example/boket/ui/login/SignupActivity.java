@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import org.w3c.dom.Text;
 
@@ -36,11 +37,11 @@ public class SignupActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_signup);
 
-        final TextView nameTextView = findViewById(R.id.name);
-        final TextView emailTextView = findViewById(R.id.email);
-        final TextView emailConfirmTextView = findViewById(R.id.emailConfirm);
-        final TextView passwordTextView = findViewById(R.id.password);
-        final TextView passwordConfirmTextView = findViewById(R.id.passwordConfirm);
+        final EditText nameEditText = findViewById(R.id.name);
+        final EditText emailEditText = findViewById(R.id.email);
+        final EditText emailConfirmEditText = findViewById(R.id.emailConfirm);
+        final EditText passwordEditText = findViewById(R.id.password);
+        final EditText passwordConfirmEditText = findViewById(R.id.passwordConfirm);
         final Button signupButton = findViewById(R.id.signup);
         final Button goTologin = findViewById(R.id.goToLogin);
 
@@ -50,16 +51,26 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                signup(nameTextView.getText().toString(), emailTextView.getText().toString(),
-                        emailConfirmTextView.getText().toString(), passwordTextView.getText().toString(),
-                        passwordConfirmTextView.getText().toString());
+                signup(nameEditText.getText().toString(), emailEditText.getText().toString(),
+                        emailConfirmEditText.getText().toString(), passwordEditText.getText().toString(),
+                        passwordConfirmEditText.getText().toString());
 
             }
         });
 
+        goTologin.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                gotToLoginMethod();
+
+            }
+        });
+
+
     }
 
-    private void signup(String name, String email, String emailConfirm, String password, String passwordConfirm){
+    private void signup(final String name, String email, String emailConfirm, String password, String passwordConfirm){
         //TODO: Validate email and password
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -69,7 +80,10 @@ public class SignupActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUiWithUser(user.getEmail());
+                            //Update the users name.
+                            updateUsersName(name, user);
+                            //Update the UI
+                            updateUiWithUser(user.getDisplayName());
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -91,8 +105,32 @@ public class SignupActivity extends AppCompatActivity {
         finish();
     }
 
+    private void gotToLoginMethod(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
+
     //TODO: LoginActivity have same method. Merge somehow.
     private void showLoginFailed(String errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    //TODO : Add error handling
+    private void updateUsersName(String name, FirebaseUser user){
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User profile updated.");
+                        }
+                    }
+                });
     }
 }
