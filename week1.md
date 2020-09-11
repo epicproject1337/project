@@ -13,3 +13,4 @@
 * Backends/APIs - firebase, goodreads
 * Loginsystem fungerande
 * UML diagram för systemet [UML_diagram](https://app.lucidchart.com/documents/edit/a3cbd6fa-5d90-45ef-99a1-85fd5b4eac3f/YGcM5DNywbTK?shared=true)
+* Navigering inte helt färdigställt går inte att ta sig till alla sidor än
