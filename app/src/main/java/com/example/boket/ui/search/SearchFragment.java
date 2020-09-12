@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.boket.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class SearchFragment extends Fragment {
 
@@ -36,6 +38,10 @@ public class SearchFragment extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment,booksellersFragment).commit();
         //getFragmentManager().beginTransaction().replace(BooksellersFragment,this)
+
+        View v = inflater.inflate(R.layout.fragment_search,container,false);
+        TextInputLayout searchBar = v.findViewById(R.id.searchBar);
+
 
         return inflater.inflate(R.layout.fragment_search, container, false);
 

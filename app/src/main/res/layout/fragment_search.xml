@@ -14,6 +14,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchBar"
             android:layout_width="348dp"
             android:layout_height="48dp"
             android:layout_marginStart="32dp"
@@ -32,6 +33,7 @@
                 android:hint="Sök efter kurslitteratur" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
