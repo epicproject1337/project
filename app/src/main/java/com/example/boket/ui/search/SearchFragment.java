@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.boket.R;
+import com.example.boket.model.Book;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class SearchFragment extends Fragment {
         return searchBar.getEditText().toString();
     }
 
-    private ArrayList<String> fetchBooks() {  //Change type of list to Book object
+    private ArrayList<Book> fetchBooks() {
         String input = getInput();
         ArrayList books = searchViewModel.fetchBooks(input);
 
