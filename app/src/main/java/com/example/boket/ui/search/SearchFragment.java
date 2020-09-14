@@ -52,7 +52,7 @@ public class SearchFragment extends Fragment {
 */
 
 // GlÖM INTE ÄNDRA TILLBAKA TILL "fragmen_search"
-        return inflater.inflate(R.layout.fragment_booksellers, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
 
 
     }
