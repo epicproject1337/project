@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         //TODO : Remove this. Only for testing purpose
-        mAuth.signOut();
-
+        //mAuth.signOut();
+        /*
         if(mAuth.getCurrentUser() == null){
             Intent intent = new Intent(this, BarcodeScannerActivity.class);
             startActivity(intent);
@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
             //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
+        */
+
 
 
         setContentView(R.layout.activity_main);
