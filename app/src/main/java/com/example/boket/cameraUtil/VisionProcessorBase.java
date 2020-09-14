@@ -23,8 +23,9 @@ import com.example.boket.cameraUtil.common.BitmapUtils;
 import com.example.boket.cameraUtil.common.FrameMetadata;
 import com.example.boket.cameraUtil.common.GraphicOverlay;
 import com.example.boket.cameraUtil.common.VisionImageProcessor;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 
@@ -59,7 +60,9 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
     }
 
     @Override
-    public void process(ByteBuffer data, FrameMetadata frameMetadata, com.example.boket.cameraUtil.common.GraphicOverlay graphicOverlay) throws FirebaseMLException {
+    public synchronized void process(
+            ByteBuffer data, final FrameMetadata frameMetadata, final GraphicOverlay
+            graphicOverlay) {
         latestImage = data;
         latestImageMetaData = frameMetadata;
         if (processingImage == null && processingMetaData == null) {
@@ -67,8 +70,10 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
         }
     }
 
+    // Bitmap version
     @Override
-    public void process(Bitmap bitmap, com.example.boket.cameraUtil.common.GraphicOverlay graphicOverlay) {
+    public void process(Bitmap bitmap, final GraphicOverlay
+            graphicOverlay) {
         detectInVisionImage(null /* bitmap */, FirebaseVisionImage.fromBitmap(bitmap), null,
                 graphicOverlay);
     }
@@ -86,9 +91,6 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
     private void processImage(
             ByteBuffer data, final FrameMetadata frameMetadata,
             final GraphicOverlay graphicOverlay) {
-
-        // To create the FirebaseVisionImage
-
         FirebaseVisionImageMetadata metadata =
                 new FirebaseVisionImageMetadata.Builder()
                         .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
@@ -98,27 +100,34 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
                         .build();
 
         Bitmap bitmap = BitmapUtils.getBitmap(data, frameMetadata);
-
-        FirebaseVisionImage firebaseVisionImage = FirebaseVisionImage.fromByteBuffer(data, metadata);
-
         detectInVisionImage(
-                bitmap, firebaseVisionImage, frameMetadata,
+                bitmap, FirebaseVisionImage.fromByteBuffer(data, metadata), frameMetadata,
                 graphicOverlay);
     }
 
     private void detectInVisionImage(
-            final Bitmap originalCameraImage, FirebaseVisionImage image,
-            final FrameMetadata metadata, final GraphicOverlay graphicOverlay) {
+            final Bitmap originalCameraImage,
+            FirebaseVisionImage image,
+            final FrameMetadata metadata,
+            final GraphicOverlay graphicOverlay) {
         detectInImage(image)
                 .addOnSuccessListener(
-                        results -> {
-                            VisionProcessorBase.this.onSuccess(originalCameraImage, results,
-                                    metadata,
-                                    graphicOverlay);
-                            processLatestImage(graphicOverlay);
+                        new OnSuccessListener<T>() {
+                            @Override
+                            public void onSuccess(T results) {
+                                VisionProcessorBase.this.onSuccess(originalCameraImage, results,
+                                        metadata,
+                                        graphicOverlay);
+                                processLatestImage(graphicOverlay);
+                            }
                         })
                 .addOnFailureListener(
-                        VisionProcessorBase.this::onFailure);
+                        new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                VisionProcessorBase.this.onFailure(e);
+                            }
+                        });
     }
 
     @Override

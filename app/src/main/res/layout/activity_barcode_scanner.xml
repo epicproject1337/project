@@ -5,19 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.camera.BarcodeScannerActivity">
 
-    <com.example.boket.cameraUtils.common.CameraSourcePreview
+    <com.example.boket.cameraUtil.common.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.boket.cameraUtils.common.GraphicOverlay
+        <com.example.boket.cameraUtil.common.GraphicOverlay
             android:id="@+id/barcodeOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.example.boket.cameraUtils.common.CameraSourcePreview>
+    </com.example.boket.cameraUtil.common.CameraSourcePreview>
 
-    <com.example.boket.cameraUtils.OverlayView
+    <com.example.boket.cameraUtil.OverlayView
         android:id="@+id/overlayView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -20,20 +18,16 @@ import com.example.boket.R;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor.BarcodeResultListener;
 import com.example.boket.cameraUtil.OverlayView;
-import com.example.boket.cameraUtil.common.BitmapUtils;
 import com.example.boket.cameraUtil.common.CameraSource;
 import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
 import com.example.boket.cameraUtil.common.GraphicOverlay;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
-import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 
 import java.io.IOException;
 import java.util.List;
@@ -96,8 +90,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         FirebaseVisionBarcodeDetectorOptions options =
                 new FirebaseVisionBarcodeDetectorOptions.Builder()
-                        .setBarcodeFormats(
-                                FirebaseVisionBarcode.FORMAT_QR_CODE)
+                        .setBarcodeFormats(FirebaseVisionBarcode.FORMAT_QR_CODE)
                         .build();
 
         FirebaseVisionBarcodeDetector detector = FirebaseVision.getInstance()

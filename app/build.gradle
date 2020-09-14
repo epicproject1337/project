@@ -47,7 +47,11 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     implementation 'com.intuit.sdp:sdp-android:1.0.5'
-    implementation 'com.google.firebase:firebase-ml-vision:18.0.1'
+    implementation 'com.google.firebase:firebase-ml-vision:24.1.0'
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    implementation 'com.google.android.gms:play-services-vision:20.1.1'
+    implementation 'com.google.android.gms:play-services-vision-common:19.1.1'
+    implementation 'com.google.android.gms:play-services-vision-image-label:18.0.5'
 }
