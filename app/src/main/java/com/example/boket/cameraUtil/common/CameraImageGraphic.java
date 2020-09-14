@@ -1,4 +1,4 @@
-package com.example.boket.cameraUtils.common;
+package com.example.boket.cameraUtil.common;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

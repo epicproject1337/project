@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.example.boket.cameraUtils.common;
+package com.example.boket.cameraUtil.common;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -27,11 +27,10 @@ import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 
 import com.google.android.gms.common.images.Size;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.lang.Thread.State;

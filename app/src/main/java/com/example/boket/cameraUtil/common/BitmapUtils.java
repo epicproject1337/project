@@ -1,4 +1,4 @@
-package com.example.boket.cameraUtils.common;
+package com.example.boket.cameraUtil.common;
 
 
 import android.graphics.Bitmap;
@@ -9,9 +9,10 @@ import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera.CameraInfo;
 import android.util.Log;
-import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
+
+import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;

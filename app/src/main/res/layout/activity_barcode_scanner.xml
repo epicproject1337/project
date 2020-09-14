@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BarcodeScanner.BarcodeScannerActivity">
+    tools:context=".ui.camera.BarcodeScannerActivity">
 
-    <com.droidmentor.mlkitbarcodescan.BarCodeScannerUtil.common.CameraSourcePreview
+    <com.example.boket.cameraUtils.common.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.droidmentor.mlkitbarcodescan.BarCodeScannerUtil.common.GraphicOverlay
+        <com.example.boket.cameraUtils.common.GraphicOverlay
             android:id="@+id/barcodeOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.droidmentor.mlkitbarcodescan.BarCodeScannerUtil.common.CameraSourcePreview>
+    </com.example.boket.cameraUtils.common.CameraSourcePreview>
 
-    <com.droidmentor.mlkitbarcodescan.BarCodeScannerUtil.OverlayView
+    <com.example.boket.cameraUtils.OverlayView
         android:id="@+id/overlayView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

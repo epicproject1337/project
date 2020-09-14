@@ -23,15 +23,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, BarcodeScannerActivity.class);
-        startActivity(intent);
-        /*
         mAuth = FirebaseAuth.getInstance();
         //TODO : Remove this. Only for testing purpose
-        //mAuth.signOut();
+        mAuth.signOut();
 
         if(mAuth.getCurrentUser() == null){
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, BarcodeScannerActivity.class);
             startActivity(intent);
             finish();
         }else{
@@ -40,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_main);
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-         */
+
     }
 
 }

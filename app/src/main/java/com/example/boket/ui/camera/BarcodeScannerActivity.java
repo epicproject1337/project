@@ -6,45 +6,54 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PersistableBundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.boket.R;
-import com.example.boket.cameraUtils.BarcodeScanningProcessor;
-import com.example.boket.cameraUtils.OverlayView;
-import com.example.boket.cameraUtils.common.CameraSource;
-import com.example.boket.cameraUtils.common.CameraSourcePreview;
-import com.example.boket.cameraUtils.common.FrameMetadata;
-import com.example.boket.cameraUtils.common.GraphicOverlay;
+import com.example.boket.cameraUtil.BarcodeScanningProcessor;
+import com.example.boket.cameraUtil.BarcodeScanningProcessor.BarcodeResultListener;
+import com.example.boket.cameraUtil.OverlayView;
+import com.example.boket.cameraUtil.common.BitmapUtils;
+import com.example.boket.cameraUtil.common.CameraSource;
+import com.example.boket.cameraUtil.common.CameraSourcePreview;
+import com.example.boket.cameraUtil.common.FrameMetadata;
+import com.example.boket.cameraUtil.common.GraphicOverlay;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
-
-import org.jetbrains.annotations.Nullable;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 
 import java.io.IOException;
 import java.util.List;
 
-import static com.example.boket.cameraUtils.common.BarcodeScanner.Constants.KEY_CAMERA_PERMISSION_GRANTED;
-import static com.example.boket.cameraUtils.common.BarcodeScanner.Constants.PERMISSION_REQUEST_CAMERA;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import static com.example.boket.cameraUtil.common.BarcodeScanner.Constants.KEY_CAMERA_PERMISSION_GRANTED;
+import static com.example.boket.cameraUtil.common.BarcodeScanner.Constants.PERMISSION_REQUEST_CAMERA;
 
 public class BarcodeScannerActivity extends AppCompatActivity {
 
     String TAG = "BarcodeScannerActivity";
 
-    /*
-    private GraphicOverlay barcodeOverlay = findViewById(R.id.barcodeOverlay);
-    private CameraSourcePreview preview = findViewById(R.id.preview);
-    private OverlayView overlayView = findViewById(R.id.overlayView);
-
-     */
+    @BindView(R.id.barcodeOverlay)
+    GraphicOverlay barcodeOverlay;
+    @BindView(R.id.preview)
+    CameraSourcePreview preview;
+    @BindView(R.id.overlayView)
+    OverlayView overlayView;
 
     BarcodeScanningProcessor barcodeScanningProcessor;
 
@@ -71,15 +80,13 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode_scanner);
 
-        //ButterKnife.bind(this);
+        ButterKnife.bind(this);
 
         //dbHandler = new DBHandler(this);
-        /*
+
         if (preview != null)
             if (preview.isPermissionGranted(true, mMessageSender))
                 new Thread(mMessageSender).start();
-
-         */
     }
 
 
@@ -99,7 +106,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         // To connect the camera resource with the detector
 
-        //mCameraSource = new CameraSource(this, barcodeOverlay);
+        mCameraSource = new CameraSource(this, barcodeOverlay);
         mCameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
 
         barcodeScanningProcessor = new BarcodeScanningProcessor(detector);
@@ -124,7 +131,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             dlg.show();
         }
 
-        /*
         if (mCameraSource != null && preview != null && barcodeOverlay != null) {
             try {
                 Log.d(TAG, "startCameraSource: ");
@@ -137,14 +143,13 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         } else
             Log.d(TAG, "startCameraSource: not started");
 
-         */
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
         Log.d(TAG, "onRequestPermissionsResult: " + requestCode);
-        //preview.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        preview.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     /**
@@ -162,11 +167,8 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        /*
         if (preview != null)
             preview.stop();
-
-         */
     }
 
     @Override
@@ -194,11 +196,8 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
             Log.d(TAG, "handleMessage: ");
 
-            /*
             if (preview != null)
                 createCameraSource();
-
-             */
 
         }
     };
@@ -212,12 +211,19 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         mHandler.sendMessage(msg);
     };
 
-    public BarcodeScanningProcessor.BarcodeResultListener getBarcodeResultListener() {
+    public BarcodeResultListener getBarcodeResultListener() {
 
-        return new BarcodeScanningProcessor.BarcodeResultListener() {
+        return new BarcodeResultListener() {
             @Override
             public void onSuccess(@Nullable Bitmap originalCameraImage, @NonNull List<FirebaseVisionBarcode> barcodes, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
                 Log.d(TAG, "onSuccess: " + barcodes.size());
+
+                for (FirebaseVisionBarcode barCode : barcodes)
+                {
+                    Log.d(TAG, "onSuccess: " + barCode.getRawValue());
+                    Log.d(TAG, "onSuccess: " + barCode.getFormat());
+                    Log.d(TAG, "onSuccess: " + barCode.getValueType());
+                }
 
             }
 

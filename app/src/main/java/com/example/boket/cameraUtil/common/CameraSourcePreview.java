@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.example.boket.cameraUtils.common;
+package com.example.boket.cameraUtil.common;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -23,6 +23,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -37,10 +38,11 @@ import com.google.android.gms.common.images.Size;
 
 import java.io.IOException;
 
+import static com.example.boket.cameraUtil.common.BarcodeScanner.Constants.PERMISSION_REQUEST_CAMERA;
+
 /** Preview the camera image in the screen. */
 public class CameraSourcePreview extends ViewGroup {
   private static final String TAG = "MIDemoApp:Preview";
-  private static final int PERMISSION_REQUEST_CAMERA = 1001;
 
   private Context context;
   private SurfaceView surfaceView;

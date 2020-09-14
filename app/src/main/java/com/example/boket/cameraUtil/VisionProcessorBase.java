@@ -11,23 +11,22 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package com.example.boket.cameraUtils;
+package com.example.boket.cameraUtil;
 
 import android.graphics.Bitmap;
 
 import androidx.annotation.GuardedBy;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import com.example.boket.cameraUtils.common.BitmapUtils;
-import com.example.boket.cameraUtils.common.FrameMetadata;
-import com.example.boket.cameraUtils.common.GraphicOverlay;
-import com.example.boket.cameraUtils.common.VisionImageProcessor;
+import com.example.boket.cameraUtil.common.BitmapUtils;
+import com.example.boket.cameraUtil.common.FrameMetadata;
+import com.example.boket.cameraUtil.common.GraphicOverlay;
+import com.example.boket.cameraUtil.common.VisionImageProcessor;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.nio.ByteBuffer;
 
@@ -60,7 +59,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
     }
 
     @Override
-    public void process(ByteBuffer data, FrameMetadata frameMetadata, GraphicOverlay graphicOverlay) throws FirebaseMLException {
+    public void process(ByteBuffer data, FrameMetadata frameMetadata, com.example.boket.cameraUtil.common.GraphicOverlay graphicOverlay) throws FirebaseMLException {
         latestImage = data;
         latestImageMetaData = frameMetadata;
         if (processingImage == null && processingMetaData == null) {
@@ -69,7 +68,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
     }
 
     @Override
-    public void process(Bitmap bitmap, GraphicOverlay graphicOverlay) {
+    public void process(Bitmap bitmap, com.example.boket.cameraUtil.common.GraphicOverlay graphicOverlay) {
         detectInVisionImage(null /* bitmap */, FirebaseVisionImage.fromBitmap(bitmap), null,
                 graphicOverlay);
     }

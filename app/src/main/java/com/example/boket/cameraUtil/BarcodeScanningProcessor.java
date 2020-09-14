@@ -1,20 +1,20 @@
-package com.example.boket.cameraUtils;
+package com.example.boket.cameraUtil;
 
 import android.graphics.Bitmap;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import com.example.boket.cameraUtils.common.CameraImageGraphic;
-import com.example.boket.cameraUtils.common.FrameMetadata;
-import com.example.boket.cameraUtils.common.GraphicOverlay;
+import com.example.boket.cameraUtil.common.CameraImageGraphic;
+import com.example.boket.cameraUtil.common.FrameMetadata;
+import com.example.boket.cameraUtil.common.GraphicOverlay;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.List;

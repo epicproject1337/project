@@ -1,4 +1,4 @@
-package com.example.boket.cameraUtils;
+package com.example.boket.cameraUtil;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,12 +6,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Region;
+
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Created by Jaison.

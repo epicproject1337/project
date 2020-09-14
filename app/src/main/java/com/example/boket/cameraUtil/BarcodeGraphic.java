@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.boket.cameraUtils;
+package com.example.boket.cameraUtil;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,8 +21,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-
-import com.example.boket.cameraUtils.common.GraphicOverlay;
+import com.example.boket.cameraUtil.common.GraphicOverlay;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode;
 
 /**
