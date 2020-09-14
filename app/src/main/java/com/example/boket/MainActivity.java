@@ -33,14 +33,15 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }else{
             //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
-            Intent barcodeScanner=new Intent(this, BarcodeScannerActivity.class);
-            startActivity(barcodeScanner);
         }
 
 
 
 
         setContentView(R.layout.activity_main);
+
+        Intent barcodeScanner=new Intent(this, BarcodeScannerActivity.class);
+        startActivity(barcodeScanner);
 
         /*
         BottomNavigationView navView = findViewById(R.id.nav_view);

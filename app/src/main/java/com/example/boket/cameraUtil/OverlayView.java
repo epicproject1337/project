@@ -154,7 +154,7 @@ public class OverlayView extends View {
             overlayRegion.set(overlayRect);
         }
 
-        canvas.clipRect(overlayRect);
+        canvas.clipRect(overlayRect, Region.Op.DIFFERENCE);
         canvas.drawPaint(paint);
         canvas.restore();
     }
