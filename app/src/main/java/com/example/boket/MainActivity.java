@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.boket.cameraUtil.common.BarcodeScanner;
+import com.example.boket.ui.addAd.AddAdActivity;
+import com.example.boket.ui.camera.BarcodeScannerActivity;
 import com.example.boket.ui.login.LoginActivity;
-import com.example.boket.ui.search.BooksellersFragment;
+
 import com.example.boket.ui.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         //TODO : Remove this. Only for testing purpose
         //mAuth.signOut();
-/*
+
         if(mAuth.getCurrentUser() == null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -37,20 +42,25 @@ public class MainActivity extends AppCompatActivity {
         }else{
             //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
-        */
-
 
         setContentView(R.layout.activity_main);
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_search, R.id.navigation_notifications)
+                R.id.navigation_search, R.id.navigation_profile)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
+
+
+    }
+
+    public void startCameraActivity(View view) {
+        Intent intent = new Intent(this, BarcodeScannerActivity.class);
+        startActivity(intent);
     }
 
 
