@@ -54,4 +54,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:20.1.1'
     implementation 'com.google.android.gms:play-services-vision-common:19.1.1'
     implementation 'com.google.android.gms:play-services-vision-image-label:18.0.5'
+    implementation 'com.algolia:algoliasearch-android:3.+'
 }
