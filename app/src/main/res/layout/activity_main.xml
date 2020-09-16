@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="startAddAdActivity">
+    android:onClick="startCameraActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_marginBottom="4dp"
             android:clickable="true"
-            android:onClick="startAddAdActivity"
+            android:onClick="startCameraActivity"
             app:backgroundTint="@color/colorPrimary"
             app:borderWidth="0dp"
             app:elevation="16dp"
