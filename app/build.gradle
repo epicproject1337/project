@@ -21,6 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -33,6 +37,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
@@ -40,4 +45,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-firestore:21.6.0'
     implementation 'com.android.support:multidex:1.0.3'
+
+    implementation 'com.intuit.sdp:sdp-android:1.0.5'
+    implementation 'com.google.firebase:firebase-ml-vision:24.1.0'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    implementation 'com.google.android.gms:play-services-vision:20.1.1'
+    implementation 'com.google.android.gms:play-services-vision-common:19.1.1'
+    implementation 'com.google.android.gms:play-services-vision-image-label:18.0.5'
 }
