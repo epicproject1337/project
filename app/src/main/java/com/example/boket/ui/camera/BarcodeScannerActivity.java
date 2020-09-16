@@ -2,6 +2,7 @@ package com.example.boket.ui.camera;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import com.example.boket.cameraUtil.common.CameraSource;
 import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
 import com.example.boket.cameraUtil.common.GraphicOverlay;
+import com.example.boket.ui.addAd.AddAdActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -55,13 +57,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
     boolean isCalled;
 
-    //DBHandler dbHandler;
-
-    private Toast toast;
-
-    boolean isAdded = false;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -76,8 +71,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        //dbHandler = new DBHandler(this);
-
         if (preview != null)
             if (preview.isPermissionGranted(true, mMessageSender))
                 new Thread(mMessageSender).start();
@@ -90,7 +83,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         FirebaseVisionBarcodeDetectorOptions options =
                 new FirebaseVisionBarcodeDetectorOptions.Builder()
-                        .setBarcodeFormats(FirebaseVisionBarcode.FORMAT_QR_CODE)
+                        .setBarcodeFormats(FirebaseVisionBarcode.FORMAT_ALL_FORMATS)
                         .build();
 
         FirebaseVisionBarcodeDetector detector = FirebaseVision.getInstance()
@@ -209,13 +202,12 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         return new BarcodeResultListener() {
             @Override
             public void onSuccess(@Nullable Bitmap originalCameraImage, @NonNull List<FirebaseVisionBarcode> barcodes, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
-                Log.d(TAG, "onSuccess: " + barcodes.size());
-
-                for (FirebaseVisionBarcode barCode : barcodes)
-                {
-                    Log.d(TAG, "onSuccess: " + barCode.getRawValue());
-                    Log.d(TAG, "onSuccess: " + barCode.getFormat());
-                    Log.d(TAG, "onSuccess: " + barCode.getValueType());
+                Toast.makeText(BarcodeScannerActivity.this, "BARCODE: " + barcodes.toString(),Toast.LENGTH_LONG).show();
+                //Todo: kolla om det faktiskt är en ISBN kod
+                if (barcodes.size() > 0) {
+                    Intent addAdActivity = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
+                    addAdActivity.putExtra("ISBN", barcodes.get(1).toString());
+                    startActivity(addAdActivity);
                 }
 
             }
@@ -230,16 +222,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (toast != null) {
-            toast.cancel();
-        }
     }
 
-    public void showToast(String message) {
-        if (toast != null) {
-            toast.cancel();
-        }
-        toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
-        toast.show();
-    }
 }
