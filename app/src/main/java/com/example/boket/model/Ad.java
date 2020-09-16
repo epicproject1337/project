@@ -43,7 +43,7 @@ public class Ad {
         this.id = id;
     }
 
-    public static ArrayList<Ad> getAdsByISBN(String isbn){
+    public static void getAdsByISBN(String isbn, GetAdsCallback callback){
 
         final ArrayList<Ad> adList = new ArrayList<Ad>();
 
@@ -56,13 +56,12 @@ public class Ad {
                         Ad ad = document.toObject(Ad.class);
                         adList.add(ad);
                     }
+                    callback.onGetAdsComplete(adList);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
             }
         });
-
-        return adList;
     }
 
     public int getId() {
@@ -108,5 +107,9 @@ public class Ad {
         this.adType = ad.getAdType();
         this.condition = ad.getCondition();
         this.archived = ad.isArchived();
+    }
+
+    public interface GetAdsCallback{
+        void onGetAdsComplete(ArrayList<Ad> adList);
     }
 }
