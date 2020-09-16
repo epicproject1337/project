@@ -204,9 +204,11 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             public void onSuccess(@Nullable Bitmap originalCameraImage, @NonNull List<FirebaseVisionBarcode> barcodes, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
                 Toast.makeText(BarcodeScannerActivity.this, "BARCODE: " + barcodes.toString(),Toast.LENGTH_LONG).show();
                 //Todo: kolla om det faktiskt är en ISBN kod
-                Intent addAdActivity = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
-                addAdActivity.putExtra("ISBN", barcodes.get(1).toString());
-                startActivity(addAdActivity);
+                if (barcodes.size() > 0) {
+                    Intent addAdActivity = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
+                    addAdActivity.putExtra("ISBN", barcodes.get(1).toString());
+                    startActivity(addAdActivity);
+                }
 
             }
 
