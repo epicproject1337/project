@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         //mAuth.signOut();
 
         if(mAuth.getCurrentUser() == null){
-            Intent intent = new Intent(this, BarcodeScannerActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         }else{
@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        Intent barcodeScanner=new Intent(this, BarcodeScannerActivity.class);
-        startActivity(barcodeScanner);
-
-        /*
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -54,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-
-         */
 
     }
 
