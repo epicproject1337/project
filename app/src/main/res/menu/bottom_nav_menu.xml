@@ -7,9 +7,9 @@
         android:title="@string/title_search" />
 
     <item
-        android:id="@+id/navigation_add_ad"
-        android:icon="@drawable/add_ad_icon"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_blank"
+        android:title="Blank"
+        android:enabled="false"/>
 
     <item
         android:id="@+id/navigation_profile"
