@@ -1,7 +1,18 @@
 package com.example.boket.model;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 public class Ad {
     private int id;
@@ -12,8 +23,9 @@ public class Ad {
     private String condition = null; // null if adType is buy (default value)
     private boolean archived;
 
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private final String collection = "ads";
+    private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static final String collection = "ads";
+    private static final String TAG = Ad.class.getName();
 
     public Ad() {}
 
@@ -29,6 +41,28 @@ public class Ad {
 
     public Ad(int id) {
         this.id = id;
+    }
+
+    public static ArrayList<Ad> getAdsByISBN(String isbn){
+
+        final ArrayList<Ad> adList = new ArrayList<Ad>();
+
+        Query docRef = db.collection(collection).whereEqualTo("isbn", isbn);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Ad ad = document.toObject(Ad.class);
+                        adList.add(ad);
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+
+        return adList;
     }
 
     public int getId() {
@@ -63,6 +97,8 @@ public class Ad {
         //TODO : Add validation to make sure 1. all fields are set and valid
         db.collection(collection).add(this);
     }
+
+
 
     private void loadData(Ad ad, int id){
         this.id = id;
