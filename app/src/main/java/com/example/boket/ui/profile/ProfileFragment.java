@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.boket.R;
+import com.example.boket.ui.search.SearchFragment;
 
 public class ProfileFragment extends Fragment {
 
@@ -21,6 +22,10 @@ public class ProfileFragment extends Fragment {
 
     public ProfileFragment() {
         // Required empty public constructor
+    }
+
+    public static ProfileFragment newInstance() {
+        return new ProfileFragment();
     }
 
     @Override
