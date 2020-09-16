@@ -1,6 +1,7 @@
 package com.example.boket.ui.search;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -35,7 +36,8 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-/*
+        System.out.println("funkar");
+        /*
 
         //onClickListener
         BooksellersFragment booksellersFragment = new BooksellersFragment();
@@ -49,7 +51,10 @@ public class SearchFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         searchBar = v.findViewById(R.id.searchBar);
 
-*/
+*/      BooksellersFragment booksellersFragment = new BooksellersFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment,booksellersFragment);
+        transaction.commit();
 
 // GlÖM INTE ÄNDRA TILLBAKA TILL "fragmen_search"
         return inflater.inflate(R.layout.fragment_search, container, false);

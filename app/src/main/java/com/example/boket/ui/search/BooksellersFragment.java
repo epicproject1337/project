@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,12 +29,12 @@ import java.util.ArrayList;
 public class BooksellersFragment extends Fragment{
 
 
-    private static final String TAG =  BooksellersFragment.class.getName();
+    private static final String TAG = BooksellersFragment.class.getName();
     private String ISBN_number;
     private ImageView bookImageView;
     private TextView bookNameTextView;
     private TextView bookAuthorTextView;
-    private Button subscribeButton;
+    //private Button subscribeButton;
 
     private BookAdapter bookAdapter;
     private ArrayList<String> items;
@@ -42,20 +43,21 @@ public class BooksellersFragment extends Fragment{
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
+        System.out.println("tariks funkar");
 
         Bundle bundle = getArguments();
-        if (bundle!=null){
-            ISBN_number=bundle.getString("ISBN-nummer");
+        if (bundle != null) {
+            ISBN_number = bundle.getString("ISBN-nummer");
 
         }
 
 
         //Fill the following parameters with info from database with ISBN number
-        View v = inflater.inflate(R.layout.fragment_booksellers,container,false);
+        View v = inflater.inflate(R.layout.fragment_booksellers, container, false);
         bookImageView = v.findViewById(R.id.bookImage);
         bookNameTextView = v.findViewById(R.id.bookName);
         bookAuthorTextView = v.findViewById(R.id.bookAuthor);
-        subscribeButton = (Button) v.findViewById(R.id.subscribeButton);
+        final Button subscribeButton = (Button) v.findViewById(R.id.subscribeButton);
 
         items = new ArrayList<>();
         items.add("hej");
@@ -64,38 +66,73 @@ public class BooksellersFragment extends Fragment{
         items.add("inte");
 
 
-        adListRecyclerView = v.findViewById(R.id.adList);
-        adListRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         bookAdapter = new BookAdapter(this.getContext(), items);
+        adListRecyclerView = v.findViewById(R.id.adList);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        adListRecyclerView.setLayoutManager(llm);
         adListRecyclerView.setAdapter(bookAdapter);
 
-        subscribeButton.setEnabled(true);
+
+        //subscribeButton.setEnabled(true);
+        //subscribeButton.setOnClickListener(this);
 
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                subscribeButtonClicked();
+            public void onClick(View v) {
+                System.out.println("clicked");
+                subscribeButton.setText("heeej");
+                Toast.makeText(getActivity(), "haalooooo", Toast.LENGTH_LONG);
+                //subscribeButtonClicked();
                 //If user is not subscribed then, subscribe and change text to "avprenumerera"
                 //If user is subscribed then, unsubscribe and change text to "prenumerera"
             }
         });
 
+
+
+
         return inflater.inflate(R.layout.fragment_booksellers, container, false);
     }
 
-    public void subscribeButtonClicked(){
-        bookNameTextView.setText(""+"hej");
+    /*
+    public void onClick(View v) {
+        System.out.println("inne");
+        switch (v.getId()) {
+            case R.id.subscribeButton:
+                System.out.println("inne2");
+                subscribeButton.setText("hej");
+                System.out.println("inne3");
+                break;
+            default:
+                break;
+        }
     }
 
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
 
+    public void subscribeButtonClicked() {
 
+        subscribeButton.setText("hej");
+    }
+     */
 
-
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+/*
+    @Override
+    public void onClick(View view) {
+        System.out.println("clicked");
+        switch (view.getId()) {
+            case R.id.subscribeButton:
+                System.out.println("kom in hit");
+                subscribeButton.setText("heeej");
+                break;
+        }
     }
 
-
-
-
+ */
 }
+
+
+
