@@ -9,3 +9,4 @@
 
 # Möte 2
 * Albin och Jyborn har fixat kameraaktivitet och navigationen kring den
+* Pajam jobbar med modellerna och söken. Försöker förstå hur vi implementerar alla asynch calls på bästa sätt.
