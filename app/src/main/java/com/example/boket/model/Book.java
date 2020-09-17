@@ -9,6 +9,7 @@ public class Book {
 
     private String isbn;
     private String name;
+    //TODO: Author should be some kind of array/object.
     private String author;
     private String edition;
     private String releaseYear;
@@ -64,7 +65,7 @@ public class Book {
     }
     public void create(){
         //TODO : Add validation to make sure 1. all fields are set and valid, 2. There is no excisting book with same ISBN
-        db.collection(collection).document(isbn).set(this);
+        db.collection(collection).document(isbn).set(this).getResult();
     }
 
     private void loadData(Book book){
