@@ -21,7 +21,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     private LayoutInflater layoutInflater;
     private List<String> data;
 
-    BookAdapter(Context contex, List<String> data ){
+    public BookAdapter(Context contex, List<String> data ){
         this.layoutInflater=layoutInflater.from(contex);
         this.data=data;
     }

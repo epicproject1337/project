@@ -36,27 +36,27 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        System.out.println("funkar");
-        /*
 
-        //onClickListener
+        //Put this in onClickListener
         BooksellersFragment booksellersFragment = new BooksellersFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("BookNumber", "ISBN-nummer"); //Skriv valda bokens ISBN-nummer
+        bundle.putString("BookNumber", "ISBN-nummer"); //Skriv valda bokens ISBN-nummer i "ISBN-nummer"
         booksellersFragment.setArguments(bundle);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, booksellersFragment).commit();
-        //getFragmentManager().beginTransaction().replace(BooksellersFragment,this)
+        //
 
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         searchBar = v.findViewById(R.id.searchBar);
 
-*/      BooksellersFragment booksellersFragment = new BooksellersFragment();
+/*
+       // BooksellersFragment booksellersFragment = new BooksellersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment,booksellersFragment);
         transaction.commit();
 
-// GlÖM INTE ÄNDRA TILLBAKA TILL "fragmen_search"
+
+ */
         return inflater.inflate(R.layout.fragment_search, container, false);
 
 
