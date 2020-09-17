@@ -36,7 +36,7 @@ public class BooksellersFragment extends Fragment {
     private TextView bookAuthorTextView;
     private Button subscribeButton;
 
-    private BookAdapter bookAdapter;
+    private BookAdapter2 bookAdapter2;
     private ArrayList<String> items;
     private RecyclerView adListRecyclerView;
 
@@ -53,20 +53,6 @@ public class BooksellersFragment extends Fragment {
         init(v);
 
 
-        items = new ArrayList<>();
-        items.add("hej");
-        items.add("detta");
-        items.add("funkar");
-        items.add("inte");
-
-        System.out.println("här");
-        //bookAdapter = new BookAdapter(this.getContext(), items);
-        adListRecyclerView = v.findViewById(R.id.adList);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        adListRecyclerView.setLayoutManager(llm);
-        adListRecyclerView.setAdapter(bookAdapter);
-
 
         return v;
     }
@@ -77,12 +63,49 @@ public class BooksellersFragment extends Fragment {
         bookAuthorTextView = v.findViewById(R.id.bookAuthor);
         subscribeButton = v.findViewById(R.id.subscribeButton);
 
+        adListRecyclerView = v.findViewById(R.id.adList);
+        adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        bookAdapter2 = new BookAdapter2(getContext(), getBookSellersList());
+        adListRecyclerView.setAdapter(bookAdapter2);
+
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 subscribeButtonClicked();
             }
         });
+    }
+
+    private ArrayList<ABookSeller> getBookSellersList(){
+        ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
+
+        ABookSeller aBookSeller = new ABookSeller();
+        aBookSeller.setCity("Göteborg");
+        aBookSeller.setPrice("Gratis");
+        aBookSeller.setState("Skit braaa");
+
+        ABookSeller aBookSeller2 = new ABookSeller();
+        aBookSeller2.setCity("Skövde");
+        aBookSeller2.setPrice("kompis pris");
+        aBookSeller2.setState("original");
+
+        ABookSeller aBookSeller3 = new ABookSeller();
+        aBookSeller3.setCity("Bagdad");
+        aBookSeller3.setPrice("99999");
+        aBookSeller3.setState("bästaste");
+
+        bookSellersList.add(aBookSeller);
+        bookSellersList.add(aBookSeller2);
+        bookSellersList.add(aBookSeller3);
+        bookSellersList.add(aBookSeller3);
+        bookSellersList.add(aBookSeller3);
+        bookSellersList.add(aBookSeller3);
+        bookSellersList.add(aBookSeller3);
+        bookSellersList.add(aBookSeller3);
+        bookSellersList.add(aBookSeller);
+
+        return  bookSellersList;
     }
 
     private void subscribeButtonClicked(){
