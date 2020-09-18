@@ -3,7 +3,7 @@ package com.example.boket.model;
 import com.example.boket.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class User{
+public class User {
 
     private int uid;
     private String email;
@@ -37,11 +37,11 @@ public class User{
         //TODO
     }
 
-    public void login(String email, String password){
+    public void login(String email, String password) {
         //TODO
     }
 
-    public void signout(){
+    public void signout() {
         //TODO
     }
 }

@@ -27,8 +27,6 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 
 public class BooksellersFragment extends Fragment {
-
-
     private static final String TAG = BooksellersFragment.class.getName();
     private String ISBN_number;
     private ImageView bookImageView;
@@ -51,9 +49,6 @@ public class BooksellersFragment extends Fragment {
         }
 
         init(v);
-
-
-
         return v;
     }
 
@@ -77,7 +72,7 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private ArrayList<ABookSeller> getBookSellersList(){
+    private ArrayList<ABookSeller> getBookSellersList() {
         ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
 
         ABookSeller aBookSeller = new ABookSeller();
@@ -105,19 +100,18 @@ public class BooksellersFragment extends Fragment {
         bookSellersList.add(aBookSeller3);
         bookSellersList.add(aBookSeller);
 
-        return  bookSellersList;
+        return bookSellersList;
     }
 
-    private void subscribeButtonClicked(){
+    private void subscribeButtonClicked() {
         CharSequence chSeq = subscribeButton.getText();
         String btntxt = chSeq.toString();
-        if(btntxt.equals("Prenumerera")){
+        if (btntxt.equals("Prenumerera")) {
             subscribeButton.setText("Avprenumerera");
-        }else{
+        } else {
             subscribeButton.setText("Prenumerera");
         }
     }
-
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

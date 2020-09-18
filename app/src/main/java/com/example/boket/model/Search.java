@@ -14,14 +14,14 @@ public class Search {
     public Search() {
     }
 
-    public static void searchBooks(String query, SearchCallback searchCallback){
+    public static void searchBooks(String query, SearchCallback searchCallback) {
         Algolia algolia = new Algolia(bookIndex);
         ArrayList<Book> books = new ArrayList<Book>();
         algolia.search(query, new Algolia.AlgoliaCallback() {
             @Override
             public void onSearchComplete(JSONObject content) {
                 Iterator<String> keys = content.keys();
-                while (keys.hasNext()){
+                while (keys.hasNext()) {
                     String key = keys.next();
                     Book book = new Book(key);
                     books.add(book);
@@ -32,7 +32,7 @@ public class Search {
 
     }
 
-    public interface SearchCallback{
+    public interface SearchCallback {
         void onSearchBooks(ArrayList<Book> bookList);
     }
 }

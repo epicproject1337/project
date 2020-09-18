@@ -22,6 +22,4 @@ public class SearchViewModel extends ViewModel {
 
     // TODO: Implement the ViewModel
 
-
-
 }

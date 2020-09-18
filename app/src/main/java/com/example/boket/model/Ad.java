@@ -27,7 +27,8 @@ public class Ad {
     private static final String collection = "ads";
     private static final String TAG = Ad.class.getName();
 
-    public Ad() {}
+    public Ad() {
+    }
 
     public Ad(int id, FirebaseUser user, String isbn, double price, String adType, String condition, boolean archived) {
         this.id = id;
@@ -43,7 +44,7 @@ public class Ad {
         this.id = id;
     }
 
-    public static void getAdsByISBN(String isbn, GetAdsCallback callback){
+    public static void getAdsByISBN(String isbn, GetAdsCallback callback) {
 
         final ArrayList<Ad> adList = new ArrayList<Ad>();
 
@@ -92,14 +93,13 @@ public class Ad {
         return archived;
     }
 
-    public void create(){
+    public void create() {
         //TODO : Add validation to make sure 1. all fields are set and valid
         db.collection(collection).add(this);
     }
 
 
-
-    private void loadData(Ad ad, int id){
+    private void loadData(Ad ad, int id) {
         this.id = id;
         this.user = ad.getUser();
         this.isbn = ad.getIsbn();
@@ -109,7 +109,7 @@ public class Ad {
         this.archived = ad.isArchived();
     }
 
-    public interface GetAdsCallback{
+    public interface GetAdsCallback {
         void onGetAdsComplete(ArrayList<Ad> adList);
     }
 }

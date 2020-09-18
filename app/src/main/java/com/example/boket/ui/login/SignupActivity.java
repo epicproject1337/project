@@ -58,7 +58,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        goTologin.setOnClickListener(new View.OnClickListener(){
+        goTologin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -66,11 +66,9 @@ public class SignupActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
-    private void signup(final String name, String email, String emailConfirm, String password, String passwordConfirm){
+    private void signup(final String name, String email, String emailConfirm, String password, String passwordConfirm) {
         //TODO: Validate email and password
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -105,7 +103,7 @@ public class SignupActivity extends AppCompatActivity {
         finish();
     }
 
-    private void gotToLoginMethod(){
+    private void gotToLoginMethod() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -118,7 +116,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     //TODO : Add error handling
-    private void updateUsersName(String name, FirebaseUser user){
+    private void updateUsersName(String name, FirebaseUser user) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(name)
                 .build();

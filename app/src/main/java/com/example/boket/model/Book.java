@@ -18,14 +18,15 @@ public class Book {
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final String collection = "books";
 
-    public Book() {}
+    public Book() {
+    }
 
     public Book(String isbn) {
         DocumentReference docRef = db.collection(collection).document(isbn);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Book book  = documentSnapshot.toObject(Book.class);
+                Book book = documentSnapshot.toObject(Book.class);
                 loadData(book);
             }
         });
@@ -63,12 +64,13 @@ public class Book {
     public String getImage() {
         return image;
     }
-    public void create(){
+
+    public void create() {
         //TODO : Add validation to make sure 1. all fields are set and valid, 2. There is no excisting book with same ISBN
         db.collection(collection).document(isbn).set(this).getResult();
     }
 
-    private void loadData(Book book){
+    private void loadData(Book book) {
         this.isbn = book.getIsbn();
         this.name = book.getName();
         this.author = book.getAuthor();

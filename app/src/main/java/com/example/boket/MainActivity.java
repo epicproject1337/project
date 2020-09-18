@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
-
-
-
     }
 
     public void startCameraActivity(View view) {

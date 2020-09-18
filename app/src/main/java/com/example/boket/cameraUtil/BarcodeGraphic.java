@@ -74,8 +74,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
         canvas.drawText(barcode.getRawValue(), rect.left, rect.bottom, barcodePaint);
     }
 
-    public Rect getActualBounds(FirebaseVisionBarcode barcode)
-    {
+    public Rect getActualBounds(FirebaseVisionBarcode barcode) {
         Rect rect = new Rect(barcode.getBoundingBox());
         rect.left = (int) translateX(rect.left);
         rect.top = (int) translateY(rect.top);

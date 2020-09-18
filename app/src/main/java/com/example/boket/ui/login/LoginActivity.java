@@ -43,14 +43,13 @@ public class LoginActivity extends AppCompatActivity {
     //Validate input
     //
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
-       // loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
-       //         .get(LoginViewModel.class);
+        // loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
+        //         .get(LoginViewModel.class);
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -146,9 +145,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void signIn(String email, String password){
+    private void signIn(String email, String password) {
         mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(email,password)
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -165,14 +164,12 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
-    private void updateUiWithSignup(){
+    private void updateUiWithSignup() {
         Intent intent = new Intent(this, SignupActivity.class);
         startActivity(intent);
     }
-
 
 
     private void updateUiWithUser(String displayName) {
@@ -183,7 +180,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 
 
     private void showLoginFailed(String errorString) {
