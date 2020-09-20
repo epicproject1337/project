@@ -1,6 +1,6 @@
 package com.example.boket.model;
 
-import com.example.boket.helpers.algolia.Algolia;
+import com.example.boket.model.integrations.Algolia;
 
 import org.json.JSONObject;
 
@@ -17,7 +17,7 @@ public class Search {
     public static void searchBooks(String query, SearchCallback searchCallback) {
         Algolia algolia = new Algolia(bookIndex);
         ArrayList<Book> books = new ArrayList<Book>();
-        algolia.search(query, new Algolia.AlgoliaCallback() {
+        algolia.search(query, new ISearch.SearchCallback() {
             @Override
             public void onSearchComplete(JSONObject content) {
                 Iterator<String> keys = content.keys();
@@ -29,7 +29,6 @@ public class Search {
                 searchCallback.onSearchBooks(books);
             }
         });
-
     }
 
     public interface SearchCallback {

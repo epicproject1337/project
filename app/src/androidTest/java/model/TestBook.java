@@ -1,19 +1,24 @@
 package model;
 
-import androidx.test.core.app.ApplicationProvider;
 import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
 
 import com.example.boket.model.Book;
 import com.google.firebase.FirebaseApp;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+public class TestBook {
+    private Context context;
 
-public class BookTest {
-    private Context context = ApplicationProvider.getApplicationContext();
-
+    @Before
+    public void init(){
+        context = ApplicationProvider.getApplicationContext();
+    }
 
     @Test
     public void Book_CreateBook(){
@@ -23,5 +28,4 @@ public class BookTest {
         Book newBook = new Book("9789144090504");
         assertEquals(book, newBook);
     }
-
 }

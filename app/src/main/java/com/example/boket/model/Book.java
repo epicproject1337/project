@@ -30,6 +30,7 @@ public class Book {
                 loadData(book);
             }
         });
+
     }
 
     public Book(String isbn, String name, String author, String edition, String releaseYear, String image) {

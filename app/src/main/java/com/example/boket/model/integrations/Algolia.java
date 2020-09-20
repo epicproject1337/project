@@ -1,14 +1,15 @@
-package com.example.boket.helpers.algolia;
+package com.example.boket.model.integrations;
 
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
+import com.example.boket.model.ISearch;
 
 import org.json.JSONObject;
 
-public class Algolia {
+public class Algolia implements ISearch {
 
     //TODO: Shouldnt be hardcoded into app for security reasons.
     private static final String appId = "SPT4NUD890";
@@ -28,18 +29,14 @@ public class Algolia {
         index.addObjectAsync(json, null);
     }
 
-    public void search(String query, AlgoliaCallback onCallback) {
+    public void search(String query, SearchCallback onComplete) {
         CompletionHandler completionHandler = new CompletionHandler() {
             @Override
             public void requestCompleted(JSONObject content, AlgoliaException error) {
                 //TODO: error handling
-                onCallback.onSearchComplete(content);
+                onComplete.onSearchComplete(content);
             }
         };
         index.searchAsync(new Query(query), completionHandler);
-    }
-
-    public interface AlgoliaCallback {
-        void onSearchComplete(JSONObject content);
     }
 }
