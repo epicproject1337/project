@@ -17,6 +17,7 @@ public class SearchViewModel extends ViewModel {
     }
 
     public ArrayList<Book> getBooks(){
+
         return books;
     }
 

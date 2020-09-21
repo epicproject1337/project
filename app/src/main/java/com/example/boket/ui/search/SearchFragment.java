@@ -13,20 +13,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.example.boket.R;
 import com.example.boket.model.Book;
 import com.example.boket.ui.RecyclerViewClickListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment implements RecyclerViewClickListener {
+public class SearchFragment extends Fragment implements RecyclerViewClickListener, SearchView.OnQueryTextListener{
 
     private SearchViewModel searchViewModel;
 
@@ -34,7 +39,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         return new SearchFragment();
     }
 
-    private TextInputLayout searchBar;
+    private SearchView searchView;
     private RecyclerView recyclerView;
     private BookItem bookItem;
     private BookItemAdapter bookItemAdapter;
@@ -45,8 +50,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
 
         View v = inflater.inflate(R.layout.fragment_search, container, false);
-        searchBar = v.findViewById(R.id.searchBar);
-
+        searchView = v.findViewById(R.id.searchView);
+        searchView.setOnQueryTextListener(this);
 
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -57,7 +62,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
         return v;
     }
-
 
 
     private ArrayList<BookItem> getBookItems(){
@@ -87,7 +91,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
     public String getInput() {
-        return searchBar.getEditText().toString();
+        //return searchBar.getText().toString();
+        return null;
     }
 
     private ArrayList<Book> fetchBooks() {
@@ -114,5 +119,18 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         transaction.replace(R.id.nav_host_fragment,booksellersFragment);
         transaction.commit();
 
+    }
+
+
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        System.out.println(searchView.getQuery());
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        return false;
     }
 }
