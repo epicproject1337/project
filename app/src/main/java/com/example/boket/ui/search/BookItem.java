@@ -63,10 +63,23 @@ public class BookItem extends View {
         }
         */
 
+        //setOnClickListener(this);
+/*
+        this.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                System.out.println(getBookTitle());
+            }
+        });
+
+
+ */
         a.recycle();
 
     }
+
+
 
 
 
@@ -93,4 +106,11 @@ public class BookItem extends View {
     public void setPublishedYear(String publishedYear) {
         this.publishedYear = publishedYear;
     }
+/*
+    @Override
+    public void onClick(View view) {
+        System.out.println(this.bookTitle);
+    }
+
+ */
 }

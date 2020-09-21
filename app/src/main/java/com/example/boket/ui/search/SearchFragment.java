@@ -20,12 +20,13 @@ import android.widget.ImageView;
 
 import com.example.boket.R;
 import com.example.boket.model.Book;
+import com.example.boket.ui.RecyclerViewClickListener;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements RecyclerViewClickListener {
 
     private SearchViewModel searchViewModel;
 
@@ -35,6 +36,7 @@ public class SearchFragment extends Fragment {
 
     private TextInputLayout searchBar;
     private RecyclerView recyclerView;
+    private BookItem bookItem;
     private BookItemAdapter bookItemAdapter;
 
     @Override
@@ -66,12 +68,15 @@ public class SearchFragment extends Fragment {
 
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        bookItemAdapter = new BookItemAdapter(getContext(), getBookItems());
+        bookItemAdapter = new BookItemAdapter(getContext(), this, getBookItems());
         recyclerView.setAdapter(bookItemAdapter);
+
 
 
         return v;
     }
+
+
 
     private ArrayList<BookItem> getBookItems(){
         ArrayList<BookItem> bookItems = new ArrayList<>();
@@ -110,4 +115,9 @@ public class SearchFragment extends Fragment {
         return books;
     }
 
+    @Override
+    public void recyclerViewListClicked(View v, int position) {
+        BookItem book = bookItemAdapter.getItem(position);
+        System.out.println(book.getBookTitle());
+    }
 }
