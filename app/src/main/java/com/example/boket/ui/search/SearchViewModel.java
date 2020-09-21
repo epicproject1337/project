@@ -17,11 +17,10 @@ public class SearchViewModel extends ViewModel {
     }
 
     public ArrayList<Book> getBooks(){
+
         return books;
     }
 
     // TODO: Implement the ViewModel
-
-
 
 }

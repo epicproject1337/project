@@ -48,7 +48,7 @@ public class OverlayView extends View {
     int currentX = 0;
     int currentY = 0;
 
-    Rect oveylayRect=new Rect();
+    Rect oveylayRect = new Rect();
 
     boolean isMovableView;
 
@@ -95,36 +95,30 @@ public class OverlayView extends View {
         overlayRegion = new Region(overlayRect);
     }
 
-    public Rect getOverlayRect()
-    {
+    public Rect getOverlayRect() {
         return overlayRect;
     }
 
     public void moveOverlay(final int top) {
         if (top >= verticalPadding) {
 
-            if((top + viewHeight)<=(viewPortHeight-verticalPadding))
-            {
+            if ((top + viewHeight) <= (viewPortHeight - verticalPadding)) {
                 overlayRect.top = top;
                 overlayRect.bottom = top + viewHeight;
                 overlayRegion.set(overlayRect);
                 prevY = top;
                 invalidate();
                 downY = top;
-            }
-            else
-            {
-                overlayRect.top = (viewPortHeight-verticalPadding)-viewHeight;
-                overlayRect.bottom = viewPortHeight-verticalPadding;
+            } else {
+                overlayRect.top = (viewPortHeight - verticalPadding) - viewHeight;
+                overlayRect.bottom = viewPortHeight - verticalPadding;
                 overlayRegion.set(overlayRect);
                 prevY = overlayRect.top;
                 invalidate();
                 downY = overlayRect.top;
             }
 
-        }
-        else
-        {
+        } else {
             overlayRect.top = verticalPadding;
             overlayRect.bottom = verticalPadding + viewHeight;
             overlayRegion.set(overlayRect);
@@ -134,7 +128,7 @@ public class OverlayView extends View {
 
         }
     }
-    
+
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -169,8 +163,7 @@ public class OverlayView extends View {
     // events when touching the screen
     public boolean onTouchEvent(MotionEvent event) {
 
-        if(isMovableView)
-        {
+        if (isMovableView) {
             int eventaction = event.getAction();
 
             int positionX = (int) event.getX();
@@ -241,9 +234,7 @@ public class OverlayView extends View {
             // redraw the canvas
 
             return true;
-        }
-        else
+        } else
             return false;
-
     }
 }

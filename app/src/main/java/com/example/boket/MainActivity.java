@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         //TODO : Remove this. Only for testing purpose
         //mAuth.signOut();
-
+/*
         if(mAuth.getCurrentUser() == null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
-
+*/
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -53,9 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
-
-
-
     }
 
     public void startCameraActivity(View view) {
