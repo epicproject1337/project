@@ -43,24 +43,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        //Put this in onClickListener
-        /*
-        BooksellersFragment booksellersFragment = new BooksellersFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("BookNumber", "ISBN-nummer"); //Skriv valda bokens ISBN-nummer i "ISBN-nummer"
-        booksellersFragment.setArguments(bundle);
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, booksellersFragment).commit();
-        //
-
-
-*/
-/*
-       // BooksellersFragment booksellersFragment = new BooksellersFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment,booksellersFragment);
-        transaction.commit();
- */
 
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         searchBar = v.findViewById(R.id.searchBar);
@@ -119,5 +101,18 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public void recyclerViewListClicked(View v, int position) {
         BookItem book = bookItemAdapter.getItem(position);
         System.out.println(book.getBookTitle());
+
+
+        BooksellersFragment booksellersFragment = new BooksellersFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("BookNumber", book.getBookTitle()); //Skriv valda bokens ISBN-nummer i "ISBN-nummer"
+        booksellersFragment.setArguments(bundle);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, booksellersFragment).commit();
+        // BooksellersFragment booksellersFragment = new BooksellersFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment,booksellersFragment);
+        transaction.commit();
+
     }
 }

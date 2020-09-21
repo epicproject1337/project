@@ -64,6 +64,8 @@ public class BooksellersFragment extends Fragment {
         bookAdapter2 = new BookAdapter2(getContext(), getBookSellersList());
         adListRecyclerView.setAdapter(bookAdapter2);
 
+        bookNameTextView.setText(ISBN_number);
+
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
