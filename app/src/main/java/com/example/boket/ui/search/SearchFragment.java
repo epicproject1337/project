@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,12 +34,15 @@ public class SearchFragment extends Fragment {
     }
 
     private TextInputLayout searchBar;
+    private RecyclerView recyclerView;
+    private BookItemAdapter bookItemAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
         //Put this in onClickListener
+        /*
         BooksellersFragment booksellersFragment = new BooksellersFragment();
         Bundle bundle = new Bundle();
         bundle.putString("BookNumber", "ISBN-nummer"); //Skriv valda bokens ISBN-nummer i "ISBN-nummer"
@@ -46,18 +51,35 @@ public class SearchFragment extends Fragment {
         fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, booksellersFragment).commit();
         //
 
-        View v = inflater.inflate(R.layout.fragment_search, container, false);
-        searchBar = v.findViewById(R.id.searchBar);
 
+*/
 /*
        // BooksellersFragment booksellersFragment = new BooksellersFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment,booksellersFragment);
         transaction.commit();
-
-
  */
+
+        View v = inflater.inflate(R.layout.fragment_search, container, false);
+        searchBar = v.findViewById(R.id.searchBar);
+
+        recyclerView = v.findViewById(R.id.adList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        bookItemAdapter = new BookItemAdapter(getContext(), getBookItems());
+        recyclerView.setAdapter(bookItemAdapter);
+
+
         return inflater.inflate(R.layout.fragment_search, container, false);
+    }
+
+    private ArrayList<BookItem> getBookItems(){
+        ArrayList<BookItem> bookItems = new ArrayList<>();
+
+        BookItem b1 = new BookItem(this.getContext());
+        b1.setText("BRUH");
+
+        bookItems.add(b1);
+        return bookItems;
     }
 
     @Override
