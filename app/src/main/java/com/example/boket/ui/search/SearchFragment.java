@@ -63,13 +63,14 @@ public class SearchFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_search, container, false);
         searchBar = v.findViewById(R.id.searchBar);
 
-        recyclerView = v.findViewById(R.id.adList);
+
+        recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         bookItemAdapter = new BookItemAdapter(getContext(), getBookItems());
         recyclerView.setAdapter(bookItemAdapter);
 
 
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        return v;
     }
 
     private ArrayList<BookItem> getBookItems(){
