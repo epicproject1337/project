@@ -16,7 +16,9 @@ import com.example.boket.R;
  * TODO: document your custom view class.
  */
 public class BookItem extends View {
-    private String text = "bruh";
+    private String bookTitle;
+    private String author;
+    private String publishedYear;
 
 
     public BookItem(Context context) {
@@ -33,6 +35,8 @@ public class BookItem extends View {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
     }
+
+
 
 
     private void init(AttributeSet attrs, int defStyle) {
@@ -66,26 +70,27 @@ public class BookItem extends View {
 
 
 
-    /**
-     * Gets the example string attribute value.
-     *
-     * @return The example string attribute value.
-     */
-    public String getText() {
-        return text;
+    public String getBookTitle() {
+        return bookTitle;
     }
 
-    /**
-     * Sets the view's example string attribute value. In the example view, this string
-     * is the text to draw.
-     *
-     * @param exampleString The example string attribute value to use.
-     */
-    public void setText(String exampleString) {
-        text = exampleString;
-
+    public void setBookTitle(String title) {
+        bookTitle = title;
     }
 
-    
+    public String getAuthor() {
+        return author;
+    }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(String publishedYear) {
+        this.publishedYear = publishedYear;
+    }
 }

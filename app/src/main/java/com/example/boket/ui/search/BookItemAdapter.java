@@ -31,7 +31,9 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull BookItemHolder holder, int i) {
-        //holder.state.setText(bookItems.get(i).getState());
+        holder.bookTitle.setText(bookItems.get(i).getBookTitle());
+        holder.author.setText(bookItems.get(i).getAuthor());
+        holder.publishedYear.setText(bookItems.get(i).getPublishedYear());
 
     }
 

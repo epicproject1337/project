@@ -77,9 +77,18 @@ public class SearchFragment extends Fragment {
         ArrayList<BookItem> bookItems = new ArrayList<>();
 
         BookItem b1 = new BookItem(this.getContext());
-        b1.setText("BRUH");
+        b1.setBookTitle("The life of a KING");
+        b1.setAuthor("Oscar Bennet");
+        b1.setPublishedYear("2020");
+
+        BookItem b2 = new BookItem(this.getContext());
+        b2.setBookTitle("The life of a SIMP");
+        b2.setAuthor("Albin Landgren");
+        b2.setPublishedYear("2020");
+
 
         bookItems.add(b1);
+        bookItems.add(b2);
         return bookItems;
     }
 
