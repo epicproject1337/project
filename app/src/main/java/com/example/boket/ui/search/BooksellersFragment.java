@@ -52,8 +52,6 @@ public class BooksellersFragment extends Fragment {
 
         init(v);
 
-
-
         return v;
     }
 
