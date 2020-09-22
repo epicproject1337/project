@@ -23,8 +23,12 @@ public class Search {
                 Iterator<String> keys = content.keys();
                 while (keys.hasNext()) {
                     String key = keys.next();
-                    Book book = new Book(key);
-                    books.add(book);
+                    Book book = new Book(key, new Book.OnLoadCallback() {
+                        @Override
+                        public void onLoadComplete(Book book) {
+                            books.add(book);
+                        }
+                    });
                 }
                 searchCallback.onSearchBooks(books);
             }
