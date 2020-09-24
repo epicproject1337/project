@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.boket.R;
@@ -203,15 +204,25 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             @Override
             public void onSuccess(@Nullable Bitmap originalCameraImage, @NonNull List<FirebaseVisionBarcode> barcodes, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
                 //Todo ta bort finns endast för testnings syfte
-                Toast.makeText(BarcodeScannerActivity.this, "BARCODE: " + barcodes.toString(), Toast.LENGTH_LONG).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BarcodeScannerActivity.this, "BARCODE: " + barcodes.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
 
-                String isbn = barcodes.get(1).toString();
+                String isbn = barcodes.toString();
                 if (isValidISBN13(isbn)) {
                     Intent addAdActivity = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
                     addAdActivity.putExtra("ISBN", isbn);
                     startActivity(addAdActivity);
                 } else {
-                    Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
 
             }
@@ -229,10 +240,12 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 = 93
         93 / 10 = 9 remainder 3
         10 –  3 = 7
+        Todo fixa testet så denna kan vara private och inte statisk / alternativt lägga den i någon helper class?
      */
-    private boolean isValidISBN13(String input) {
-        if (input.length() != 13 || !input.contains("[0-9]+"))
+    public static boolean isValidISBN13(String input) {
+        if (input.length() != 13 || !input.matches("[0-9]+")) {
             return false;
+        }
 
         int sum = 0;
         for (int i = 0; i < input.length() - 1; i++) {
@@ -245,7 +258,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
         int remainder = sum%10;
         int checkDigit = 10 - remainder;
-        if (checkDigit == input.charAt(input.length()) - '0') {
+        if (checkDigit == input.charAt(input.length() - 1) - '0') {
             return true;
         } else {
             return false;

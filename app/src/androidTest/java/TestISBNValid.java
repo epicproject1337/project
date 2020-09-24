@@ -1,12 +1,16 @@
-import androidx.test.core.app.ActivityScenario;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import android.app.Instrumentation;
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.example.boket.ui.camera.BarcodeScannerActivity;
-import com.google.firebase.firestore.proto.TargetOuterClass;
+import com.google.firebase.FirebaseApp;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
@@ -15,10 +19,8 @@ import java.lang.reflect.*;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(Parameterized.class)
 public class TestISBNValid {
-
-    @Rule
-    public ActivityScenarioRule<BarcodeScannerActivity> activityrule = new ActivityScenarioRule(BarcodeScannerActivity.class);
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
@@ -32,18 +34,22 @@ public class TestISBNValid {
     @Parameterized.Parameter(1)
     public boolean isValid;
 
-    @Test(expected = IllegalAccessException.class)
+    @Test
     public void testISBNValid() {
-        ActivityScenario scenario = activityrule.getScenario();
-        BarcodeScannerActivity barcodeScannerActivity = new BarcodeScannerActivity();
-        Class c = barcodeScannerActivity.getClass();
+        /*
+        Todo fixa detta på något sätt så metoden kan vara private o inte statisk (reflect method)
         try {
-            Method reflectedMethod = c.getDeclaredMethod("isValidISBN13", String.class);
-
+            BarcodeScannerActivity barcodeScannerActivity = new BarcodeScannerActivity();
+            Class c = barcodeScannerActivity.getClass();
+            Method reflectedMethod;
+            reflectedMethod = c.getDeclaredMethod("isValidISBN13", String.class);
             Boolean result = (Boolean) reflectedMethod.invoke(null, isbn);
             assertEquals(result, isValid);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
+         */
+
+        assertEquals(isValid, BarcodeScannerActivity.isValidISBN13(isbn));
     }
 }

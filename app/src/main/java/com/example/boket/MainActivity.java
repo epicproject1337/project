@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
-    public void startAddAdActivity(View view) {
-        Intent intent = new Intent(this, AddAdActivity.class);
+    public void startCameraActivity(View view) {
+        Intent intent = new Intent(this, BarcodeScannerActivity.class);
         startActivity(intent);
     }
 
