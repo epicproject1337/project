@@ -5,25 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.boket.R;
-import com.example.boket.model.Book;
-import com.example.boket.ui.login.LoginActivity;
 
-import java.text.BreakIterator;
 import java.util.ArrayList;
 
 public class BooksellersFragment extends Fragment {
@@ -35,8 +29,7 @@ public class BooksellersFragment extends Fragment {
     private TextView bookNameTextView;
     private TextView bookAuthorTextView;
     private Button subscribeButton;
-
-    private BookAdapter2 bookAdapter2;
+    private BookAdapter bookAdapter2;
     private ArrayList<String> items;
     private RecyclerView adListRecyclerView;
 
@@ -52,6 +45,7 @@ public class BooksellersFragment extends Fragment {
 
         init(v);
 
+
         return v;
     }
 
@@ -61,10 +55,11 @@ public class BooksellersFragment extends Fragment {
         bookAuthorTextView = v.findViewById(R.id.bookAuthor);
         subscribeButton = v.findViewById(R.id.subscribeButton);
 
+
         adListRecyclerView = v.findViewById(R.id.adList);
         adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        bookAdapter2 = new BookAdapter2(getContext(), getBookSellersList());
+        bookAdapter2 = new BookAdapter(getContext(), getBookSellersList(v));
         adListRecyclerView.setAdapter(bookAdapter2);
 
         bookNameTextView.setText(ISBN_number);
@@ -77,33 +72,16 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private ArrayList<ABookSeller> getBookSellersList(){
+    private ArrayList<ABookSeller> getBookSellersList(View v){
         ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
 
-        ABookSeller aBookSeller = new ABookSeller();
-        aBookSeller.setCity("Göteborg");
-        aBookSeller.setPrice("Gratis");
-        aBookSeller.setState("Skit braaa");
 
-        ABookSeller aBookSeller2 = new ABookSeller();
-        aBookSeller2.setCity("Skövde");
-        aBookSeller2.setPrice("kompis pris");
-        aBookSeller2.setState("original");
-
-        ABookSeller aBookSeller3 = new ABookSeller();
-        aBookSeller3.setCity("Bagdad");
-        aBookSeller3.setPrice("99999");
-        aBookSeller3.setState("bästaste");
-
-        bookSellersList.add(aBookSeller);
+        //String state, String price, String city, View
+        ABookSeller aBookSeller2 = new ABookSeller("orginal","kompispres","skövde",v);
         bookSellersList.add(aBookSeller2);
-        bookSellersList.add(aBookSeller3);
-        bookSellersList.add(aBookSeller3);
-        bookSellersList.add(aBookSeller3);
-        bookSellersList.add(aBookSeller3);
-        bookSellersList.add(aBookSeller3);
-        bookSellersList.add(aBookSeller3);
-        bookSellersList.add(aBookSeller);
+        bookSellersList.add(aBookSeller2);
+        bookSellersList.add(aBookSeller2);
+        bookSellersList.add(aBookSeller2);
 
         return  bookSellersList;
     }
@@ -116,6 +94,11 @@ public class BooksellersFragment extends Fragment {
         }else{
             subscribeButton.setText("Prenumerera");
         }
+    }
+
+    public void onIABookSellerCL(View v, int position) {
+
+
     }
 
 
