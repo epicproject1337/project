@@ -71,10 +71,10 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     private ArrayList<BookItem> getBookItems(){
         ArrayList<BookItem> bookItems = new ArrayList<>();
-        //ArrayList<Book> books = searchViewModel.getBooks();
-        ArrayList<Book> books = new ArrayList<Book>();
-        Book book1 = new Book("hje","de","fsf","fds","fsf","ffs");
-        books.add(book1);
+        ArrayList<Book> books = searchViewModel.getBooks();
+        //ArrayList<Book> books = new ArrayList<Book>();
+        //Book book1 = new Book("hje","de","fsf","fds","fsf","ffs");
+        //books.add(book1);
 
         for(Book book : books){
             String isbn = book.getIsbn();
@@ -115,17 +115,17 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         // TODO: Use the ViewModel
     }
 
-    public String getInput() {
-        //return searchBar.getText().toString();
-        return null;
-    }
-
     private void searchBooks(String query) {
+    RecyclerViewClickListener i = this;
+        System.out.println("BITCH3");
         Search.searchBooks(query, new Search.SearchCallback() {
 
             @Override
             public void onSearchBooks(ArrayList<Book> bookList) {
+                System.out.println("BITCH");
                 searchViewModel.setBooks(bookList);
+                bookItemAdapter = new BookItemAdapter(getContext(), i, getBookItems());
+                recyclerView.setAdapter(bookItemAdapter);
             }
         });
 
@@ -160,8 +160,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public boolean onQueryTextSubmit(String s) {
         System.out.println(searchView.getQuery());
         searchBooks(s);
-        bookItemAdapter = new BookItemAdapter(getContext(), this, getBookItems());
-        recyclerView.setAdapter(bookItemAdapter);
+        //bookItemAdapter = new BookItemAdapter(getContext(), this, getBookItems());
+        //recyclerView.setAdapter(bookItemAdapter);
         return false;
     }
 
