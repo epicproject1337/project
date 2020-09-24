@@ -26,7 +26,7 @@ public class Algolia implements ISearch {
     }
 
     public void addToIndex(JSONObject json) {
-        index.addObjectAsync(json, null);
+        index.addObjectAsync(json,null);
     }
 
     public void search(String query, SearchCallback onComplete) {

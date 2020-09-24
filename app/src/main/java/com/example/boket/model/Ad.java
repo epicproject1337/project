@@ -1,27 +1,35 @@
 package com.example.boket.model;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.ServerTimestamp;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Objects;
 
-public class Ad {
+public class Ad{
     private int id;
-    private FirebaseUser user;
+    private String userId;
     private String isbn;
     private double price;
-    private String adType; // "sell" or "buy"
-    private String condition = null; // null if adType is buy (default value)
+    private String condition = null;
     private boolean archived;
+    @ServerTimestamp
+    private Timestamp timeUpdated = null;
 
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String collection = "ads";
@@ -30,12 +38,11 @@ public class Ad {
     public Ad() {
     }
 
-    public Ad(int id, FirebaseUser user, String isbn, double price, String adType, String condition, boolean archived) {
+    public Ad(int id, String userId, String isbn, double price, String condition, boolean archived) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.isbn = isbn;
         this.price = price;
-        this.adType = adType;
         this.condition = condition;
         this.archived = archived;
     }
@@ -69,8 +76,8 @@ public class Ad {
         return id;
     }
 
-    public FirebaseUser getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
     public String getIsbn() {
@@ -81,10 +88,6 @@ public class Ad {
         return price;
     }
 
-    public String getAdType() {
-        return adType;
-    }
-
     public String getCondition() {
         return condition;
     }
@@ -93,20 +96,32 @@ public class Ad {
         return archived;
     }
 
-    public void create() {
+    public void save() {
         //TODO : Add validation to make sure 1. all fields are set and valid
         db.collection(collection).add(this);
     }
 
+    public Timestamp getTimeUpdated() {
+        return timeUpdated;
+    }
 
-    private void loadData(Ad ad, int id) {
-        this.id = id;
-        this.user = ad.getUser();
-        this.isbn = ad.getIsbn();
-        this.price = ad.getPrice();
-        this.adType = ad.getAdType();
-        this.condition = ad.getCondition();
-        this.archived = ad.isArchived();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ad ad = (Ad) o;
+        return id == ad.id &&
+                Double.compare(ad.price, price) == 0 &&
+                archived == ad.archived &&
+                userId.equals(ad.userId) &&
+                isbn.equals(ad.isbn) &&
+                condition.equals(ad.condition);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, isbn, price, condition, archived);
     }
 
     public interface GetAdsCallback {

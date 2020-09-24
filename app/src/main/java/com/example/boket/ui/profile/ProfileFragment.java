@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
+import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.ui.search.SearchFragment;
 
@@ -56,6 +59,17 @@ public class ProfileFragment extends Fragment {
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         sellAds.setLayoutManager(layoutManager2);
         sellAds.setAdapter(new ItemAdapter(view.getContext()));
+
+        ImageButton signOutButton = (ImageButton) view.findViewById(R.id.signOutButton);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity)getActivity()).signOut();
+            }
+        });
+
         return view;
     }
+
+
 }

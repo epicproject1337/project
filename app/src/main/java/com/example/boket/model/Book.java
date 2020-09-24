@@ -6,17 +6,17 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.boket.model.integrations.Algolia;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 public class Book {
 
@@ -32,6 +32,7 @@ public class Book {
     private final String collection = "books";
 
     private static final String TAG = Book.class.getName();
+    private static final String bookIndex = "BOOKINDEX";
 
     public Book() {
     }
@@ -44,7 +45,6 @@ public class Book {
                 Book book = documentSnapshot.toObject(Book.class);
                 onLoadCallback.onLoadComplete(book);
                 Log.d(TAG, "SUCCESS:" + book.toString());
-                //loadData(book);
             }
         });
 
@@ -83,7 +83,7 @@ public class Book {
         return image;
     }
 
-    public void create() {
+    public void save() {
         //TODO : Add validation to make sure 1. all fields are set and valid, 2. There is no excisting book with same ISBN
         db.collection(collection).document(isbn).set(this).addOnSuccessListener(
                 new OnSuccessListener<Void>() {
@@ -98,15 +98,20 @@ public class Book {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
-    }
 
-    private void loadData(Book book) {
-        this.isbn = book.getIsbn();
-        this.name = book.getName();
-        this.author = book.getAuthor();
-        this.edition = book.getEdition();
-        this.releaseYear = book.getReleaseYear();
-        this.image = book.getImage();
+        //Add to Algolia..
+        try {
+            JSONObject jObj = new JSONObject().put("objectID", this.isbn )
+                    .put("isbn", this.isbn)
+                    .put("name", this.name)
+                    .put("author", this.author);
+            Algolia a = new Algolia(bookIndex);
+            a.addToIndex(jObj);
+        } catch (JSONException e) {
+            //TODO: Error handling
+            e.printStackTrace();
+        }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)

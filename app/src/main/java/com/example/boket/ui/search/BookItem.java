@@ -16,9 +16,12 @@ import com.example.boket.R;
  * TODO: document your custom view class.
  */
 public class BookItem extends View {
+    private String isbn;
     private String bookTitle;
     private String author;
+    private String edition;
     private String publishedYear;
+    private String image;
 
 
     public BookItem(Context context) {
@@ -34,6 +37,17 @@ public class BookItem extends View {
     public BookItem(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs, defStyle);
+    }
+    public BookItem(Context context, String isbn, String title, String author, String edition, String publishedYear, String image){
+        super(context);
+        init(null, 0);
+        this.isbn = isbn;
+        this.bookTitle = title;
+        this.author = author;
+        this.edition = edition;
+        this.publishedYear = publishedYear;
+        this.image = image;
+
     }
 
 
