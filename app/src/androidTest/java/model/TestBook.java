@@ -15,7 +15,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class TestBook {
     private Context context;
@@ -26,11 +25,11 @@ public class TestBook {
     }
 
     @Test
-    public void Book_CreateBook() throws InterruptedException {
+    public void Book_CreateAndGetBook() throws InterruptedException {
         CountDownLatch lock = new CountDownLatch(1);
         FirebaseApp.initializeApp(context);
-        Book book1 = new Book("9789144090504", "Algebra och diskret matematik", "Johan Jonasson, Stefan Lemurell", "2", "2013", "noimage");
-        book1.create();
+        Book book1 = new Book("9789144090504", "Algebra och diskret matematik", "Johan Jonasson, Stefan Lemurell", "2", "2013", "https://s1.adlibris.com/images/3075059/algebra-och-diskret-matematik.jpg");
+        book1.save();
         Book newBook = new Book("9789144090504", new Book.OnLoadCallback() {
             @Override
             public void onLoadComplete(Book book) {
@@ -40,6 +39,5 @@ public class TestBook {
             }
         });
         lock.await(1, TimeUnit.MINUTES);
-
     }
 }
