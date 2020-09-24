@@ -12,4 +12,4 @@
 * Fokus på att få all funktonalitet inför peer review
 * Ändra addAd utefter ny figma, och ändra på man öppnar kameran
 * Ändra tabell för subscriptions i databas
-* 
+* Bestämt att vi skriver def of done i task description
