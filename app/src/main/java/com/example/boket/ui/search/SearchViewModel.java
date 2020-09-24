@@ -17,8 +17,11 @@ public class SearchViewModel extends ViewModel {
     }
 
     public ArrayList<Book> getBooks(){
-
         return books;
+    }
+
+    public void setBooks(ArrayList<Book> books){
+        this.books = books;
     }
 
     // TODO: Implement the ViewModel

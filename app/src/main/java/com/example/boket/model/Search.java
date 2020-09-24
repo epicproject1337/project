@@ -12,6 +12,7 @@ public class Search {
     private static final String bookIndex = "BOOKINDEX";
 
     public Search() {
+
     }
 
     public static void searchBooks(String query, SearchCallback searchCallback) {
@@ -34,6 +35,8 @@ public class Search {
             }
         });
     }
+
+
 
     public interface SearchCallback {
         void onSearchBooks(ArrayList<Book> bookList);

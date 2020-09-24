@@ -24,6 +24,8 @@ import android.widget.SearchView;
 
 import com.example.boket.R;
 import com.example.boket.model.Book;
+import com.example.boket.model.ISearch;
+import com.example.boket.model.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -55,8 +57,9 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        bookItemAdapter = new BookItemAdapter(getContext(), this, getBookItems());
-        recyclerView.setAdapter(bookItemAdapter);
+
+        //bookItemAdapter = new BookItemAdapter(getContext(), this, getBookItems());
+        //recyclerView.setAdapter(bookItemAdapter);
 
 
 
@@ -64,9 +67,28 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
 
+
+
     private ArrayList<BookItem> getBookItems(){
         ArrayList<BookItem> bookItems = new ArrayList<>();
+        //ArrayList<Book> books = searchViewModel.getBooks();
+        ArrayList<Book> books = new ArrayList<Book>();
+        Book book1 = new Book("hje","de","fsf","fds","fsf","ffs");
+        books.add(book1);
 
+        for(Book book : books){
+            String isbn = book.getIsbn();
+            String title = book.getName();
+            String author = book.getAuthor();
+            String edition = book.getEdition();
+            String releaseYear = book.getReleaseYear();
+            String image = book.getImage();
+
+            BookItem bi = new BookItem(this.getContext(), isbn, title, author, edition, releaseYear, image);
+            bookItems.add(bi);
+        }
+
+        /*
         BookItem b1 = new BookItem(this.getContext());
         b1.setBookTitle("The life of a KING");
         b1.setAuthor("Oscar Bennet");
@@ -80,8 +102,11 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
         bookItems.add(b1);
         bookItems.add(b2);
+
+         */
         return bookItems;
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -95,11 +120,15 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         return null;
     }
 
-    private ArrayList<Book> fetchBooks() {
-        String input = getInput();
-        ArrayList books = searchViewModel.fetchBooks(input);
+    private void searchBooks(String query) {
+        Search.searchBooks(query, new Search.SearchCallback() {
 
-        return books;
+            @Override
+            public void onSearchBooks(ArrayList<Book> bookList) {
+                searchViewModel.setBooks(bookList);
+            }
+        });
+
     }
 
     @Override
@@ -107,7 +136,12 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         BookItem book = bookItemAdapter.getItem(position);
         System.out.println(book.getBookTitle());
 
+        goToBookSellers(book);
 
+
+    }
+
+    private void goToBookSellers(BookItem book){
         BooksellersFragment booksellersFragment = new BooksellersFragment();
         Bundle bundle = new Bundle();
         bundle.putString("BookNumber", book.getBookTitle()); //Skriv valda bokens ISBN-nummer i "ISBN-nummer"
@@ -118,7 +152,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment,booksellersFragment);
         transaction.commit();
-
     }
 
 
@@ -126,6 +159,9 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     @Override
     public boolean onQueryTextSubmit(String s) {
         System.out.println(searchView.getQuery());
+        searchBooks(s);
+        bookItemAdapter = new BookItemAdapter(getContext(), this, getBookItems());
+        recyclerView.setAdapter(bookItemAdapter);
         return false;
     }
 
