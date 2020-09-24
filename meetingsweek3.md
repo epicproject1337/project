@@ -8,4 +8,8 @@
 * Börja skriva descriptions på tasks i trello
 
 # Möte 2
-
+* Bestämt att vi inte använder goodreads till att börja med, hårdkoda in ett antal böcker i egen databas och lägga till goodreads API senare om tid finns
+* Fokus på att få all funktonalitet inför peer review
+* Ändra addAd utefter ny figma, och ändra på man öppnar kameran
+* Ändra tabell för subscriptions i databas
+* 
