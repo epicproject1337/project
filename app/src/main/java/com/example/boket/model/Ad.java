@@ -22,6 +22,7 @@ public class Ad {
     private String adType; // "sell" or "buy"
     private String condition = null; // null if adType is buy (default value)
     private boolean archived;
+    //private TimeSt
 
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String collection = "ads";
