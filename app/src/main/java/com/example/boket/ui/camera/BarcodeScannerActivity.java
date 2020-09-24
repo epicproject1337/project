@@ -202,12 +202,16 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         return new BarcodeResultListener() {
             @Override
             public void onSuccess(@Nullable Bitmap originalCameraImage, @NonNull List<FirebaseVisionBarcode> barcodes, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
+                //Todo ta bort finns endast för testnings syfte
                 Toast.makeText(BarcodeScannerActivity.this, "BARCODE: " + barcodes.toString(), Toast.LENGTH_LONG).show();
-                //Todo: kolla om det faktiskt är en ISBN kod
-                if (barcodes.size() > 0) {
+
+                String isbn = barcodes.get(1).toString();
+                if (isValidISBN13(isbn)) {
                     Intent addAdActivity = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
-                    addAdActivity.putExtra("ISBN", barcodes.get(1).toString());
+                    addAdActivity.putExtra("ISBN", isbn);
                     startActivity(addAdActivity);
+                } else {
+                    Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -217,6 +221,35 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
             }
         };
+    }
+
+    /*
+    s = 9×1 + 7×3 + 8×1 + 0×3 + 3×1 + 0×3 + 6×1 + 4×3 + 0×1 + 6×3 + 1×1 + 5×3
+                =   9 +  21 +   8 +   0 +   3 +   0 +   6 +  12 +   0 +  18 +   1 +  15
+                = 93
+        93 / 10 = 9 remainder 3
+        10 –  3 = 7
+     */
+    private boolean isValidISBN13(String input) {
+        if (input.length() != 13 || !input.contains("[0-9]+"))
+            return false;
+
+        int sum = 0;
+        for (int i = 0; i < input.length() - 1; i++) {
+            if (i%2 == 0) {
+                sum += input.charAt(i) - '0';
+            } else {
+                sum += (input.charAt(i) - '0') * 3;
+            }
+        }
+
+        int remainder = sum%10;
+        int checkDigit = 10 - remainder;
+        if (checkDigit == input.charAt(input.length()) - '0') {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
