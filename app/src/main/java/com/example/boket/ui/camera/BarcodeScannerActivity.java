@@ -20,6 +20,7 @@ import com.example.boket.R;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor.BarcodeResultListener;
 import com.example.boket.cameraUtil.OverlayView;
+import com.example.boket.cameraUtil.common.BarcodeScanner;
 import com.example.boket.cameraUtil.common.CameraSource;
 import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
@@ -212,7 +213,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                 });
 
                 String isbn = barcodes.toString();
-                if (isValidISBN13(isbn)) {
+                if (BarcodeScanner.isValidISBN13(isbn)) {
                     Intent addAdActivity = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
                     addAdActivity.putExtra("ISBN", isbn);
                     startActivity(addAdActivity);
@@ -232,37 +233,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
             }
         };
-    }
-
-    /*
-    s = 9×1 + 7×3 + 8×1 + 0×3 + 3×1 + 0×3 + 6×1 + 4×3 + 0×1 + 6×3 + 1×1 + 5×3
-                =   9 +  21 +   8 +   0 +   3 +   0 +   6 +  12 +   0 +  18 +   1 +  15
-                = 93
-        93 / 10 = 9 remainder 3
-        10 –  3 = 7
-        Todo fixa testet så denna kan vara private och inte statisk / alternativt lägga den i någon helper class?
-     */
-    public static boolean isValidISBN13(String input) {
-        if (input.length() != 13 || !input.matches("[0-9]+")) {
-            return false;
-        }
-
-        int sum = 0;
-        for (int i = 0; i < input.length() - 1; i++) {
-            if (i%2 == 0) {
-                sum += input.charAt(i) - '0';
-            } else {
-                sum += (input.charAt(i) - '0') * 3;
-            }
-        }
-
-        int remainder = sum%10;
-        int checkDigit = 10 - remainder;
-        if (checkDigit == input.charAt(input.length() - 1) - '0') {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
