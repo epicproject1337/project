@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.boket.R;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor.BarcodeResultListener;
 import com.example.boket.cameraUtil.OverlayView;
+import com.example.boket.cameraUtil.common.BarcodeScanner;
 import com.example.boket.cameraUtil.common.CameraSource;
 import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
@@ -202,12 +204,26 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         return new BarcodeResultListener() {
             @Override
             public void onSuccess(@Nullable Bitmap originalCameraImage, @NonNull List<FirebaseVisionBarcode> barcodes, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
-                Toast.makeText(BarcodeScannerActivity.this, "BARCODE: " + barcodes.toString(), Toast.LENGTH_LONG).show();
-                //Todo: kolla om det faktiskt är en ISBN kod
-                if (barcodes.size() > 0) {
+                //Todo ta bort finns endast för testnings syfte
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BarcodeScannerActivity.this, "BARCODE: " + barcodes.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                String isbn = barcodes.toString();
+                if (BarcodeScanner.isValidISBN13(isbn)) {
                     Intent addAdActivity = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
-                    addAdActivity.putExtra("ISBN", barcodes.get(1).toString());
+                    addAdActivity.putExtra("ISBN", isbn);
                     startActivity(addAdActivity);
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
 
             }
