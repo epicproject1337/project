@@ -5,3 +5,6 @@
 * Fixa fungerande tester  
 
 # Resultat för vecka 3  
+* Domän modell uppdaterad
+* Prototyp fortsatt förbättrad
+* Ett fungerande test skapat
