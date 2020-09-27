@@ -63,7 +63,12 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+            }
+        });
 
         return v;
     }
@@ -157,4 +162,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public boolean onQueryTextChange(String s) {
         return false;
     }
+
+
 }
