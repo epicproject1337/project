@@ -30,7 +30,7 @@ public class AddAdActivity extends AppCompatActivity {
         final TextView titleText = findViewById(R.id.titleText);
         final TextView bookTitleTextView = findViewById(R.id.bookTitleText);
         final TextView releaseYearTextView = findViewById(R.id.releaseYear);
-        final TextView editionTextView = findViewById(R.id.releaseYear);
+        final TextView editionTextView = findViewById(R.id.edition);
         final TextView isbnTextView = findViewById(R.id.isbn);
 
 
