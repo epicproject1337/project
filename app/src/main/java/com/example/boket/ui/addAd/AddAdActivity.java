@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.boket.R;
+import com.example.boket.model.Book;
 
 import org.w3c.dom.Text;
 
@@ -27,8 +28,12 @@ public class AddAdActivity extends AppCompatActivity {
         final EditText priceEditText = findViewById(R.id.priceInput);
         final EditText cityEditText = findViewById(R.id.cityInput);
         final Button publishButton = findViewById(R.id.publishButton);
-        final TextView authorText = findViewById(R.id.authorText);
+        final TextView authorTextView = findViewById(R.id.authorText);
         final TextView titleText = findViewById(R.id.titleText);
+        final TextView bookTitleTextView = findViewById(R.id.bookTitleText);
+        final TextView releaseYearTextView = findViewById(R.id.releaseYear);
+        final TextView editionTextView = findViewById(R.id.edition);
+        final TextView isbnTextView = findViewById(R.id.isbn);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -36,7 +41,17 @@ public class AddAdActivity extends AppCompatActivity {
             isbn = bundle.getString("BookNumber");
         }
 
-        System.out.println(isbn);
+        Book book = new Book(isbn, new Book.OnLoadCallback() {
+            @Override
+            public void onLoadComplete(Book book) {
+                bookTitleTextView.setText(book.getName());
+                authorTextView.setText(book.getAuthor());
+                releaseYearTextView.setText(book.getReleaseYear());
+                editionTextView.setText("Upplaga: " + book.getEdition());
+                isbnTextView.setText("ISBN: " +book.getIsbn());
+            }
+        });
+
 
     }
 
