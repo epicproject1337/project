@@ -17,7 +17,8 @@ public class AddAdActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_ad);
+        //setContentView(R.layout.activity_add_ad);
+        setContentView(R.layout.activity_search_bookseller);
 
         final EditText conditionEditText = findViewById(R.id.conditionInput);
         final EditText priceEditText = findViewById(R.id.priceInput);
