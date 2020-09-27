@@ -140,15 +140,14 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         else {
             BooksellersFragment booksellersFragment = new BooksellersFragment();
             booksellersFragment.setArguments(bundle);
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, booksellersFragment).commit();
-            // BooksellersFragment booksellersFragment = new BooksellersFragment();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment, booksellersFragment);
-            transaction.commit();
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.nav_host_fragment, booksellersFragment)
+                    .addToBackStack("SearchFragment")
+                    .commit();
+
         }
     }
-
 
 
     @Override
