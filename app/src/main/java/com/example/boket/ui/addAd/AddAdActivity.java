@@ -14,11 +14,14 @@ import org.w3c.dom.Text;
 public class AddAdActivity extends AppCompatActivity {
     // TODO: 2020-09-09
     //Lagra info i db
+
+    private String isbn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_add_ad);
-        setContentView(R.layout.activity_search_bookseller);
+        setContentView(R.layout.activity_add_ad);
+        //setContentView(R.layout.activity_search_bookseller);
 
         final EditText conditionEditText = findViewById(R.id.conditionInput);
         final EditText priceEditText = findViewById(R.id.priceInput);
@@ -26,6 +29,14 @@ public class AddAdActivity extends AppCompatActivity {
         final Button publishButton = findViewById(R.id.publishButton);
         final TextView authorText = findViewById(R.id.authorText);
         final TextView titleText = findViewById(R.id.titleText);
+
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            isbn = bundle.getString("BookNumber");
+        }
+
+        System.out.println(isbn);
 
     }
 

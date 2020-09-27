@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,8 @@ import com.example.boket.model.Book;
 import com.example.boket.model.ISearch;
 import com.example.boket.model.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
+import com.example.boket.ui.addAd.AddAdActivity;
+import com.example.boket.ui.addAd.SearchBookseller;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -119,14 +123,17 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
     private void sendISBN(BookItem book){
-        if(getActivity() instanceof SearchBookseller){
-            System.out.println("YEET");
+        Bundle bundle = new Bundle();
+        bundle.putString("BookNumber", book.getIsbn());
+
+        Activity activity = getActivity();
+        if(activity instanceof SearchBookseller){
+            Intent intent = new Intent(activity, AddAdActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
         else {
-
             BooksellersFragment booksellersFragment = new BooksellersFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("BookNumber", book.getIsbn());
             booksellersFragment.setArguments(bundle);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, booksellersFragment).commit();

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.boket.cameraUtil.common.BarcodeScanner;
 import com.example.boket.ui.addAd.AddAdActivity;
+import com.example.boket.ui.addAd.SearchBookseller;
 import com.example.boket.ui.camera.BarcodeScannerActivity;
 import com.example.boket.ui.login.LoginActivity;
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startAddAdActivity(View view) {
-        Intent intent = new Intent(this, AddAdActivity.class);
+        Intent intent = new Intent(this, SearchBookseller.class);
         startActivity(intent);
     }
 
