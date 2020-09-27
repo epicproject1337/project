@@ -10,8 +10,6 @@ import android.widget.TextView;
 import com.example.boket.R;
 import com.example.boket.model.Book;
 
-import org.w3c.dom.Text;
-
 public class AddAdActivity extends AppCompatActivity {
     // TODO: 2020-09-09
     //Lagra info i db
@@ -32,25 +30,27 @@ public class AddAdActivity extends AppCompatActivity {
         final TextView titleText = findViewById(R.id.titleText);
         final TextView bookTitleTextView = findViewById(R.id.bookTitleText);
         final TextView releaseYearTextView = findViewById(R.id.releaseYear);
-        final TextView editionTextView = findViewById(R.id.edition);
+        final TextView editionTextView = findViewById(R.id.releaseYear);
         final TextView isbnTextView = findViewById(R.id.isbn);
 
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             isbn = bundle.getString("BookNumber");
+
+            Book book = new Book(isbn, new Book.OnLoadCallback() {
+                @Override
+                public void onLoadComplete(Book book) {
+                    bookTitleTextView.setText(book.getName());
+                    authorTextView.setText(book.getAuthor());
+                    releaseYearTextView.setText(book.getReleaseYear());
+                    editionTextView.setText("Upplaga: " + book.getEdition());
+                    isbnTextView.setText("ISBN: " +book.getIsbn());
+                }
+            });
+
         }
 
-        Book book = new Book(isbn, new Book.OnLoadCallback() {
-            @Override
-            public void onLoadComplete(Book book) {
-                bookTitleTextView.setText(book.getName());
-                authorTextView.setText(book.getAuthor());
-                releaseYearTextView.setText(book.getReleaseYear());
-                editionTextView.setText("Upplaga: " + book.getEdition());
-                isbnTextView.setText("ISBN: " +book.getIsbn());
-            }
-        });
 
 
     }

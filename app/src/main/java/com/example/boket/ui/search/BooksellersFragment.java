@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.boket.R;
+import com.example.boket.model.Book;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,9 @@ public class BooksellersFragment extends Fragment {
     private ImageView bookImageView;
     private TextView bookNameTextView;
     private TextView bookAuthorTextView;
+    private TextView releaseYearTextView;
+    private TextView editionTextView;
+    private TextView isbnTextView;
     private Button subscribeButton;
     private BookAdapter bookAdapter2;
     private ArrayList<String> items;
@@ -37,13 +41,26 @@ public class BooksellersFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_booksellers, container, false);
-
+        init(v);
         Bundle bundle = getArguments();
         if (bundle != null) {
             ISBN_number = bundle.getString("BookNumber");
+
+            Book book = new Book(ISBN_number, new Book.OnLoadCallback() {
+                @Override
+                public void onLoadComplete(Book book) {
+                    bookNameTextView.setText(book.getName());
+                    bookAuthorTextView.setText(book.getAuthor());
+                    releaseYearTextView.setText(book.getReleaseYear());
+                    editionTextView.setText("Upplaga: " + book.getEdition());
+                    isbnTextView.setText("ISBN: " +book.getIsbn());
+                }
+            });
         }
 
-        init(v);
+
+
+
 
 
         return v;
@@ -54,6 +71,9 @@ public class BooksellersFragment extends Fragment {
         bookNameTextView = v.findViewById(R.id.bookName);
         bookAuthorTextView = v.findViewById(R.id.bookAuthor);
         subscribeButton = v.findViewById(R.id.subscribeButton);
+        releaseYearTextView = v.findViewById(R.id.releaseYear);
+        editionTextView = v.findViewById(R.id.edition);
+        isbnTextView = v.findViewById(R.id.isbn);
 
 
         adListRecyclerView = v.findViewById(R.id.adList);
