@@ -55,10 +55,9 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
-        System.out.println("här");
         this.changeVisibility();
         this.iaBookSellerCL.onIABookSellerCL(view,getLayoutPosition());
-        System.out.println("här passerat");
+
     }
 
     public void setIaBookSellerCL(IABookSellerCL AbCL){
