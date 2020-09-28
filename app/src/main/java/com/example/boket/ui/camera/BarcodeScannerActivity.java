@@ -1,6 +1,7 @@
 package com.example.boket.ui.camera;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
 import com.example.boket.cameraUtil.common.GraphicOverlay;
 import com.example.boket.ui.addAd.AddAdActivity;
+import com.example.boket.ui.addAd.SearchBookseller;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -204,26 +206,21 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         return new BarcodeResultListener() {
             @Override
             public void onSuccess(@Nullable Bitmap originalCameraImage, @NonNull List<FirebaseVisionBarcode> barcodes, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
-                //Todo ta bort finns endast för testnings syfte
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(BarcodeScannerActivity.this, "BARCODE: " + barcodes.toString(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                String isbn = "";
+                for (FirebaseVisionBarcode barCode : barcodes)
+                {
+                    isbn = barCode.getRawValue();
+                }
 
-                String isbn = barcodes.toString();
                 if (BarcodeScanner.isValidISBN13(isbn)) {
-                    Intent addAdActivity = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
-                    addAdActivity.putExtra("ISBN", isbn);
-                    startActivity(addAdActivity);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("BookNumber", isbn);
+
+                    Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    //Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
                 }
 
             }
