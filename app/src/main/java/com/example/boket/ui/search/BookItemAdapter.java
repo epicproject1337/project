@@ -4,13 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.boket.R;
 import com.example.boket.ui.RecyclerViewClickListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,6 +46,8 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
         holder.bookTitle.setText(bookItems.get(i).getBookTitle());
         holder.author.setText(bookItems.get(i).getAuthor());
         holder.publishedYear.setText(bookItems.get(i).getPublishedYear());
+        Glide.with(c).load(bookItems.get(i).getImage()).into(holder.imageView);
+
 
 
 
@@ -57,6 +62,8 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
         TextView bookTitle;
         TextView author;
         TextView publishedYear;
+        ImageView imageView;
+
 
         public BookItemHolder(@NonNull View v) {
             super(v);
@@ -64,6 +71,7 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
             this.bookTitle = v.findViewById(R.id.bookTitle);
             this.author = v.findViewById(R.id.author);
             this.publishedYear = v.findViewById(R.id.publishedYear);
+            this.imageView = v.findViewById(R.id.imageView2);
 
             v.setOnClickListener(this);
         }

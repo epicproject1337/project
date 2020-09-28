@@ -12,8 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.boket.R;
+import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,7 +32,7 @@ public class BooksellersFragment extends Fragment {
     private TextView editionTextView;
     private TextView isbnTextView;
     private Button subscribeButton;
-    private BookAdapter bookAdapter2;
+    private BookAdapter bookAdapter;
     private ArrayList<String> items;
     private RecyclerView adListRecyclerView;
 
@@ -37,27 +40,12 @@ public class BooksellersFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_booksellers, container, false);
-        init(v);
         Bundle bundle = getArguments();
         if (bundle != null) {
             ISBN_number = bundle.getString("BookNumber");
 
-            Book book = new Book(ISBN_number, new Book.OnLoadCallback() {
-                @Override
-                public void onLoadComplete(Book book) {
-                    bookNameTextView.setText(book.getName());
-                    bookAuthorTextView.setText(book.getAuthor());
-                    releaseYearTextView.setText(book.getReleaseYear());
-                    editionTextView.setText("Upplaga: " + book.getEdition());
-                    isbnTextView.setText("ISBN: " +book.getIsbn());
-                }
-            });
         }
-
-
-
-
-
+        init(v);
 
         return v;
     }
@@ -71,14 +59,11 @@ public class BooksellersFragment extends Fragment {
         editionTextView = v.findViewById(R.id.edition);
         isbnTextView = v.findViewById(R.id.isbn);
 
+        setBookInfo(v);
 
         adListRecyclerView = v.findViewById(R.id.adList);
         adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        bookAdapter2 = new BookAdapter(getContext(), getBookSellersList(v));
-        adListRecyclerView.setAdapter(bookAdapter2);
-
-        bookNameTextView.setText(ISBN_number);
+        setBookSellersList(v);
 
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +73,42 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private ArrayList<ABookSeller> getBookSellersList(View v){
+    private void setBookInfo(View v){
+        Book book = new Book(ISBN_number, new Book.OnLoadCallback() {
+            @Override
+            public void onLoadComplete(Book book) {
+                bookNameTextView.setText(book.getName());
+                bookAuthorTextView.setText(book.getAuthor());
+                releaseYearTextView.setText(book.getReleaseYear());
+                editionTextView.setText("Upplaga: " + book.getEdition());
+                isbnTextView.setText("ISBN: " +book.getIsbn());
+                //Picasso.get().load(book.getImage()).into(bookImageView);
+                Glide.with(v).load(book.getImage()).into(bookImageView);
+            }
+        });
+    }
+
+    private void setBookSellersList(View v){
         ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
 
-
+        Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
+            @Override
+            public void onGetAdsComplete(ArrayList<Ad> adList) {
+               for (int i = 0 ; i<adList.size();i++){
+                   Ad ad = adList.get(i);
+                   String state = ad.getCondition();
+                   Double price = ad.getPrice();
+                   //TODO fixa city i ad
+                   //String city =
+                   ABookSeller aBookSeller = new ABookSeller(state,price.toString(),"Göteborg",v);
+                   bookSellersList.add(aBookSeller);
+                   System.out.println(bookSellersList.size());
+               }
+                bookAdapter = new BookAdapter(getContext(), bookSellersList);
+                adListRecyclerView.setAdapter(bookAdapter);
+            }
+        });
+/*
         //String state, String price, String city, View
         ABookSeller aBookSeller2 = new ABookSeller("orginal","kompispres","skövde",v);
         bookSellersList.add(aBookSeller2);
@@ -99,7 +116,7 @@ public class BooksellersFragment extends Fragment {
         bookSellersList.add(aBookSeller2);
         bookSellersList.add(aBookSeller2);
 
-        return  bookSellersList;
+ */
     }
 
     private void subscribeButtonClicked(){
