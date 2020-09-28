@@ -21,17 +21,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.boket.R;
+import com.example.boket.cameraUtil.common.BarcodeScanner;
 import com.example.boket.model.Book;
 import com.example.boket.model.ISearch;
 import com.example.boket.model.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.example.boket.ui.addAd.AddAdActivity;
 import com.example.boket.ui.addAd.SearchBookseller;
+import com.example.boket.ui.camera.BarcodeScannerActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -49,6 +52,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     private SearchView searchView;
     private RecyclerView recyclerView;
     private BookItemAdapter bookItemAdapter;
+    private ImageButton cameraButton;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -63,6 +67,14 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        cameraButton = v.findViewById(R.id.cameraButton);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), BarcodeScannerActivity.class);
+                startActivity(intent);
+            }
+        });
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,6 +173,5 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public boolean onQueryTextChange(String s) {
         return false;
     }
-
 
 }
