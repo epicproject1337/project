@@ -1,4 +1,4 @@
-# Mötesrapport vecka 3
+# Mötesrapport vecka 4
 # Möte 1
 Denna vecka är vi överrens om att fokus inte ligger på nya funktioner utan på att göra klart det vi har liggande, testa samt förbreda allt annat som behövs inför peer reviewn. 
 Saker att göra denna vecka:
