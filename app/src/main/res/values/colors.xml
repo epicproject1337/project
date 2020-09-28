@@ -6,4 +6,6 @@
     <color name="colorBottomBar">#CED4DA</color>
     <color name="colorInput">#F1F3F5</color>
     <color name="colorWhite">#FFFFFF</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

@@ -120,7 +120,31 @@ public class BookItem extends View {
     public void setPublishedYear(String publishedYear) {
         this.publishedYear = publishedYear;
     }
-/*
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getEdition() {
+        return edition;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    /*
     @Override
     public void onClick(View view) {
         System.out.println(this.bookTitle);

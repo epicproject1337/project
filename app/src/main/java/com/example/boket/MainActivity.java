@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.boket.cameraUtil.common.BarcodeScanner;
 import com.example.boket.ui.addAd.AddAdActivity;
+import com.example.boket.ui.addAd.SearchBookseller;
 import com.example.boket.ui.camera.BarcodeScannerActivity;
 import com.example.boket.ui.login.LoginActivity;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         //TODO : Remove this. Only for testing purpose
         //mAuth.signOut();
-/*
+
         if(mAuth.getCurrentUser() == null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
-*/
+
         setContentView(R.layout.activity_main);
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startAddAdActivity(View view) {
-        Intent intent = new Intent(this, AddAdActivity.class);
+        Intent intent = new Intent(this, SearchBookseller.class);
         startActivity(intent);
     }
 
