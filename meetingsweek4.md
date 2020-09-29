@@ -8,6 +8,7 @@ Saker att göra denna vecka:
 * Förbättra domänmodell utan search (Huvudansvar: ? den som har tid över gör det.)
 * Tester (alla)
 * Se till att protypen är helt fungerande samt justera designen. (alla enligt trello)
+* JAVADOC på public funktioner
 
 
 # Möte 2
