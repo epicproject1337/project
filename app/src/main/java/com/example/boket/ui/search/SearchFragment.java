@@ -41,7 +41,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment implements RecyclerViewClickListener, SearchView.OnQueryTextListener{
+public class SearchFragment extends Fragment implements RecyclerViewClickListener, SearchView.OnQueryTextListener {
 
     private SearchViewModel searchViewModel;
 
@@ -86,13 +86,11 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
 
-
-
-    private ArrayList<BookItem> getBookItems(){
+    private ArrayList<BookItem> getBookItems() {
         ArrayList<BookItem> bookItems = new ArrayList<>();
         ArrayList<Book> books = searchViewModel.getBooks();
 
-        for(Book book : books){
+        for (Book book : books) {
             String isbn = book.getIsbn();
             String title = book.getName();
             String author = book.getAuthor();
@@ -116,7 +114,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
     private void searchBooks(String query) {
-    RecyclerViewClickListener i = this;
+        RecyclerViewClickListener i = this;
         Search.searchBooks(query, new Search.SearchCallback() {
 
             @Override
@@ -139,17 +137,16 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     }
 
-    private void sendISBN(BookItem book){
+    public void sendISBN(BookItem book) {
         Bundle bundle = new Bundle();
         bundle.putString("BookNumber", book.getIsbn());
 
         Activity activity = getActivity();
-        if(activity instanceof SearchBookseller){
+        if (activity instanceof SearchBookseller) {
             Intent intent = new Intent(activity, AddAdActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
-        }
-        else {
+        } else {
             BooksellersFragment booksellersFragment = new BooksellersFragment();
             booksellersFragment.setArguments(bundle);
             getFragmentManager()

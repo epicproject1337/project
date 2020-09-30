@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.example.boket.R;
 import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
+import com.example.boket.model.Subscription;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -82,6 +84,7 @@ public class BooksellersFragment extends Fragment {
     }
 
     private void setBookInfo(View v){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         Book book = new Book(ISBN_number, new Book.OnLoadCallback() {
             @Override
             public void onLoadComplete(Book book) {
@@ -92,6 +95,16 @@ public class BooksellersFragment extends Fragment {
                 isbnTextView.setText("ISBN: " +book.getIsbn());
                 //Picasso.get().load(book.getImage()).into(bookImageView);
                 Glide.with(v).load(book.getImage()).into(bookImageView);
+                Subscription.isSubscribed(book.getIsbn(), mAuth.getUid(), new Subscription.OnLoadCallback() {
+                    @Override
+                    public void isSubscribedCallback(boolean isSubscribed) {
+                        if (isSubscribed) {
+                            subscribeButton.setText("Avprenumerera");
+                        } else {
+                            subscribeButton.setText("Prenumerera");
+                        }
+                    }
+                });
             }
         });
     }

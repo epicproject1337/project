@@ -30,6 +30,7 @@ public class Ad{
     private boolean archived;
     @ServerTimestamp
     private Timestamp timeUpdated = null;
+    private Book book = null;
 
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String collection = "ads";
@@ -49,6 +50,26 @@ public class Ad{
 
     public Ad(int id) {
         this.id = id;
+    }
+
+    public static void getAdsByUser(String userId, GetAdsCallback callback) {
+        final ArrayList<Ad> adList = new ArrayList<Ad>();
+
+        Query docRef = db.collection(collection).whereEqualTo("userId", userId);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Ad ad = document.toObject(Ad.class);
+                        adList.add(ad);
+                    }
+                    callback.onGetAdsComplete(adList);
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
     }
 
     public static void getAdsByISBN(String isbn, GetAdsCallback callback) {

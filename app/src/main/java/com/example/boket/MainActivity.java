@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void showBookFromProfile(View view) {
+
+    }
+
     public void signOut() {
         mAuth.signOut();
         if(mAuth.getCurrentUser() == null){

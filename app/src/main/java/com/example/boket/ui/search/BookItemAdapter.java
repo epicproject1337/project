@@ -47,10 +47,6 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
         holder.author.setText(bookItems.get(i).getAuthor());
         holder.publishedYear.setText(bookItems.get(i).getPublishedYear());
         Glide.with(c).load(bookItems.get(i).getImage()).into(holder.imageView);
-
-
-
-
     }
 
     @Override
