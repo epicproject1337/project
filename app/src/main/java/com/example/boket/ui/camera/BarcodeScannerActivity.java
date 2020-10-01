@@ -44,6 +44,14 @@ import butterknife.ButterKnife;
 import static com.example.boket.cameraUtil.common.BarcodeScanner.Constants.KEY_CAMERA_PERMISSION_GRANTED;
 import static com.example.boket.cameraUtil.common.BarcodeScanner.Constants.PERMISSION_REQUEST_CAMERA;
 
+/**
+ * @author Alexander Jyborn
+ *
+ * Class the represents the camera activity combining the camera with the overlay to get the GUI correct,
+ * aswell as using the camerautil library to determine if barcode is valid.
+ *
+ * @since 2020-09-10
+ */
 public class BarcodeScannerActivity extends AppCompatActivity {
 
     String TAG = "BarcodeScannerActivity";
@@ -135,6 +143,13 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Requests camera permission when starting the camera
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
@@ -201,6 +216,11 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         mHandler.sendMessage(msg);
     };
 
+    /**
+     * Returns the BarcoderesultListener that determines if the image from the camera is a barcode or not
+     *
+     * @return resultlistener
+     */
     public BarcodeResultListener getBarcodeResultListener() {
 
         return new BarcodeResultListener() {
