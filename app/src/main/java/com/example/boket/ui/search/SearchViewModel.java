@@ -10,15 +10,18 @@ import com.example.boket.ui.camera.BarcodeScannerActivity;
 
 import java.util.ArrayList;
 
+/**
+ * @author Oscar Bennet
+ *
+ * View Model of SearchFragment
+ * Stores books
+ *
+ * @since 2020-09-10
+ */
+
 public class SearchViewModel extends ViewModel {
 
     private ArrayList<Book> books;
-
-    public ArrayList<Book> fetchBooks(String input) {
-        books = null; //fetch from database
-
-        return books;
-    }
 
     public ArrayList<Book> getBooks(){
         return books;

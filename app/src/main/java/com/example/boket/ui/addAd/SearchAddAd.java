@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.boket.R;
 
 
-public class SearchBookseller extends AppCompatActivity {
+public class SearchAddAd extends AppCompatActivity {
 
 
 

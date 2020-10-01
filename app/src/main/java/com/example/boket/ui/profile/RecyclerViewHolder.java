@@ -23,10 +23,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import static com.example.boket.ui.profile.ItemAdapter.itemListener;
 
+/**
+ * Represents an item in the RecyclerView on the profile page
+ *
+ * @author Albin Landgren
+ * @since 2020-09-10
+ */
 public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ImageView view;
 
+    /**
+     *
+     * @param itemView
+     */
     public RecyclerViewHolder(@NonNull View itemView) {
         super(itemView);
         view = itemView.findViewById(R.id.bookimage);
@@ -39,12 +49,18 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
         });
     }
 
-
-
+    /**
+     *
+     * @return the ImageView for this RecyclerView item.
+     */
     public ImageView getView() {
         return view;
     }
 
+    /**
+     *
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         //itemListener.recyclerViewListClicked(view, this.getLayoutPosition());
