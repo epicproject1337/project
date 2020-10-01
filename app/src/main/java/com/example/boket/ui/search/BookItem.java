@@ -13,7 +13,11 @@ import android.view.View;
 import com.example.boket.R;
 
 /**
- * TODO: document your custom view class.
+ * @author Oscar Bennet
+ *
+ * Item in recycler view representing a book
+ *
+ * @since 2020-09-21
  */
 public class BookItem extends View {
     private String isbn;
@@ -58,37 +62,7 @@ public class BookItem extends View {
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.BookItem, defStyle, 0);
 
-        /*
-        mExampleString = a.getString(
-                R.styleable.BookItem_exampleString);
-        mExampleColor = a.getColor(
-                R.styleable.BookItem_exampleColor,
-                mExampleColor);
-        // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
-        // values that should fall on pixel boundaries.
-        mExampleDimension = a.getDimension(
-                R.styleable.BookItem_exampleDimension,
-                mExampleDimension);
 
-        if (a.hasValue(R.styleable.BookItem_exampleDrawable)) {
-            mExampleDrawable = a.getDrawable(
-                    R.styleable.BookItem_exampleDrawable);
-            mExampleDrawable.setCallback(this);
-        }
-        */
-
-        //setOnClickListener(this);
-/*
-        this.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                System.out.println(getBookTitle());
-            }
-        });
-
-
- */
         a.recycle();
 
     }

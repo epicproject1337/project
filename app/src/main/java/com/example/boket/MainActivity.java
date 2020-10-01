@@ -5,18 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.boket.cameraUtil.common.BarcodeScanner;
-import com.example.boket.ui.addAd.AddAdActivity;
-import com.example.boket.ui.addAd.SearchBookseller;
-import com.example.boket.ui.camera.BarcodeScannerActivity;
+import com.example.boket.ui.addAd.SearchAddAd;
 import com.example.boket.ui.login.LoginActivity;
 
-import com.example.boket.ui.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.NavController;
@@ -57,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startAddAdActivity(View view) {
-        Intent intent = new Intent(this, SearchBookseller.class);
+        Intent intent = new Intent(this, SearchAddAd.class);
         startActivity(intent);
     }
 
