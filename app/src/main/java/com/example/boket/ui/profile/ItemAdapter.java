@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.boket.R;
 import com.example.boket.model.Book;
 import com.example.boket.ui.RecyclerViewClickListener;
@@ -49,8 +50,9 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.diskmatte, null);
-        holder.getView().setImageDrawable(d);
+        Glide.with(context).load(bookItems.get(position).getImage()).into(holder.getView());
+        //Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.diskmatte, null);
+        //holder.getView().setImageDrawable(d);
     }
 
     @Override

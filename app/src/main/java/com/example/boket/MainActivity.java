@@ -75,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
     }
+/*
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            this.finish();
+        }
+    }*/
 
 
 }

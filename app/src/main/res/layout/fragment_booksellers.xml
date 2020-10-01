@@ -22,6 +22,7 @@
 
     <TextView
         android:id="@+id/bookName"
+        style="@style/MediumHeading"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -31,7 +32,6 @@
         android:layout_marginRight="20dp"
         android:orientation="vertical"
         android:text="Boktitel"
-        android:textColor="#5F3DC4"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -40,6 +40,7 @@
 
     <TextView
         android:id="@+id/releaseYear"
+        style="@style/GrayText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -47,7 +48,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:text="År"
-        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/bookImage"
@@ -55,6 +55,7 @@
 
     <TextView
         android:id="@+id/edition"
+        style="@style/GrayText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -62,7 +63,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:text="Upplaga"
-        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/bookImage"
@@ -70,6 +70,7 @@
 
     <TextView
         android:id="@+id/isbn"
+        style="@style/GrayText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -77,7 +78,6 @@
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:text="ISBN"
-        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/bookImage"
@@ -85,31 +85,33 @@
 
     <TextView
         android:id="@+id/bookAuthor"
+        style="@style/GrayText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:text="Författare"
-        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/bookImage"
         app:layout_constraintTop_toBottomOf="@+id/bookName" />
 
     <Button
         android:id="@+id/subscribeButton"
+        style="@style/DefaultButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
         android:text="Prenumerera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bookImage" />
+        app:layout_constraintTop_toBottomOf="@+id/isbn" />
 
     <View
         android:id="@+id/divider"
@@ -129,7 +131,6 @@
         android:layout_marginLeft="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginRight="1dp"
-        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

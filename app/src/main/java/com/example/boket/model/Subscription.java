@@ -45,13 +45,19 @@ public class Subscription {
         db.collection(collection).document(docId).set(s);
     }
 
+    public static void unsubscribeUser(String isbn, String userId) {
+        String docId = userId + isbn;
+        db.collection(collection).document(docId).delete();
+    }
+
     public static void isSubscribed(String isbn, String userId, OnLoadCallback callback) {
         String docId = userId + isbn;
         DocumentReference docRef = db.collection(collection).document(docId);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                callback.isSubscribedCallback(true);
+                callback.isSubscribedCallback(documentSnapshot.exists());
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -70,14 +76,14 @@ public class Subscription {
                 if (task.isSuccessful()) {
                     QuerySnapshot result = task.getResult();
                     int i = 0;
-                    for (QueryDocumentSnapshot document : result) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
                         int finalI = i;
                         Subscription subscription = document.toObject(Subscription.class);
                         Book tmpBook = new Book(subscription.getIsbn(), new Book.OnLoadCallback() {
                             @Override
                             public void onLoadComplete(Book book) {
                                 bookList.add(book);
-                                if (finalI == result.size() - 1) {
+                                if (finalI == task.getResult().size() - 1) {
                                     callback.onCompleteCallback(bookList);
                                 }
                             }

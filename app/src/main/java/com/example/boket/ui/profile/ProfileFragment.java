@@ -113,7 +113,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.nav_host_fragment, booksellersFragment)
-                .addToBackStack("ProfileFragment")
+                .addToBackStack(null)
                 .commit();
     }
 }

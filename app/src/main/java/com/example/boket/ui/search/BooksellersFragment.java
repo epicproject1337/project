@@ -17,6 +17,7 @@ import com.example.boket.R;
 import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
@@ -28,7 +29,7 @@ import java.util.ArrayList;
  */
 public class BooksellersFragment extends Fragment {
 
-
+    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final String TAG = BooksellersFragment.class.getName();
     private String ISBN_number;
     private ImageView bookImageView;
@@ -41,6 +42,7 @@ public class BooksellersFragment extends Fragment {
     private BookAdapter bookAdapter;
     private ArrayList<String> items;
     private RecyclerView adListRecyclerView;
+    private boolean isSubscribedToBook;
     private TextView sorryText;
     private TextView pressSubText;
 
@@ -84,7 +86,6 @@ public class BooksellersFragment extends Fragment {
     }
 
     private void setBookInfo(View v){
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         Book book = new Book(ISBN_number, new Book.OnLoadCallback() {
             @Override
             public void onLoadComplete(Book book) {
@@ -98,6 +99,8 @@ public class BooksellersFragment extends Fragment {
                 Subscription.isSubscribed(book.getIsbn(), mAuth.getUid(), new Subscription.OnLoadCallback() {
                     @Override
                     public void isSubscribedCallback(boolean isSubscribed) {
+                        System.out.println(isSubscribed);
+                        isSubscribedToBook = isSubscribed;
                         if (isSubscribed) {
                             subscribeButton.setText("Avprenumerera");
                         } else {
@@ -146,10 +149,12 @@ public class BooksellersFragment extends Fragment {
     private void subscribeButtonClicked(){
         CharSequence chSeq = subscribeButton.getText();
         String btntxt = chSeq.toString();
-        if(btntxt.equals("Prenumerera")){
-            subscribeButton.setText("Avprenumerera");
-        }else{
+        if (isSubscribedToBook) {
+            Subscription.unsubscribeUser(ISBN_number, mAuth.getUid());
             subscribeButton.setText("Prenumerera");
+        } else {
+            Subscription.subscribeUser(ISBN_number, mAuth.getUid());
+            subscribeButton.setText("Avprenumerera");
         }
     }
 

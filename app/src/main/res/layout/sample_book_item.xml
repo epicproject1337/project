@@ -1,25 +1,26 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="348dp"
+    android:layout_width="match_parent"
     android:layout_height="116dp">
 
     <com.example.boket.ui.search.BookItem
-        android:layout_width="348dp"
+        android:layout_width="match_parent"
         android:layout_height="116dp"
         android:paddingLeft="20dp"
         android:paddingBottom="40dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="348dp"
+        android:layout_width="match_parent"
         android:layout_height="116dp">
 
         <TextView
             android:id="@+id/bookTitle"
+            style="@style/SmallHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp"
             android:text="Book Title"
@@ -29,11 +30,12 @@
 
         <TextView
             android:id="@+id/author"
+            style="@style/GrayText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
             android:text="Author"
             app:layout_constraintBottom_toTopOf="@+id/publishedYear"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -41,11 +43,12 @@
 
         <TextView
             android:id="@+id/publishedYear"
+            style="@style/GrayText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
             android:text="Published Year"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/author" />
