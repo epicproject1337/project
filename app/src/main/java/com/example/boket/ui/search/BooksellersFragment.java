@@ -20,6 +20,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * @author Tarik Porobic
+ * @since ${2020-10-1}
+ */
 public class BooksellersFragment extends Fragment {
 
 
@@ -35,6 +39,8 @@ public class BooksellersFragment extends Fragment {
     private BookAdapter bookAdapter;
     private ArrayList<String> items;
     private RecyclerView adListRecyclerView;
+    private TextView sorryText;
+    private TextView pressSubText;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -58,6 +64,8 @@ public class BooksellersFragment extends Fragment {
         releaseYearTextView = v.findViewById(R.id.releaseYear);
         editionTextView = v.findViewById(R.id.edition);
         isbnTextView = v.findViewById(R.id.isbn);
+        sorryText = v.findViewById(R.id.sorryText);
+        pressSubText = v.findViewById(R.id.pressSubText);
 
         setBookInfo(v);
 
@@ -102,7 +110,10 @@ public class BooksellersFragment extends Fragment {
                    //String city =
                    ABookSeller aBookSeller = new ABookSeller(state,price.toString(),"Göteborg",v);
                    bookSellersList.add(aBookSeller);
-                   System.out.println(bookSellersList.size());
+               }
+               if (adList.size()==0){
+                   sorryText.setVisibility(View.VISIBLE);
+                   pressSubText.setVisibility(View.VISIBLE);
                }
                 bookAdapter = new BookAdapter(getContext(), bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter);
