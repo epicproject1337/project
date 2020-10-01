@@ -10,16 +10,24 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.boket.R;
+import com.example.boket.model.Book;
+import com.example.boket.ui.RecyclerViewClickListener;
+import com.example.boket.ui.search.BookItem;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private Context context;
+    static RecyclerViewClickListener itemListener;
+    private ArrayList<Book> bookItems;
 
-    public ItemAdapter(Context context) {
+    public ItemAdapter(Context context, RecyclerViewClickListener itemListener, ArrayList<Book> bookItems) {
         this.context = context;
+        this.bookItems = bookItems;
+        this.itemListener = itemListener;
     }
 
     @Override
@@ -27,22 +35,29 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         return R.layout.horizontal_list_item;
     }
 
+    public Book getItem(int position){
+        return bookItems.get(position);
+    }
+
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         return new RecyclerViewHolder(view);
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.diskmatte, null);
-        holder.getView().setImageDrawable(d);
+        Glide.with(context).load(bookItems.get(position).getImage()).into(holder.getView());
+        //Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.diskmatte, null);
+        //holder.getView().setImageDrawable(d);
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return bookItems.size();
     }
+
 }

@@ -13,16 +13,47 @@
         <item name="android:height">@color/colorWhite</item>
     </style>
 
+    <style name="DefaultText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="GrayText" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorGray</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="LargeHeading" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">36sp</item>
     </style>
 
+    <style name="MediumHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="SmallHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="SmallestHeading" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="DefaultButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:bottomLeftRadius">8dp</item>
+        <item name="android:bottomRightRadius">8dp</item>
+        <item name="android:topLeftRadius">8dp</item>
+        <item name="android:topRightRadius">8dp</item>
     </style>
 
     <style name="IconButton" parent="Widget.AppCompat.ImageButton">
