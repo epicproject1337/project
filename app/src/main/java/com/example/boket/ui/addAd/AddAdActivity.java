@@ -2,12 +2,14 @@ package com.example.boket.ui.addAd;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
@@ -16,13 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 /**
  * @author Alexander Jyborn, Oscar Bennet
  *
- * Activity class for presenting and getting data from the AddAd page
+ * Activity class for presenting and creating an Ad from the data on the AddAd page
  *
  * @since 2020-09-08
  */
 public class AddAdActivity extends AppCompatActivity {
-    // TODO: 2020-09-09
-    //Lagra info i db
 
     private String isbn;
 
@@ -61,7 +61,21 @@ public class AddAdActivity extends AppCompatActivity {
 
         }
 
+        publishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double price = Double.parseDouble(String.valueOf(priceEditText.getText()));
+                String isbn = String.valueOf(isbnTextView.getText());
+                String condition = String.valueOf(conditionEditText.getText());
+                String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                int adID = 0; //TODO hur får man fram id?
+                Ad ad = new Ad(adID, userID, isbn, price, condition, false);
+                //ad.save();
 
+                Intent backToSearch = new Intent(AddAdActivity.this, MainActivity.class);
+                startActivity(backToSearch);
+            }
+        });
 
     }
 
