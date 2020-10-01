@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.boket.R;
 import com.example.boket.model.Book;
@@ -48,6 +49,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     private RecyclerView recyclerView;
     private BookItemAdapter bookItemAdapter;
     private ImageButton cameraButton;
+    private TextView noBookTextView;
 
     /**
      * Creates the view of the search page
@@ -69,6 +71,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        noBookTextView = v.findViewById(R.id.noBookTextView);
 
         cameraButton = v.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -135,10 +139,20 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
             @Override
             public void onSearchBooks(ArrayList<Book> bookList) {
+                //noBookTextView.setVisibility(View.INVISIBLE);
                 searchViewModel.setBooks(bookList);
-                bookItemAdapter = new BookItemAdapter(getContext(), i, getBookItems());
-                recyclerView.setAdapter(bookItemAdapter);
+                ArrayList<Book> books = searchViewModel.getBooks();
+                if(books.size() > 0) {
+
+                    bookItemAdapter = new BookItemAdapter(getContext(), i, getBookItems());
+                    recyclerView.setAdapter(bookItemAdapter);
+                }
+                else{
+                    noBookTextView.setVisibility(View.VISIBLE);
+                    System.out.println("NO BOOK");
+                }
             }
+
         });
 
     }
