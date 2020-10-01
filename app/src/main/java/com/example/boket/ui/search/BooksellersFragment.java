@@ -22,7 +22,10 @@ import java.util.ArrayList;
 
 /**
  * @author Tarik Porobic
- * @since ${2020-10-1}
+ *
+ *Class that is connected to fragment_booksellers
+ *
+ * @since 2020-10-1
  */
 public class BooksellersFragment extends Fragment {
 
@@ -42,6 +45,14 @@ public class BooksellersFragment extends Fragment {
     private TextView sorryText;
     private TextView pressSubText;
 
+    /**
+     * Gets the ISBN number of the book from the previous screen (search) and initiate all buttons,
+     * texts and so
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return The edited view for booksellersFragment
+     */
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -135,17 +146,27 @@ public class BooksellersFragment extends Fragment {
         String btntxt = chSeq.toString();
         if(btntxt.equals("Prenumerera")){
             subscribeButton.setText("Avprenumerera");
+
+
         }else{
             subscribeButton.setText("Prenumerera");
+
         }
     }
-
+/*
     public void onIABookSellerCL(View v, int position) {
 
 
     }
 
 
+
+ */
+
+    /**
+     * Android specific class
+     * @param savedInstanceState
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

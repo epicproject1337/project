@@ -9,6 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.boket.R;
 
+/**
+ * @author Tarik Porobic
+ *
+ * Class that represent a bookseller for a specific book
+ * @since 2020-10-01
+ */
 public class ABookSeller {
 
     private String state, price, city;
@@ -26,53 +32,36 @@ public class ABookSeller {
         this.cardView = v.findViewById(R.id.cardView);
     }
 
-
-    public CardView getCardView() {
-        return cardView;
-    }
-
-    public void setCardView(CardView cardView) {
-        this.cardView = cardView;
-    }
-
+    /*
     public ConstraintLayout getExpandableLayout() {
         return expandableLayout;
     }
 
-    public void setExpandableLayout(ConstraintLayout expandableLayout) {
-        this.expandableLayout = expandableLayout;
-    }
+     */
 
-    public ImageButton getContactSeller() {
-        return contactSeller;
-    }
-
-    public void setContactSeller(ImageButton contactSeller) {
-        this.contactSeller = contactSeller;
-    }
-
+    /**
+     * Returns the value so that the holder can present this information
+     * @return state of the book
+     */
     public String getState() {
         return state;
     }
 
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
+    /**
+     * Returns the value so that the holder can present this information
+     * @return price of the book
+     */
     public String getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
+    /**
+     * Returns the value so that the holder can present this information
+     * @return the city where the book is sold at
+     */
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+
 }

@@ -16,16 +16,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.boket.R;
 
+/**
+ * @author Tarik Porobic
+ *
+ * A holder for AbookSeller class so that it can be used in adapter for the recyclerview in BooksellersFragement
+ * @since 2020-10-01
+ */
 public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView state, price, city;
-    ImageButton contactSeller;
-    ConstraintLayout expandableLayout;
-    CardView cardView;
+    private TextView state, price, city;
+    private ImageButton contactSeller;
+    private ConstraintLayout expandableLayout;
+    private CardView cardView;
 
-    IABookSellerCL iaBookSellerCL;
+    private IABookSellerCL iaBookSellerCL;
 
-
+    /**
+     * It is package private since it is only needed for the BookAdapter
+     * @param v view that the holder is being bond to
+     */
     ABookSellerHolder(@NonNull View v) {
         super(v);
 
@@ -36,13 +45,17 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
         this.expandableLayout=v.findViewById(R.id.expandableView);
         this.cardView=v.findViewById(R.id.cardView);
 
-
-
+        contactSeller.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Stay tuned
+            }
+        });
         v.setOnClickListener(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void changeVisibility(){
+    private void changeVisibility(){
         if(expandableLayout.getVisibility()==View.GONE){
             TransitionManager.beginDelayedTransition(cardView,new AutoTransition());
             expandableLayout.setVisibility(View.VISIBLE);
@@ -52,6 +65,10 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
         }
     }
 
+    /**
+     * Expands the expandable view if it is not expanded and vice versa if the AbookSellerHolder is clicked
+     * @param view of fragment_abookseller with the expanded/contracted "expandableLayout"
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
@@ -60,7 +77,43 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
 
     }
 
-    public void setIaBookSellerCL(IABookSellerCL AbCL){
-        this.iaBookSellerCL=AbCL;
+    /**
+     * Setter for iaBookSellerCL
+     * @param IaBCL
+     */
+    public void setIaBookSellerCL(IABookSellerCL IaBCL){
+        this.iaBookSellerCL=IaBCL;
     }
+
+    /**
+     *
+     * @return state of the book
+     */
+    public TextView getState() {
+        return state;
+    }
+
+    /**
+     *
+     * @return price of the book
+     */
+    public TextView getPrice() {
+        return price;
+    }
+
+    /**
+     *
+     * @return the city where the book is being sold
+     */
+    public TextView getCity() {
+        return city;
+    }
+
+/*
+    public ConstraintLayout getExpandableLayout() {
+        return expandableLayout;
+    }
+
+
+ */
 }
