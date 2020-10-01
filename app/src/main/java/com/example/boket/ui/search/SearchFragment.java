@@ -85,6 +85,16 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
             }
         });
 
+        //Bad solution TODO better solution
+        Activity activity = getActivity();
+        if (activity instanceof SearchAddAd) {
+            ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+            params.height = 1200;
+            recyclerView.setLayoutParams(params);
+        }
+
+
+
         return v;
     }
 
