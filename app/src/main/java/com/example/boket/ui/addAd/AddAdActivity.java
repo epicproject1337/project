@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.boket.MainActivity;
 import com.example.boket.R;
@@ -69,15 +70,21 @@ public class AddAdActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Publish an ad and saves it to the database.
+     * @param v the associated view
+     */
     public void publishAd(View v){
-        final EditText conditionEditText = findViewById(R.id.conditionInput);
-        final EditText priceEditText = findViewById(R.id.priceInput);
+        String condition = ((EditText) findViewById(R.id.conditionInput)).getText().toString();
+        double price = Integer.parseInt(((EditText) findViewById(R.id.priceInput)).getText().toString());
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        Ad ad = new Ad(1, mAuth.getUid(), isbn, Integer.parseInt(priceEditText.toString()), conditionEditText.toString(), false);
+        Ad ad = new Ad(1, mAuth.getUid(), isbn, price, condition, false);
         ad.save();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
+        //TODO: Have to check so ad actually uploaded before giving success message.
+        Toast.makeText(this, "Ad Succesfully uploaded!", Toast.LENGTH_LONG).show();
     }
 
 }
