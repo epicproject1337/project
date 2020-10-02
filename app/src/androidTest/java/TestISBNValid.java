@@ -46,20 +46,6 @@ public class TestISBNValid {
     @Test
     public void testISBNValid() {
         FirebaseApp.initializeApp(context);
-        /*
-        try {
-            BarcodeScannerActivity barcodeScannerActivity = new BarcodeScannerActivity();
-            Class c = barcodeScannerActivity.getClass();
-            Method reflectedMethod;
-            reflectedMethod = c.getDeclaredMethod("isValidISBN13", String.class);
-            Boolean result = (Boolean) reflectedMethod.invoke(null, isbn);
-            assertEquals(result, isValid);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-         */
-
 
         assertEquals(isValid, BarcodeScanner.isValidISBN13(isbn));
     }
