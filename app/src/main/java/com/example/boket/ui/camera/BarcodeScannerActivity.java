@@ -1,7 +1,6 @@
 package com.example.boket.ui.camera;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,11 +9,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.boket.R;
@@ -27,7 +24,6 @@ import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
 import com.example.boket.cameraUtil.common.GraphicOverlay;
 import com.example.boket.ui.addAd.AddAdActivity;
-import com.example.boket.ui.addAd.SearchBookseller;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -44,6 +40,14 @@ import butterknife.ButterKnife;
 import static com.example.boket.cameraUtil.common.BarcodeScanner.Constants.KEY_CAMERA_PERMISSION_GRANTED;
 import static com.example.boket.cameraUtil.common.BarcodeScanner.Constants.PERMISSION_REQUEST_CAMERA;
 
+/**
+ * @author Alexander Jyborn
+ *
+ * Class the represents the camera activity combining the camera with the overlay to get the GUI correct,
+ * aswell as using the camerautil library to determine if barcode is valid.
+ *
+ * @since 2020-09-10
+ */
 public class BarcodeScannerActivity extends AppCompatActivity {
 
     String TAG = "BarcodeScannerActivity";
@@ -135,6 +139,13 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Requests camera permission when starting the camera
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
@@ -201,6 +212,11 @@ public class BarcodeScannerActivity extends AppCompatActivity {
         mHandler.sendMessage(msg);
     };
 
+    /**
+     * Returns the BarcoderesultListener that determines if the image from the camera is a barcode or not
+     *
+     * @return resultlistener
+     */
     public BarcodeResultListener getBarcodeResultListener() {
 
         return new BarcodeResultListener() {

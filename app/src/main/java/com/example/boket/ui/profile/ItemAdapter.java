@@ -19,26 +19,56 @@ import com.example.boket.ui.search.BookItem;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Manages the RecyclerViews used for showing books on the profile page.
+ *
+ * @author Albin Landgren
+ * @since 2020-09-10
+ */
+
 public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private Context context;
     static RecyclerViewClickListener itemListener;
     private ArrayList<Book> bookItems;
 
+
+    /**
+     * @param context
+     * @param itemListener ClickListener to enable onclick events
+     * @param bookItems List of Book model instances
+     */
     public ItemAdapter(Context context, RecyclerViewClickListener itemListener, ArrayList<Book> bookItems) {
         this.context = context;
         this.bookItems = bookItems;
         this.itemListener = itemListener;
     }
 
+    /**
+     *
+     * @param position
+     * @return
+     */
     @Override
     public int getItemViewType(final int position) {
         return R.layout.horizontal_list_item;
     }
 
+    /**
+     * Retrieve instance of Book at given position
+     *
+     * @param position the instance's position in the collection
+     * @return
+     */
     public Book getItem(int position){
         return bookItems.get(position);
     }
 
+    /**
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -46,15 +76,20 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         return new RecyclerViewHolder(view);
     }
 
-
-
+    /**
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
         Glide.with(context).load(bookItems.get(position).getImage()).into(holder.getView());
-        //Drawable d = ResourcesCompat.getDrawable(context.getResources(), R.drawable.diskmatte, null);
-        //holder.getView().setImageDrawable(d);
     }
 
+    /**
+     *
+     * @return the amount of RecyclerView items
+     */
     @Override
     public int getItemCount() {
         return bookItems.size();

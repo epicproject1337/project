@@ -3,6 +3,7 @@ package com.example.boket.model;
 import com.example.boket.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
+//TODO: move all user "logic" and firebase auth calls to a User Model.
 public class User {
 
     private int uid;

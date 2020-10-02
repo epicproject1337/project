@@ -1,8 +1,5 @@
 package com.example.boket.ui.search;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.Activity;
@@ -15,31 +12,30 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.boket.R;
-import com.example.boket.cameraUtil.common.BarcodeScanner;
 import com.example.boket.model.Book;
-import com.example.boket.model.ISearch;
-import com.example.boket.model.Search;
+import com.example.boket.controller.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.example.boket.ui.addAd.AddAdActivity;
-import com.example.boket.ui.addAd.SearchBookseller;
+import com.example.boket.ui.addAd.SearchAddAd;
 import com.example.boket.ui.camera.BarcodeScannerActivity;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.List;
+
+/**
+ * @author Oscar Bennet
+ *
+ * Fragment for the search page where the user searches for books
+ *
+ * @since 2020-09-10
+ */
 
 public class SearchFragment extends Fragment implements RecyclerViewClickListener, SearchView.OnQueryTextListener {
 
@@ -53,7 +49,16 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     private RecyclerView recyclerView;
     private BookItemAdapter bookItemAdapter;
     private ImageButton cameraButton;
+    private TextView noBookTextView;
 
+    /**
+     * Creates the view of the search page
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view of search fragment
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -66,6 +71,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        noBookTextView = v.findViewById(R.id.noBookTextView);
 
         cameraButton = v.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +88,16 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 searchView.setIconified(false);
             }
         });
+
+        //Bad solution TODO better solution
+        Activity activity = getActivity();
+        if (activity instanceof SearchAddAd) {
+            ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+            params.height = 1200;
+            recyclerView.setLayoutParams(params);
+        }
+
+
 
         return v;
     }
@@ -105,7 +122,10 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         return bookItems;
     }
 
-
+    /**
+     * Get the view model
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -119,14 +139,30 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
             @Override
             public void onSearchBooks(ArrayList<Book> bookList) {
+                //noBookTextView.setVisibility(View.INVISIBLE);
                 searchViewModel.setBooks(bookList);
-                bookItemAdapter = new BookItemAdapter(getContext(), i, getBookItems());
-                recyclerView.setAdapter(bookItemAdapter);
+                ArrayList<Book> books = searchViewModel.getBooks();
+                if(books.size() > 0) {
+
+                    bookItemAdapter = new BookItemAdapter(getContext(), i, getBookItems());
+                    recyclerView.setAdapter(bookItemAdapter);
+                }
+                else{
+                    noBookTextView.setVisibility(View.VISIBLE);
+                    System.out.println("NO BOOK");
+                }
             }
+
         });
 
     }
 
+    /**
+     * Handle clicked book item
+     *
+     * @param v
+     * @param position the position of the item
+     */
     @Override
     public void recyclerViewListClicked(View v, int position) {
         BookItem book = bookItemAdapter.getItem(position);
@@ -137,12 +173,17 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     }
 
+
+    /**
+     * Navigates and send the ISBN to either BookSeller or AddAd
+     * @param book
+     */
     public void sendISBN(BookItem book) {
         Bundle bundle = new Bundle();
         bundle.putString("BookNumber", book.getIsbn());
 
         Activity activity = getActivity();
-        if (activity instanceof SearchBookseller) {
+        if (activity instanceof SearchAddAd) {
             Intent intent = new Intent(activity, AddAdActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -158,7 +199,11 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         }
     }
 
-
+    /**
+     * Handles submitted text from the search bar
+     * @param s Input text from the user
+     * @return
+     */
     @Override
     public boolean onQueryTextSubmit(String s) {
         System.out.println(searchView.getQuery());
@@ -166,6 +211,12 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         return false;
     }
 
+    /**
+     * Listener if query text is changed
+     *
+     * @param s Input text from the user
+     * @return
+     */
     @Override
     public boolean onQueryTextChange(String s) {
         return false;

@@ -27,6 +27,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+/**
+ *
+ *
+ * @author Albin Landgren
+ * @since 2020-09-08
+ */
 public class ProfileFragment extends Fragment implements RecyclerViewClickListener {
 
     private RecyclerView buyAds;
@@ -35,20 +41,28 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
     private RecyclerView.LayoutManager layoutManager;
     private ItemAdapter itemAdapter;
 
+    /**
+     * Required empty constructor
+     */
     public ProfileFragment() {
-        // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
-    }
-
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
+    /**
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,6 +92,9 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         });
 
         /*
+        currently not working
+
+
         sellAds = view.findViewById(R.id.sellAds);
         sellAds.setHasFixedSize(true);
         LinearLayoutManager layoutManager2
@@ -102,7 +119,12 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         return view;
     }
 
-
+    /**
+     * Handle click on RecyclerView item
+     *
+     * @param v
+     * @param position the position of the clicked item
+     */
     @Override
     public void recyclerViewListClicked(View v, int position) {
         Book book = itemAdapter.getItem(position);

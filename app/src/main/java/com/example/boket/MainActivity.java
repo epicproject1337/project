@@ -5,25 +5,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.boket.cameraUtil.common.BarcodeScanner;
-import com.example.boket.ui.addAd.AddAdActivity;
-import com.example.boket.ui.addAd.SearchBookseller;
-import com.example.boket.ui.camera.BarcodeScannerActivity;
+import com.example.boket.ui.addAd.SearchAddAd;
 import com.example.boket.ui.login.LoginActivity;
 
-import com.example.boket.ui.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
+/**
+ * @author Pajam Khoshnam, Albin Landgren, Oscar Bennet
+ *
+ * The MainActivity when the app starts
+ *
+ * @since 2020-09-07
+ */
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -56,8 +56,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    /**
+     * Start the SearchAddAd activity when add Ad button is pressed
+     * @param view the associated view.
+     */
     public void startAddAdActivity(View view) {
-        Intent intent = new Intent(this, SearchBookseller.class);
+        Intent intent = new Intent(this, SearchAddAd.class);
         startActivity(intent);
     }
 
@@ -65,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method to signout a user.
+     */
+    //TODO: Move logic to user model.
     public void signOut() {
         mAuth.signOut();
         if(mAuth.getCurrentUser() == null){

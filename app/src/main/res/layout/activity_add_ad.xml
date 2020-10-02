@@ -15,7 +15,7 @@
         android:text="Pris"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/priceInput"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
         android:id="@+id/publishButton"
@@ -27,6 +27,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="48dp"
         android:text="Lägg ut annons"
+        android:onClick="publishAd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

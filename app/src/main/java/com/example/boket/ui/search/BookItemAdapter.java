@@ -17,6 +17,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * @author Oscar Bennet
+ *
+ * Adapter for book item so it can be used in recycler view
+ *
+ * @since 2020-09-21
+ */
+
 public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookItemHolder>{
 
     private Context c;
@@ -34,6 +42,12 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
     }
 
 
+    /**
+     * Binds xml file to BookItemHolder
+     * @param parent
+     * @param viewType
+     * @return holder for the book item
+     */
     @NonNull
     @Override
     public BookItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,6 +55,11 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
         return new BookItemHolder(v);
     }
 
+    /**
+     * Set text in holder
+     * @param holder The holder for the book items
+     * @param i Index of the book item in the recycler view
+     */
     @Override
     public void onBindViewHolder(@NonNull BookItemHolder holder, int i) {
         holder.bookTitle.setText(bookItems.get(i).getBookTitle());
@@ -49,11 +68,22 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
         Glide.with(c).load(bookItems.get(i).getImage()).into(holder.imageView);
     }
 
+    /**
+     * Get amount of book items in list
+     * @return amount of book items in list
+     */
     @Override
     public int getItemCount() {
         return bookItems.size();
     }
 
+    /**
+     * @author Oscar Bennet
+     *
+     * Holder for book item so it can be used in adapter which is being used in recycler view
+     *
+     * @since 2020-09-21
+     */
     public static class BookItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView bookTitle;
         TextView author;
@@ -73,7 +103,10 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
         }
 
 
-
+        /**
+         * Handle clicks on book item
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             itemListener.recyclerViewListClicked(v, this.getLayoutPosition());

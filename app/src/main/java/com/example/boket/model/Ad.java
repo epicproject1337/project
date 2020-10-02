@@ -20,7 +20,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-
+/**
+ * @author Pajam Khoshnam, Albin Landgren
+ *
+ * An object representing an Ad.
+ * Handles all the database adds/updates/gets for Ads.
+ *
+ * @since 2020-09-10
+ */
 public class Ad{
     private int id;
     private String userId;
@@ -36,9 +43,23 @@ public class Ad{
     private static final String collection = "ads";
     private static final String TAG = Ad.class.getName();
 
+
+    /**
+     * Create an "empty" Ad object with all the instance variables set to null.
+     */
     public Ad() {
     }
 
+    /**
+     * Create an Ad object with all the necessary fields.
+     * @param id random id of the ad //TODO make this generated in the model
+     * @param userId the user ID of the ad creator
+     * @param isbn ISBN-number of the book which the ad is for.
+     * @param price Price for the book
+     * @param condition Condition of the book
+     * @param archived If the ad should be marked as archived/sold. //TODO should always be false
+     *                 on creating?
+     */
     public Ad(int id, String userId, String isbn, double price, String condition, boolean archived) {
         this.id = id;
         this.userId = userId;
@@ -48,10 +69,12 @@ public class Ad{
         this.archived = archived;
     }
 
-    public Ad(int id) {
-        this.id = id;
-    }
-
+    /**
+     * Get all ads created by a specific user
+     * @param userId the user id of the creator
+     * @param callback callback method which will receive an ArrayList of Ad with all the ads
+     *                 belonging to the specific user.
+     */
     public static void getAdsByUser(String userId, GetAdsCallback callback) {
         final ArrayList<Ad> adList = new ArrayList<Ad>();
 
@@ -72,6 +95,12 @@ public class Ad{
         });
     }
 
+    /**
+     * Get all ads belonging to a specific book.
+     * @param isbn ISBN number of the book
+     * @param callback method which will receive an ArrayList of Ad with all the ads
+     *      *                 belonging to the specific book.
+     */
     public static void getAdsByISBN(String isbn, GetAdsCallback callback) {
 
         final ArrayList<Ad> adList = new ArrayList<Ad>();
@@ -93,39 +122,68 @@ public class Ad{
         });
     }
 
+    /**
+     * @return the ad ID
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @return the user id of the ad creator
+     */
     public String getUserId() {
         return userId;
     }
 
+    /**
+     * @return isbn number of the book that the ad is for.
+     */
     public String getIsbn() {
         return isbn;
     }
 
+    /**
+     * @return price for the book
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * @return condition of the book
+     */
     public String getCondition() {
         return condition;
     }
 
+    /**
+     * @return if the book is archived/sold or not
+     */
     public boolean isArchived() {
         return archived;
     }
 
+    /**
+     * Saves the current Ad object to the database.
+     */
     public void save() {
         //TODO : Add validation to make sure 1. all fields are set and valid
         db.collection(collection).add(this);
     }
 
+    /**
+     * @return timestamp of when the ad was updated last.
+     */
     public Timestamp getTimeUpdated() {
         return timeUpdated;
     }
 
+    /**
+     * Check if two ad objects represents the same ad
+     * @param o Another ad object
+     * @return true if two book objects represent the same book.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,6 +197,9 @@ public class Ad{
                 condition.equals(ad.condition);
     }
 
+    /**
+     * @return a haschode for the object
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public int hashCode() {

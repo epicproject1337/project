@@ -1,16 +1,18 @@
 package com.example.boket.cameraUtil.common;
 
 /**
- * Created by Jaison.
+ * @author Alexander Jyborn
+ *
+ * Class that contains constants and helper functions for the camera
+ * @since 2020-10-01
  */
 public class BarcodeScanner
 {
-    /*
-    s = 9×1 + 7×3 + 8×1 + 0×3 + 3×1 + 0×3 + 6×1 + 4×3 + 0×1 + 6×3 + 1×1 + 5×3
-                =   9 +  21 +   8 +   0 +   3 +   0 +   6 +  12 +   0 +  18 +   1 +  15
-                = 93
-        93 / 10 = 9 remainder 3
-        10 –  3 = 7
+    /**
+     * Checks if code is valid ISBN
+     *
+     * @param input
+     * @return boolean if input is a vaild ISBN13 code
      */
     public static boolean isValidISBN13(String input) {
         if (input.length() != 13 || !input.matches("[0-9]+")) {
