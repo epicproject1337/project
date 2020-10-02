@@ -20,7 +20,14 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
-
+/**
+ * @author Pajam Khoshnam, Albin Landgren
+ *
+ * An object representing an Ad.
+ * Handles all the database adds/updates/gets for Ads.
+ *
+ * @since 2020-09-29
+ */
 public class Subscription {
 
     private String userId;
@@ -31,6 +38,9 @@ public class Subscription {
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String collection = "subscriptions";
 
+    /**
+     * Create an "empty" subscription object with all the instance variables set to null.
+     */
     public Subscription() {
     }
 
@@ -39,17 +49,35 @@ public class Subscription {
         this.userId = userId;
     }
 
+    /**
+     * Subscribe a user to a book
+     * @param isbn isbn to subscribe to
+     * @param userId User ID of the user.
+     */
     public static void subscribeUser(String isbn, String userId) {
+        //TODO: validate the parameters
         Subscription s = new Subscription(isbn, userId);
         String docId = userId + isbn;
         db.collection(collection).document(docId).set(s);
     }
 
+    /**
+     * Unsubscribe a user for a book.
+     * @param isbn the isbn number of the book
+     * @param userId the user id of the user
+     */
     public static void unsubscribeUser(String isbn, String userId) {
         String docId = userId + isbn;
         db.collection(collection).document(docId).delete();
     }
 
+
+    /**
+     * Check if a user is subscribed to a book
+     * @param isbn isbn number of the book
+     * @param userId the user id of the
+     * @param callback callback method that will receive the boolean return value.
+     */
     public static void isSubscribed(String isbn, String userId, OnLoadCallback callback) {
         String docId = userId + isbn;
         DocumentReference docRef = db.collection(collection).document(docId);
@@ -67,6 +95,12 @@ public class Subscription {
         });
     }
 
+    /**
+     * get all books that a user is subscribed to.
+     * @param userId the user ID
+     * @param callback callback method that will receive an ArrayList of Books that the user
+     *                 is subscribed to.
+     */
     public static void getSubscribedBooks(String userId, OnLoadSubscribedBooksCallback callback) {
         final ArrayList<Book> bookList = new ArrayList<Book>();
         Query docRef = db.collection(collection).whereEqualTo("userId", userId);
@@ -98,14 +132,23 @@ public class Subscription {
         });
     }
 
+    /**
+     * @return the user id of the subscription.
+     */
     public String getUserId() {
         return userId;
     }
 
+    /**
+     * @return the isbn of the subscription
+     */
     public String getIsbn() {
         return isbn;
     }
 
+    /**
+     * @return the time the subscription was created.
+     */
     public Timestamp getTimeCreated() {
         return timeCreated;
     }

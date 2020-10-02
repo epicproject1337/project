@@ -5,7 +5,7 @@ import com.algolia.search.saas.Client;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Index;
 import com.algolia.search.saas.Query;
-import com.example.boket.model.ISearch;
+import com.example.boket.controller.ISearch;
 
 import org.json.JSONObject;
 

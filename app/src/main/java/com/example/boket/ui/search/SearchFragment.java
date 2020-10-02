@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.example.boket.R;
 import com.example.boket.model.Book;
-import com.example.boket.model.Search;
+import com.example.boket.controller.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.example.boket.ui.addAd.AddAdActivity;
 import com.example.boket.ui.addAd.SearchAddAd;
