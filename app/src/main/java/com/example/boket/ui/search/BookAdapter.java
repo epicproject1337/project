@@ -110,7 +110,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Jag skulle vilja köpa din bok, "+b.getBookSold());
                 intent.putExtra(Intent.EXTRA_TEXT, "Hej!\n\n" + "Jag såg din bokannons på den underbara appen " +
                         "Booket och skulle vilja köpa, "+b.getBookSold() +"\n\nMed vänlig hälsning\n/"+"Booket men ska vara ett namn här");
-
+                intent.setPackage("com.google.android.gm");
                 c.startActivity(intent);
 
             }
