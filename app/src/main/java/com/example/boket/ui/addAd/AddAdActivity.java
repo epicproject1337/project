@@ -2,6 +2,7 @@ package com.example.boket.ui.addAd;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -73,15 +74,15 @@ public class AddAdActivity extends AppCompatActivity {
                 if (!checkInputs(priceEditText, conditionEditText)) return;
 
                 double price = Double.parseDouble(String.valueOf(priceEditText.getText()));
-                String isbn = String.valueOf(isbnTextView.getText());
                 String condition = String.valueOf(conditionEditText.getText());
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                int adID = 0; //TODO hur får man fram id?
-                Ad ad = new Ad(adID, userID, isbn, price, condition, false);
-                //ad.save();
+                Ad ad = new Ad(userID, isbn, price, condition, false);
+                ad.save();
 
                 Intent backToSearch = new Intent(AddAdActivity.this, MainActivity.class);
                 startActivity(backToSearch);
+                finish();
+                Toast.makeText(getApplicationContext(), "Ad Succesfully uploaded!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -100,23 +101,6 @@ public class AddAdActivity extends AppCompatActivity {
         }
 
         return inputCorrect;
-    }
-
-    /**
-     * Publish an ad and saves it to the database.
-     * @param v the associated view
-     */
-    public void publishAd(View v){
-        String condition = ((EditText) findViewById(R.id.conditionInput)).getText().toString();
-        double price = Integer.parseInt(((EditText) findViewById(R.id.priceInput)).getText().toString());
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        Ad ad = new Ad(1, mAuth.getUid(), isbn, price, condition, false);
-        ad.save();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-        //TODO: Have to check so ad actually uploaded before giving success message.
-        Toast.makeText(this, "Ad Succesfully uploaded!", Toast.LENGTH_LONG).show();
     }
 
 }

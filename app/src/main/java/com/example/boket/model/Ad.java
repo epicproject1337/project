@@ -29,7 +29,7 @@ import java.util.Objects;
  * @since 2020-09-10
  */
 public class Ad{
-    private int id;
+    private int id; //TODO: Should we remove it?
     private String userId;
     private String isbn;
     private double price;
@@ -52,7 +52,6 @@ public class Ad{
 
     /**
      * Create an Ad object with all the necessary fields.
-     * @param id random id of the ad //TODO make this generated in the model
      * @param userId the user ID of the ad creator
      * @param isbn ISBN-number of the book which the ad is for.
      * @param price Price for the book
@@ -60,8 +59,7 @@ public class Ad{
      * @param archived If the ad should be marked as archived/sold. //TODO should always be false
      *                 on creating?
      */
-    public Ad(int id, String userId, String isbn, double price, String condition, boolean archived) {
-        this.id = id;
+    public Ad(String userId, String isbn, double price, String condition, boolean archived) {
         this.userId = userId;
         this.isbn = isbn;
         this.price = price;
