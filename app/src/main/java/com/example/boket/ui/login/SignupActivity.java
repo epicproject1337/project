@@ -24,7 +24,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import org.w3c.dom.Text;
-
+/**
+ * @author Pajam Khoshnam
+ *
+ * The Activity for signing up a user
+ *
+ * @since 2020-09-07
+ */
 public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

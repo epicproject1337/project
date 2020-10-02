@@ -18,6 +18,14 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+/**
+ * @author Pajam Khoshnam
+ *
+ * An object representing a book.
+ * Handles all the database adds/updates/gets for books.
+ *
+ * @since 2020-09-10
+ */
 public class Book {
 
     private String isbn;
@@ -37,6 +45,11 @@ public class Book {
     public Book() {
     }
 
+    /**
+     * Load a book object from database with the ISBN-number
+     * @param isbn book ISBN number
+     * @param onLoadCallback callback method that will handle the book object when it is loaded.
+     */
     public Book(String isbn, OnLoadCallback onLoadCallback) {
         DocumentReference docRef = db.collection(collection).document(isbn);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -50,6 +63,15 @@ public class Book {
 
     }
 
+    /**
+     * Create a book object with all the necessary fields.
+     * @param isbn book ISBN
+     * @param name Name of the book
+     * @param author Author/s of the book
+     * @param edition Edition of the book
+     * @param releaseYear The year which the book was released
+     * @param image URL link to an image of the book.
+     */
     public Book(String isbn, String name, String author, String edition, String releaseYear, String image) {
         this.isbn = isbn;
         this.name = name;
@@ -59,30 +81,53 @@ public class Book {
         this.image = image;
     }
 
+    /**
+     * @return book isbn number
+     */
     public String getIsbn() {
         return isbn;
     }
 
+    /**
+     * @return book name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return book author
+     */
     public String getAuthor() {
         return author;
     }
 
+    /**
+     * @return book edition
+     */
     public String getEdition() {
         return edition;
     }
 
+    /**
+     * @return book release year
+     */
     public String getReleaseYear() {
         return releaseYear;
     }
 
+    /**
+     * @return url link to an image of the book
+     */
     public String getImage() {
         return image;
     }
 
+    /**
+     * Saves the current book object to the database. If there is already a book with the same isbn
+     * in the database it will update that book.
+     * it will also add the book (or update) to the Algolia search engine.
+     */
     public void save() {
         //TODO : Add validation to make sure 1. all fields are set and valid, 2. There is no excisting book with same ISBN
         db.collection(collection).document(isbn).set(this).addOnSuccessListener(
@@ -114,6 +159,11 @@ public class Book {
 
     }
 
+    /**
+     * Check if two book objects represents the same book
+     * @param o Another book object
+     * @return true if two book objects represent the same book.
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean equals(Object o) {
@@ -129,12 +179,18 @@ public class Book {
                 Objects.equals(collection, book.collection);
     }
 
+    /**
+     * @return a haschode for the object
+     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public int hashCode() {
         return Objects.hash(isbn, name, author, edition, releaseYear, image, collection);
     }
 
+    /**
+     * @return string representation of the object
+     */
     @Override
     public String toString() {
         return "Book{" +

@@ -6,8 +6,7 @@ import android.util.Log;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.example.boket.model.Book;
-import com.example.boket.model.ISearch;
-import com.example.boket.model.Search;
+import com.example.boket.controller.Search;
 import com.google.firebase.FirebaseApp;
 
 import org.junit.Before;
