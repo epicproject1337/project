@@ -1,5 +1,6 @@
 package com.example.boket.ui.search;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,6 +123,7 @@ public class BooksellersFragment extends Fragment {
 
     private void setBookSellersList(View v){
         ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
+        Context c = getContext();
 
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
@@ -130,24 +132,28 @@ public class BooksellersFragment extends Fragment {
                    Ad ad = adList.get(i);
                    String state = ad.getCondition();
                    Double price = ad.getPrice();
+                   //TODO lägg in säljarens email när det är fixat med User
+                   String sellerEmail="pajamkh@gmail.com";
+                   //TODO lägg till booknamnet när det är fixat så man kan hämta booknamnet
+                   String bookSold = "Diskret matematik ";
+
                    //TODO fixa city i ad
                    //String city =
-                   ABookSeller aBookSeller = new ABookSeller(state,price.toString(),"Göteborg",v);
+                   ABookSeller aBookSeller = new ABookSeller(bookSold,sellerEmail ,state,price.toString(),"Göteborg",v);
                    bookSellersList.add(aBookSeller);
                }
                if (adList.size()==0){
                    sorryText.setVisibility(View.VISIBLE);
                    pressSubText.setVisibility(View.VISIBLE);
                }
-                bookAdapter = new BookAdapter(getContext(), bookSellersList);
+                bookAdapter = new BookAdapter(c, bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter);
+                bookAdapter.setrV(adListRecyclerView);
             }
         });
     }
 
     private void subscribeButtonClicked(){
-        CharSequence chSeq = subscribeButton.getText();
-        String btntxt = chSeq.toString();
         if (isSubscribedToBook) {
             Subscription.unsubscribeUser(ISBN_number, mAuth.getUid());
             subscribeButton.setText("Prenumerera");
@@ -168,6 +174,9 @@ public class BooksellersFragment extends Fragment {
      */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+    public RecyclerView getRecyclerView(){
+        return adListRecyclerView;
     }
 
 }
