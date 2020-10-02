@@ -2,12 +2,14 @@ package com.example.boket.ui.addAd;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
@@ -49,6 +51,8 @@ public class AddAdActivity extends AppCompatActivity {
             isbn = bundle.getString("BookNumber");
 
             Book book = new Book(isbn, new Book.OnLoadCallback() {
+
+
                 @Override
                 public void onLoadComplete(Book book) {
                     bookTitleTextView.setText(book.getName());
@@ -63,6 +67,17 @@ public class AddAdActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void publishAd(View v){
+        final EditText conditionEditText = findViewById(R.id.conditionInput);
+        final EditText priceEditText = findViewById(R.id.priceInput);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        Ad ad = new Ad(1, mAuth.getUid(), isbn, Integer.parseInt(priceEditText.toString()), conditionEditText.toString(), false);
+        ad.save();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
