@@ -15,6 +15,8 @@ import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.example.boket.cameraUtil.common.BarcodeScanner.isValidISBN13;
+
 /**
  * @author Alexander Jyborn, Oscar Bennet
  *
@@ -64,6 +66,9 @@ public class AddAdActivity extends AppCompatActivity {
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!checkInputs(priceEditText, conditionEditText)) return;
+
                 double price = Double.parseDouble(String.valueOf(priceEditText.getText()));
                 String isbn = String.valueOf(isbnTextView.getText());
                 String condition = String.valueOf(conditionEditText.getText());
@@ -77,6 +82,21 @@ public class AddAdActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private boolean checkInputs(EditText priceEditText, EditText conditionEditText) {
+        //TODO fixa styling till validering samt bättre validering
+        boolean inputCorrect = true;
+        if (priceEditText.getText().length() <= 0) {
+            priceEditText.setHint("Skriv pris");
+            inputCorrect = false;
+        }
+        if (conditionEditText.getText().length() <= 0){
+            conditionEditText.setHint("Skriv beskrivning av skicket");
+            inputCorrect = false;
+        }
+
+        return inputCorrect;
     }
 
 }
