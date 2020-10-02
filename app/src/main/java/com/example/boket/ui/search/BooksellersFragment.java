@@ -27,7 +27,7 @@ import java.util.ArrayList;
  *
  *Class that is connected to fragment_booksellers
  *
- * @since 2020-10-1
+ * @since 2020-09-10
  */
 public class BooksellersFragment extends Fragment {
 
@@ -42,7 +42,6 @@ public class BooksellersFragment extends Fragment {
     private TextView isbnTextView;
     private Button subscribeButton;
     private BookAdapter bookAdapter;
-    private ArrayList<String> items;
     private RecyclerView adListRecyclerView;
     private boolean isSubscribedToBook;
     private TextView sorryText;
@@ -51,9 +50,9 @@ public class BooksellersFragment extends Fragment {
     /**
      * Gets the ISBN number of the book from the previous screen (search) and initiate all buttons,
      * texts and so
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * @param inflater android parameter
+     * @param container android parameter
+     * @param savedInstanceState android parameter
      * @return The edited view for booksellersFragment
      */
     @Override
@@ -104,7 +103,6 @@ public class BooksellersFragment extends Fragment {
                 releaseYearTextView.setText(book.getReleaseYear());
                 editionTextView.setText("Upplaga: " + book.getEdition());
                 isbnTextView.setText("ISBN: " +book.getIsbn());
-                //Picasso.get().load(book.getImage()).into(bookImageView);
                 Glide.with(v).load(book.getImage()).into(bookImageView);
                 Subscription.isSubscribed(book.getIsbn(), mAuth.getUid(), new Subscription.OnLoadCallback() {
                     @Override
@@ -145,15 +143,6 @@ public class BooksellersFragment extends Fragment {
                 adListRecyclerView.setAdapter(bookAdapter);
             }
         });
-/*
-        //String state, String price, String city, View
-        ABookSeller aBookSeller2 = new ABookSeller("orginal","kompispres","skövde",v);
-        bookSellersList.add(aBookSeller2);
-        bookSellersList.add(aBookSeller2);
-        bookSellersList.add(aBookSeller2);
-        bookSellersList.add(aBookSeller2);
-
- */
     }
 
     private void subscribeButtonClicked(){
@@ -173,7 +162,10 @@ public class BooksellersFragment extends Fragment {
 
     }
 
-
+    /**
+     * Android method
+     * @param savedInstanceState android parameter
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

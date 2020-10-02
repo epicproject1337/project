@@ -19,8 +19,9 @@ import com.example.boket.R;
 /**
  * @author Tarik Porobic
  *
- * A holder for AbookSeller class so that it can be used in adapter for the recyclerview in BooksellersFragement
- * @since 2020-10-01
+ * A holder for AbookSeller class so that it can be used in adapter for the recyclerview in
+ * BooksellersFragement
+ * @since 2020-09-24
  */
 public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -109,11 +110,4 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
         return city;
     }
 
-/*
-    public ConstraintLayout getExpandableLayout() {
-        return expandableLayout;
-    }
-
-
- */
 }

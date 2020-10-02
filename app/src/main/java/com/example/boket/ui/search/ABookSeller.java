@@ -13,7 +13,7 @@ import com.example.boket.R;
  * @author Tarik Porobic
  *
  * Class that represent a bookseller for a specific book
- * @since 2020-10-01
+ * @since 2020-09-17
  */
 public class ABookSeller {
 
@@ -31,13 +31,6 @@ public class ABookSeller {
         this.expandableLayout = v.findViewById(R.id.expandableView);
         this.cardView = v.findViewById(R.id.cardView);
     }
-
-    /*
-    public ConstraintLayout getExpandableLayout() {
-        return expandableLayout;
-    }
-
-     */
 
     /**
      * Returns the value so that the holder can present this information

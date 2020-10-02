@@ -23,7 +23,7 @@ import io.grpc.internal.JsonUtil;
  * @author Tarik Porobic
  * Adapter for bookSeller so that it can be presented in the recyclerview in BooksellersFragment
  *
- * @since 2020-01-01
+ * @since 2020-09-24
  */
 public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
 
@@ -66,6 +66,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onIABookSellerCL(View v, int i) {
+
                 /*
                 ABookSeller bS = bookSellers.get(i);
                 System.out.println("börjar");
