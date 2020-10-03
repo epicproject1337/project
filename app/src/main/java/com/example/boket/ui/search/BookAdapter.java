@@ -99,7 +99,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
 
 
  */
-                String[] recipients= new String[1];
+                String[] recipients = new String[1];
                 ABookSeller b = bookSellers.get(i);
                 recipients[0] = b.getSellerEmail();
 
@@ -107,9 +107,9 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_EMAIL, recipients);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Jag skulle vilja köpa din bok, "+b.getBookSold());
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Jag skulle vilja köpa din bok, " + b.getBookSold());
                 intent.putExtra(Intent.EXTRA_TEXT, "Hej!\n\n" + "Jag såg din bokannons på den underbara appen " +
-                        "Booket och skulle vilja köpa, "+b.getBookSold() +"\n\nMed vänlig hälsning\n/"+"Booket men ska vara ett namn här");
+                        "Booket och skulle vilja köpa, " + b.getBookSold() + "\n\nMed vänlig hälsning\n/" + "Booket men ska vara ett namn här");
                 intent.setPackage("com.google.android.gm");
                 c.startActivity(intent);
 
@@ -123,15 +123,12 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     }
 
     private void closeTheOther(int i) {
-        for (int pos = 0; i < bookSellers.size(); i++) {
-            if (pos == i) {
-                pos++;
-                if (pos == bookSellers.size()) {
-                    break;
-                }
+        for (int pos = 0; pos < bookSellers.size(); pos++) {
+            if (pos != i) {
+                ABookSellerHolder vh = (ABookSellerHolder) rV.findViewHolderForAdapterPosition(pos);
+                assert vh != null;
+                vh.getExpandableLayout().setVisibility(View.GONE);
             }
-            ABookSellerHolder vh = (ABookSellerHolder) rV.findViewHolderForAdapterPosition(pos);
-            vh.getExpandableLayout().setVisibility(View.GONE);
         }
     }
 
