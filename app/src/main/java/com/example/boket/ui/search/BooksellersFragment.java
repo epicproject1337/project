@@ -25,9 +25,8 @@ import java.util.ArrayList;
 
 /**
  * @author Tarik Porobic
- *
- *Class that is connected to fragment_booksellers
- *
+ * <p>
+ * Class that is connected to fragment_booksellers
  * @since 2020-09-10
  */
 public class BooksellersFragment extends Fragment {
@@ -51,8 +50,9 @@ public class BooksellersFragment extends Fragment {
     /**
      * Gets the ISBN number of the book from the previous screen (search) and initiate all buttons,
      * texts and so
-     * @param inflater android parameter
-     * @param container android parameter
+     *
+     * @param inflater           android parameter
+     * @param container          android parameter
      * @param savedInstanceState android parameter
      * @return The edited view for booksellersFragment
      */
@@ -95,7 +95,7 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private void setBookInfo(View v){
+    private void setBookInfo(View v) {
         Book book = new Book(ISBN_number, new Book.OnLoadCallback() {
             @Override
             public void onLoadComplete(Book book) {
@@ -103,7 +103,7 @@ public class BooksellersFragment extends Fragment {
                 bookAuthorTextView.setText(book.getAuthor());
                 releaseYearTextView.setText(book.getReleaseYear());
                 editionTextView.setText("Upplaga: " + book.getEdition());
-                isbnTextView.setText("ISBN: " +book.getIsbn());
+                isbnTextView.setText("ISBN: " + book.getIsbn());
                 Glide.with(v).load(book.getImage()).into(bookImageView);
                 Subscription.isSubscribed(book.getIsbn(), mAuth.getUid(), new Subscription.OnLoadCallback() {
                     @Override
@@ -121,31 +121,32 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private void setBookSellersList(View v){
+    private void setBookSellersList(View v) {
         ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
         Context c = getContext();
 
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-               for (int i = 0 ; i<adList.size();i++){
-                   Ad ad = adList.get(i);
-                   String state = ad.getCondition();
-                   Double price = ad.getPrice();
-                   //TODO lägg in säljarens email när det är fixat med User
-                   String sellerEmail="pajamkh@gmail.com";
-                   //TODO lägg till booknamnet när det är fixat så man kan hämta booknamnet
-                   String bookSold = "Diskret matematik ";
+                for (int i = 0; i < adList.size(); i++) {
+                    Ad ad = adList.get(i);
+                    String state = ad.getCondition();
+                    Double price = ad.getPrice();
+                    //TODO lägg in säljarens email när det är fixat med User
+                    String sellerEmail = "pajamkh@gmail.com";
+                    //TODO lägg till booknamnet när det är fixat så man kan hämta booknamnet
+                    String bookSold = "Diskret matematik ";
 
-                   //TODO fixa city i ad
-                   //String city =
-                   ABookSeller aBookSeller = new ABookSeller(bookSold,sellerEmail ,state,price.toString(),"Göteborg",v);
-                   bookSellersList.add(aBookSeller);
-               }
-               if (adList.size()==0){
-                   sorryText.setVisibility(View.VISIBLE);
-                   pressSubText.setVisibility(View.VISIBLE);
-               }
+                    //TODO fixa city i ad
+                    //String city =
+                    ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price.toString(), "Göteborg", v);
+                    bookSellersList.add(aBookSeller);
+                }
+                if (adList.size() == 0) {
+                    sorryText.setVisibility(View.VISIBLE);
+                    pressSubText.setVisibility(View.VISIBLE);
+                }
+                sortCheapestFirst(bookSellersList);
                 bookAdapter = new BookAdapter(c, bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter);
                 bookAdapter.setrV(adListRecyclerView);
@@ -153,7 +154,21 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private void subscribeButtonClicked(){
+    private void sortCheapestFirst(ArrayList<ABookSeller> bookSellersList) {
+        for (int i = 0; i < bookSellersList.size() - 1; i++) {
+            for (int j = 0; j < bookSellersList.size() - 1 - i; j++) {
+                ABookSeller abs = bookSellersList.get(j);
+                ABookSeller abs2 = bookSellersList.get(j + 1);
+                if (Double.parseDouble(abs.getPrice()) > Double.parseDouble(abs2.getPrice())) {
+                    ABookSeller tmp = abs;
+                    bookSellersList.set(j, abs2);
+                    bookSellersList.set(j + 1, tmp);
+                }
+            }
+        }
+    }
+
+    private void subscribeButtonClicked() {
         if (isSubscribedToBook) {
             Subscription.unsubscribeUser(ISBN_number, mAuth.getUid());
             subscribeButton.setText("Prenumerera");
@@ -170,12 +185,14 @@ public class BooksellersFragment extends Fragment {
 
     /**
      * Android method
+     *
      * @param savedInstanceState android parameter
      */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-    public RecyclerView getRecyclerView(){
+
+    public RecyclerView getRecyclerView() {
         return adListRecyclerView;
     }
 
