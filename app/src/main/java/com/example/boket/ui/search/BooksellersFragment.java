@@ -168,6 +168,7 @@ public class BooksellersFragment extends Fragment {
         }
     }
 
+
     private void subscribeButtonClicked() {
         if (isSubscribedToBook) {
             Subscription.unsubscribeUser(ISBN_number, mAuth.getUid());
