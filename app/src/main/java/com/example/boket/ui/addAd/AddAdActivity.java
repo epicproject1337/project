@@ -2,12 +2,14 @@ package com.example.boket.ui.addAd;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.boket.MainActivity;
 import com.example.boket.R;
@@ -51,6 +53,8 @@ public class AddAdActivity extends AppCompatActivity {
             isbn = bundle.getString("BookNumber");
 
             Book book = new Book(isbn, new Book.OnLoadCallback() {
+
+
                 @Override
                 public void onLoadComplete(Book book) {
                     bookTitleTextView.setText(book.getName());
@@ -70,15 +74,15 @@ public class AddAdActivity extends AppCompatActivity {
                 if (!checkInputs(priceEditText, conditionEditText)) return;
 
                 double price = Double.parseDouble(String.valueOf(priceEditText.getText()));
-                String isbn = String.valueOf(isbnTextView.getText());
                 String condition = String.valueOf(conditionEditText.getText());
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                int adID = 0; //TODO hur får man fram id?
-                Ad ad = new Ad(adID, userID, isbn, price, condition, false);
-                //ad.save();
+                Ad ad = new Ad(userID, isbn, price, condition, false);
+                ad.save();
 
                 Intent backToSearch = new Intent(AddAdActivity.this, MainActivity.class);
                 startActivity(backToSearch);
+                finish();
+                Toast.makeText(getApplicationContext(), "Ad Succesfully uploaded!", Toast.LENGTH_LONG).show();
             }
         });
 

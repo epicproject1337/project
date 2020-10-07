@@ -17,7 +17,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
+/**
+ * @author Pajam Khoshnam, Albin Landgren, Oscar Bennet
+ *
+ * The MainActivity when the app starts
+ *
+ * @since 2020-09-07
+ */
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -50,6 +56,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    /**
+     * Start the SearchAddAd activity when add Ad button is pressed
+     * @param view the associated view.
+     */
     public void startAddAdActivity(View view) {
         Intent intent = new Intent(this, SearchAddAd.class);
         startActivity(intent);
@@ -59,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method to signout a user.
+     */
+    //TODO: Move logic to user model.
     public void signOut() {
         mAuth.signOut();
         if(mAuth.getCurrentUser() == null){

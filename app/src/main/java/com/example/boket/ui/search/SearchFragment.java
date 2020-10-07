@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.example.boket.R;
 import com.example.boket.model.Book;
-import com.example.boket.model.Search;
+import com.example.boket.controller.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.example.boket.ui.addAd.AddAdActivity;
 import com.example.boket.ui.addAd.SearchAddAd;
@@ -57,7 +57,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return the view of search fragment
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -201,7 +201,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     /**
      * Handles submitted text from the search bar
-     * @param s
+     * @param s Input text from the user
      * @return
      */
     @Override
@@ -212,9 +212,9 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
     /**
-     * Must be implemented because of interface
+     * Listener if query text is changed
      *
-     * @param s
+     * @param s Input text from the user
      * @return
      */
     @Override

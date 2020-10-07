@@ -32,7 +32,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
+/**
+ * @author Pajam Khoshnam
+ *
+ * The Activity for logging in a user
+ *
+ * @since 2020-09-07
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

@@ -46,7 +46,7 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
      * Binds xml file to BookItemHolder
      * @param parent
      * @param viewType
-     * @return
+     * @return holder for the book item
      */
     @NonNull
     @Override
@@ -57,8 +57,8 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
 
     /**
      * Set text in holder
-     * @param holder
-     * @param i
+     * @param holder The holder for the book items
+     * @param i Index of the book item in the recycler view
      */
     @Override
     public void onBindViewHolder(@NonNull BookItemHolder holder, int i) {
@@ -70,7 +70,7 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
 
     /**
      * Get amount of book items in list
-     * @return
+     * @return amount of book items in list
      */
     @Override
     public int getItemCount() {

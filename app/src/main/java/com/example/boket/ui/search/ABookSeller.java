@@ -13,7 +13,7 @@ import com.example.boket.R;
  * @author Tarik Porobic
  *
  * Class that represent a bookseller for a specific book
- * @since 2020-10-01
+ * @since 2020-09-17
  */
 public class ABookSeller {
 
@@ -21,23 +21,20 @@ public class ABookSeller {
     private ImageButton contactSeller;
     private ConstraintLayout expandableLayout;
     private CardView cardView;
+    private String sellerEmail;
+    private String bookSold;
 
 
-    public ABookSeller(String state, String price, String city, View v) {
+    public ABookSeller(String bookSold, String seller, String state, String price, String city, View v) {
         this.state = state;
         this.price = price;
         this.city = city;
+        this.sellerEmail = seller;
+        this.bookSold = bookSold;
         this.contactSeller = v.findViewById(R.id.contactSellerBtn);
         this.expandableLayout = v.findViewById(R.id.expandableView);
         this.cardView = v.findViewById(R.id.cardView);
     }
-
-    /*
-    public ConstraintLayout getExpandableLayout() {
-        return expandableLayout;
-    }
-
-     */
 
     /**
      * Returns the value so that the holder can present this information
@@ -63,5 +60,15 @@ public class ABookSeller {
         return city;
     }
 
+    public String getSellerEmail() {
+        return sellerEmail;
+    }
 
+    public String getBookSold() {
+        return bookSold;
+    }
+
+    public void setSellerEmail(String sellerEmail) {
+        this.sellerEmail = sellerEmail;
+    }
 }
