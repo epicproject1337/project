@@ -1,198 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.addAd.AddAdActivity">
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent"
+    android:fillViewport="true"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.addAd.AddAdActivity">
 
-    <TextView
-        android:layout_width="25dp"
-        android:layout_height="17dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginBottom="8dp"
-        android:text="Pris"
-        android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/priceInput"
-        app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/priceText"
+            android:layout_width="25dp"
+            android:layout_height="17dp"
+            android:layout_below="@+id/conditionInput"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="Pris"
+            android:textColor="@android:color/black" />
 
-    <Button
-        android:id="@+id/publishButton"
-        android:layout_width="347dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginBottom="48dp"
-        android:text="Lägg ut annons"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/publishButton"
+            android:layout_width="347dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/cityInput"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="48dp"
+            android:text="Lägg ut annons" />
 
-    <ImageView
-        android:id="@+id/bookImage"
-        android:layout_width="114dp"
-        android:layout_height="146dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="108dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?android:attr/galleryItemBackground" />
+        <ImageView
+            android:id="@+id/bookImage"
+            android:layout_width="114dp"
+            android:layout_height="146dp"
+            android:layout_below="@+id/titleText"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="32dp" />
 
-    <TextView
-        android:id="@+id/titleText"
-        android:layout_width="278dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:text="Lägg till annons"
-        android:textColor="@android:color/holo_purple"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="278dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="32dp"
+            android:text="Lägg till annons"
+            android:textColor="@android:color/holo_purple"
+            android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/bookTitleText"
-        android:layout_width="217dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Titel för boken"
-        android:textColor="@android:color/black"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bookImage"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/bookTitleText"
+            android:layout_width="217dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="108dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_toEndOf="@+id/bookImage"
+            android:layout_toRightOf="@+id/bookImage"
+            android:text="Titel för boken"
+            android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/authorText"
-        android:layout_width="217dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Författare"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bookImage"
-        app:layout_constraintTop_toBottomOf="@+id/bookTitleText" />
+        <TextView
+            android:id="@+id/authorText"
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bookTitleText"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_toEndOf="@+id/bookImage"
+            android:layout_toRightOf="@+id/bookImage"
+            android:text="Författare"
+            android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/releaseYear"
-        android:layout_width="217dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Year"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bookImage"
-        app:layout_constraintTop_toBottomOf="@+id/authorText" />
+        <TextView
+            android:id="@+id/releaseYear"
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/authorText"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_toEndOf="@+id/bookImage"
+            android:layout_toRightOf="@+id/bookImage"
+            android:text="Year"
+            android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/edition"
-        android:layout_width="217dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Edition"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bookImage"
-        app:layout_constraintTop_toBottomOf="@+id/releaseYear" />
+        <TextView
+            android:id="@+id/edition"
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/releaseYear"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_toEndOf="@+id/bookImage"
+            android:layout_toRightOf="@+id/bookImage"
+            android:text="Edition"
+            android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/isbn"
-        android:layout_width="217dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="ISBN"
-        android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bookImage"
-        app:layout_constraintTop_toBottomOf="@+id/edition" />
+        <TextView
+            android:id="@+id/isbn"
+            android:layout_width="217dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edition"
+            android:layout_marginStart="7dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_toEndOf="@+id/bookImage"
+            android:layout_toRightOf="@+id/bookImage"
+            android:text="ISBN"
+            android:textColor="@android:color/black" />
 
-    <EditText
-        android:id="@+id/conditionInput"
-        android:layout_width="347dp"
-        android:layout_height="132dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="295dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Beskriv skick"
-        android:inputType="textMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/conditionInput"
+            android:layout_width="347dp"
+            android:layout_height="132dp"
+            android:layout_below="@+id/conditionText"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Beskriv skick"
+            android:inputType="textMultiLine" />
 
-    <EditText
-        android:id="@+id/priceInput"
-        android:layout_width="347dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="468dp"
-        android:ems="10"
-        android:hint="100kr"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/priceInput"
+            android:layout_width="347dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/priceText"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="100kr"
+            android:inputType="number" />
 
-    <TextView
-        android:id="@+id/cityText"
-        android:layout_width="31dp"
-        android:layout_height="17dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="532dp"
-        android:text="Stad"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/cityText"
+            android:layout_width="31dp"
+            android:layout_height="17dp"
+            android:layout_below="@+id/priceInput"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Stad"
+            android:textColor="@android:color/black" />
 
-    <TextView
-        android:id="@+id/conditionText"
-        android:layout_width="36dp"
-        android:layout_height="17dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="270dp"
-        android:text="Skick"
-        android:textColor="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/conditionText"
+            android:layout_width="36dp"
+            android:layout_height="17dp"
+            android:layout_below="@+id/bookImage"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="16dp"
+            android:text="Skick"
+            android:textColor="@android:color/black" />
 
-    <EditText
-        android:id="@+id/cityInput"
-        android:layout_width="347dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="557dp"
-        android:ems="10"
-        android:hint="Stad"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/cityInput"
+            android:layout_width="347dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/cityText"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Stad"
+            android:inputType="textPersonName" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</ScrollView>

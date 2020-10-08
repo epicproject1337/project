@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.Ad;
@@ -46,7 +49,7 @@ public class AddAdActivity extends AppCompatActivity {
         final TextView releaseYearTextView = findViewById(R.id.releaseYear);
         final TextView editionTextView = findViewById(R.id.edition);
         final TextView isbnTextView = findViewById(R.id.isbn);
-
+        final ImageView bookImage = findViewById(R.id.bookImage);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -62,6 +65,8 @@ public class AddAdActivity extends AppCompatActivity {
                     releaseYearTextView.setText(book.getReleaseYear());
                     editionTextView.setText("Upplaga: " + book.getEdition());
                     isbnTextView.setText("ISBN: " +book.getIsbn());
+                    Log.e("bookImage", book.getImage());
+                    Glide.with(AddAdActivity.this).load(book.getImage()).into(bookImage);
                 }
             });
 
