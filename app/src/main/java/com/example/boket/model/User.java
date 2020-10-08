@@ -3,9 +3,6 @@ package com.example.boket.model;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
-import com.example.boket.model.integrations.Algolia;
-import com.example.boket.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,9 +14,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 //TODO: move all user "logic" and firebase auth calls to a User Model.
 public class User {
@@ -55,7 +49,6 @@ public class User {
     }
 
     public String getLocation() {
-        //TODO if location is null get from database.
         return location;
     }
 
@@ -68,7 +61,7 @@ public class User {
     }
 
 
-    private void signup(String name, String email, String emailConfirm, String password, String passwordConfirm, String location, SignupCallback callback) {
+    public void signup(String name, String email, String emailConfirm, String password, String passwordConfirm, String location, SignupCallback callback) {
 
         //confirm email
         if(email != emailConfirm){
@@ -131,6 +124,18 @@ public class User {
                 });
     }
 
+    public void getUserDataByUid(String uid, LoadUserCallback callback){
+        DocumentReference docRef = db.collection(collection).document(uid);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                FirebaseUserModel um  = documentSnapshot.toObject(FirebaseUserModel.class);
+                User user = new User(um.getUid(), um.getEmail(), um.getName(), um.getLocation());
+                callback.onLoadComplete(user);
+            }
+        });
+    }
+
     private static void updateDb(){
         if(currentUser == null)
             return;
@@ -179,6 +184,19 @@ public class User {
 
     }
 
+    public static void updateLocation(String location){
+        //Make sure there is a user logged in
+        if(currentUser == null)
+            return;
+
+        //Update location locally
+        currentUser.setLocation(location);
+
+        //Update Firebase Firestore.
+        updateDb();
+
+    }
+
     public static void signout() {
         mAuth.signOut();
         currentUser = null;
@@ -204,14 +222,16 @@ public class User {
     }
 
     public interface SignupCallback{
-        //Returns null if signup failed.
         void onSignupComplete(User user);
         void onSignupFailed(String message);
     }
 
     public interface LoginCallback{
-        //Returns null if signup failed.
         void onLoginComplete(User user);
         void onLoginFailed(String message);
+    }
+
+    public interface LoadUserCallback{
+        void onLoadComplete(User user);
     }
 }
