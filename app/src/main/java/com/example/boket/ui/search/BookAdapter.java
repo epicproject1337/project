@@ -53,7 +53,10 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     @Override
     public ABookSellerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_abookseller, null);
-        return new ABookSellerHolder(v);
+        ABookSellerHolder ABsH = new ABookSellerHolder(v);
+        //rV.add(ABsH);
+        //System.out.println(rV.size());
+        return ABsH;
     }
 
     /**
@@ -70,16 +73,16 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             @Override
             public void onIABookSellerCL(View v, int i) {
                 ABookSellerHolder vh = (ABookSellerHolder) rV.findViewHolderForAdapterPosition(i);
-
+                //ABookSellerHolder vh = rV.get(i);
                 assert vh != null;
                 if (vh.getExpandableLayout().getVisibility() == View.GONE) {
-
                     TransitionManager.beginDelayedTransition(vh.getCardView(), new AutoTransition());
                     vh.getExpandableLayout().setVisibility(View.VISIBLE);
 
                     closeTheOther(i);
 
                 } else {
+                    System.out.println("måste kommma hit");
                     TransitionManager.beginDelayedTransition(vh.getCardView(), new AutoTransition());
                     vh.getExpandableLayout().setVisibility(View.GONE);
                 }
@@ -126,6 +129,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
         for (int pos = 0; pos < bookSellers.size(); pos++) {
             if (pos != i) {
                 ABookSellerHolder vh = (ABookSellerHolder) rV.findViewHolderForAdapterPosition(pos);
+                //ABookSellerHolder vh = rV.get(i);
                 assert vh != null;
                 vh.getExpandableLayout().setVisibility(View.GONE);
             }
@@ -143,4 +147,6 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     public void setrV(RecyclerView rV) {
         this.rV = rV;
     }
+
+
 }

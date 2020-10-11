@@ -150,6 +150,7 @@ public class BooksellersFragment extends Fragment {
                 bookAdapter = new BookAdapter(c, bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter);
                 bookAdapter.setrV(adListRecyclerView);
+
             }
         });
     }
@@ -177,6 +178,7 @@ public class BooksellersFragment extends Fragment {
             Subscription.subscribeUser(ISBN_number, mAuth.getUid());
             subscribeButton.setText("Avprenumerera");
         }
+        isSubscribedToBook = !isSubscribedToBook;
     }
 
     public void onIABookSellerCL(View v, int position) {
