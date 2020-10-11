@@ -168,7 +168,10 @@ public class Ad{
     public void save() {
         //TODO : Add validation to make sure 1. all fields are set and valid
         db.collection(collection).add(this);
+
     }
+
+
 
     /**
      * @return timestamp of when the ad was updated last.
