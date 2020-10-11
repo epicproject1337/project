@@ -31,6 +31,7 @@ import java.util.Objects;
 public class Ad{
     private int id; //TODO: Should we remove it?
     private String userId;
+    private String email;
     private String isbn;
     private double price;
     private String condition = null;
@@ -53,14 +54,16 @@ public class Ad{
     /**
      * Create an Ad object with all the necessary fields.
      * @param userId the user ID of the ad creator
+     * @param email the email of the ad creator
      * @param isbn ISBN-number of the book which the ad is for.
      * @param price Price for the book
      * @param condition Condition of the book
      * @param archived If the ad should be marked as archived/sold. //TODO should always be false
      *                 on creating?
      */
-    public Ad(String userId, String isbn, double price, String condition, boolean archived) {
+    public Ad(String userId, String email, String isbn, double price, String condition, boolean archived) {
         this.userId = userId;
+        this.email = email;
         this.isbn = isbn;
         this.price = price;
         this.condition = condition;
@@ -132,6 +135,13 @@ public class Ad{
      */
     public String getUserId() {
         return userId;
+    }
+
+    /**
+     * @return the email of the ad creator
+     */
+    public String getEmail() {
+        return email;
     }
 
     /**
