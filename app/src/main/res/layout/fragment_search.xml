@@ -62,6 +62,8 @@
             android:layout_marginLeft="32dp"
             android:layout_marginTop="32dp"
             android:background="#F1F3F5"
+            android:hint="Sök boknamn eller författare"
+            android:queryHint="Sök boknamn eller författare"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

@@ -119,7 +119,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             }
         });
         holder.getState().setText(bookSellers.get(i).getState());
-        holder.getPrice().setText(bookSellers.get(i).getPrice());
+        holder.getPrice().setText(bookSellers.get(i).getPrice()+" kr");
         holder.getCity().setText(bookSellers.get(i).getCity());
 
 
