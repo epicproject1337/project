@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.boket.MainActivity;
 import com.example.boket.R;
+import com.example.boket.model.user.LocalUser;
+import com.example.boket.model.user.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,13 +35,11 @@ import org.w3c.dom.Text;
  */
 public class SignupActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private static final String TAG = SignupActivity.class.getName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
 
         setContentView(R.layout.activity_signup);
 
@@ -56,7 +56,7 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingProgressBar.setVisibility(View.VISIBLE);
+//                loadingProgressBar.setVisibility(View.VISIBLE);
                 signup(nameEditText.getText().toString(), emailEditText.getText().toString(),
                         emailConfirmEditText.getText().toString(), passwordEditText.getText().toString(),
                         passwordConfirmEditText.getText().toString());
@@ -76,27 +76,23 @@ public class SignupActivity extends AppCompatActivity {
 
     private void signup(final String name, String email, String emailConfirm, String password, String passwordConfirm) {
         //TODO: Validate email and password
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            //Update the users name.
-                            updateUsersName(name, user);
-                            //Update the UI
-                            updateUiWithUser(user.getDisplayName());
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            showLoginFailed("Signup failed! Try again..");
-                        }
 
+        System.out.println(email);
+        System.out.println(emailConfirm);
 
-                    }
-                });
+        LocalUser.signup(name, email, emailConfirm, password, passwordConfirm, "Göteborg", new LocalUser.SignupCallback() {
+            @Override
+            public void onSignupComplete(LocalUser user) {
+                Log.d(TAG, "createUserWithEmail:success");
+                LocalUser.getCurrentUser();
+                //Update the UI
+                updateUiWithUser(user.getName());
+            }
+            @Override
+            public void onSignupFailed(String message) {
+                showLoginFailed("Signup failed! Try again.. " + message);
+            }
+        });
     }
 
     //TODO: LoginActivity have same method. Merge somehow.

@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.boket.MainActivity;
 import com.example.boket.R;
+import com.example.boket.model.user.LocalUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -41,7 +42,6 @@ import com.google.firebase.auth.FirebaseUser;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
     private static final String TAG = LoginActivity.class.getName();
 
     //TODO:
@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
         // loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
         //         .get(LoginViewModel.class);
@@ -152,24 +151,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUiWithUser(user.getEmail());
-                            //loginViewModel.setLoginResult(new LoginResult(new LoggedInUserView(user.getUid())));
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            showLoginFailed("Login failed!");
-                        }
-                    }
-                });
+
+        LocalUser.login(email, password, new LocalUser.LoginCallback() {
+            @Override
+            public void onLoginComplete(LocalUser user) {
+                Log.d(TAG, "signInWithEmail:success");
+                updateUiWithUser(user.getEmail());
+                //loginViewModel.setLoginResult(new LoginResult(new LoggedInUserView(user.getUid())));
+            }
+
+            @Override
+            public void onLoginFailed(String message) {
+                showLoginFailed("Login failed! " +  message);
+            }
+        });
     }
 
     private void updateUiWithSignup() {

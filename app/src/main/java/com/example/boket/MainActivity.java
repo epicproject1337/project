@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.boket.model.user.LocalUser;
 import com.example.boket.ui.addAd.SearchAddAd;
 import com.example.boket.ui.login.LoginActivity;
 
@@ -26,17 +27,11 @@ import androidx.navigation.ui.NavigationUI;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
-        //TODO : Remove this. Only for testing purpose
-        //mAuth.signOut();
-
-        if(mAuth.getCurrentUser() == null){
+        if(LocalUser.getCurrentUser() == null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -74,14 +69,11 @@ public class MainActivity extends AppCompatActivity {
      */
     //TODO: Move logic to user model.
     public void signOut() {
-        mAuth.signOut();
-        if(mAuth.getCurrentUser() == null){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }else{
-            Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
-        }
+        LocalUser.signout();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 /*
     @Override
