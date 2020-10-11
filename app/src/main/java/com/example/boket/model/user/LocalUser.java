@@ -62,15 +62,15 @@ public class LocalUser implements User{
     }
 
 
-    public void signup(String name, String email, String emailConfirm, String password, String passwordConfirm, String location, SignupCallback callback) {
+    public static void signup(String name, String email, String emailConfirm, String password, String passwordConfirm, String location, SignupCallback callback) {
 
         //confirm email
-        if(email != emailConfirm){
+        if(!email.equals(emailConfirm)){
             callback.onSignupFailed("Email does not match");
             return;
         }
         //confirm password
-        if(password != passwordConfirm){
+        if(!password.equals(passwordConfirm)){
             callback.onSignupFailed("Password does not match");
             return;
         }
@@ -97,7 +97,7 @@ public class LocalUser implements User{
                 });
     }
 
-    public void login(String email, String password, LoginCallback callback) {
+    public static void login(String email, String password, LoginCallback callback) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

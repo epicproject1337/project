@@ -44,6 +44,7 @@ public final class OtherUser implements User {
         return location;
     }
 
+    //TODO: Return OtherUser
     public static void getUserDataByUid(String uid, LoadUserCallback callback){
         DocumentReference docRef = db.collection(collection).document(uid);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
