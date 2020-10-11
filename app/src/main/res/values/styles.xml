@@ -5,12 +5,18 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
     </style>
 
     <style name="BottomNavigationBar" parent="TextAppearance.AppCompat">
         <item name="android:background">@color/colorBottomBar</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:height">@color/colorWhite</item>
+    </style>
+
+    <style name="BookSellerContainer" parent="Widget.MaterialComponents.CardView">
+        <item name="android:background">@color/colorLightPurple</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
     </style>
 
     <style name="DefaultText" parent="Widget.AppCompat.TextView">
@@ -25,25 +31,25 @@
 
     <style name="LargeHeading" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textSize">36sp</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
     </style>
 
     <style name="MediumHeading" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
         <item name="android:textSize">24sp</item>
     </style>
 
     <style name="SmallHeading" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
         <item name="android:textSize">18sp</item>
     </style>
 
     <style name="SmallestHeading" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -54,12 +60,29 @@
         <item name="android:bottomRightRadius">8dp</item>
         <item name="android:topLeftRadius">8dp</item>
         <item name="android:topRightRadius">8dp</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+    </style>
+
+    <style name="DefaultImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:color">@color/colorWhite</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
     </style>
 
     <style name="IconButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:color">@color/colorPrimary</item>
         <item name="android:background">@null</item>
+        <item name="android:fontFamily">@font/inter_bold</item>
+    </style>
+
+    <style name="BasicInput" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">@color/colorDarkGray</item>
+        <item name="android:background">@color/colorInput</item>
+        <item name="android:paddingLeft">16dp</item>
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">
@@ -68,6 +91,7 @@
         <item name="android:windowBackground">@null</item>
         <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+        <item name="android:fontFamily">@font/inter_regular</item>
     </style>
 
     <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">

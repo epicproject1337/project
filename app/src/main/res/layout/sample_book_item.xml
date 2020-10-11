@@ -2,16 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="348dp"
-    android:layout_height="116dp">
-
-    <com.example.boket.ui.search.BookItem
-        android:layout_width="348dp"
-        android:layout_height="116dp"
-        android:paddingBottom="40dp" />
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="348dp"
-        android:layout_height="116dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#FFFFFF">
 
         <TextView
             android:id="@+id/bookTitle"
@@ -22,6 +19,9 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:scrollHorizontally="true"
             android:text="Book Title"
             app:layout_constraintBottom_toTopOf="@+id/author"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -54,12 +54,11 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="94dp"
-            android:layout_height="94dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_width="88dp"
+            android:layout_height="112dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
