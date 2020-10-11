@@ -81,7 +81,8 @@ public class AddAdActivity extends AppCompatActivity {
                 double price = Double.parseDouble(String.valueOf(priceEditText.getText()));
                 String condition = String.valueOf(conditionEditText.getText());
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                Ad ad = new Ad(userID, isbn, price, condition, false);
+                String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                Ad ad = new Ad(userID, email, isbn, price, condition, false);
                 ad.save();
 
                 Intent backToSearch = new Intent(AddAdActivity.this, MainActivity.class);
