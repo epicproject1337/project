@@ -28,12 +28,13 @@ import com.example.boket.ui.addAd.SearchAddAd;
 import com.example.boket.ui.camera.BarcodeScannerActivity;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author Oscar Bennet
- *
+ * <p>
  * Fragment for the search page where the user searches for books
- *
  * @since 2020-09-10
  */
 
@@ -50,6 +51,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     private BookItemAdapter bookItemAdapter;
     private ImageButton cameraButton;
     private TextView noBookTextView;
+    private Timer timer = new Timer();
 
     /**
      * Creates the view of the search page
@@ -98,7 +100,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         }
 
 
-
         return v;
     }
 
@@ -124,6 +125,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     /**
      * Get the view model
+     *
      * @param savedInstanceState
      */
     @Override
@@ -133,27 +135,59 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         // TODO: Use the ViewModel
     }
 
-    private void searchBooks(String query) {
+    private void updateRecyclerView(ArrayList<BookItem> bookItems){
+
         RecyclerViewClickListener i = this;
+        bookItemAdapter = new BookItemAdapter(getContext(), i, bookItems);
+        recyclerView.setAdapter(bookItemAdapter);
+    }
+
+    private void startIsBookFoundTimer(){
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        ArrayList books = searchViewModel.getBooks();
+                        if(books == null || books.size() == 0){
+                            noBookTextView.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            noBookTextView.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+
+
+
+
+            }
+        }, 5*1000);
+    }
+
+    private void searchBooks(String query) {
+
+        //Clears recyclerview
+        searchViewModel.getBooks().clear();
+        updateRecyclerView(getBookItems());
+
         Search.searchBooks(query, new Search.SearchCallback() {
 
             @Override
             public void onSearchBooks(ArrayList<Book> bookList) {
-                //noBookTextView.setVisibility(View.INVISIBLE);
+                noBookTextView.setVisibility(View.INVISIBLE);
                 searchViewModel.setBooks(bookList);
-                ArrayList<Book> books = searchViewModel.getBooks();
-                if(books.size() > 0) {
+                updateRecyclerView(getBookItems());
 
-                    bookItemAdapter = new BookItemAdapter(getContext(), i, getBookItems());
-                    recyclerView.setAdapter(bookItemAdapter);
-                }
-                else{
-                    noBookTextView.setVisibility(View.VISIBLE);
-                    System.out.println("NO BOOK");
-                }
             }
 
+
         });
+
+
+        startIsBookFoundTimer();
+
 
     }
 
@@ -176,6 +210,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     /**
      * Navigates and send the ISBN to either BookSeller or AddAd
+     *
      * @param book
      */
     public void sendISBN(BookItem book) {
@@ -201,13 +236,16 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
     /**
      * Handles submitted text from the search bar
+     *
      * @param s Input text from the user
      * @return
      */
     @Override
     public boolean onQueryTextSubmit(String s) {
         System.out.println(searchView.getQuery());
+
         searchBooks(s);
+
         return false;
     }
 

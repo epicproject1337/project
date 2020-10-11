@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class SearchViewModel extends ViewModel {
 
-    private ArrayList<Book> books;
+    private ArrayList<Book> books = new ArrayList<>();
 
     public ArrayList<Book> getBooks(){
         return books;
