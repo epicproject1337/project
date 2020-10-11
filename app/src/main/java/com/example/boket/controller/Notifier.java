@@ -7,8 +7,9 @@ public final class Notifier {
 
     }
 
+
     //TODO Add logic
-    private static void notifyUsersAboutNewAd(String isbn){
+    public static void notifyUsersAboutNewAd(String isbn){
 
     }
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.example.boket.controller.Notifier;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -178,7 +179,7 @@ public class Ad{
     public void save() {
         //TODO : Add validation to make sure 1. all fields are set and valid
         db.collection(collection).add(this);
-
+        Notifier.notifyUsersAboutNewAd(this.getIsbn());
     }
 
 
