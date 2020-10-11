@@ -1,8 +1,9 @@
-package com.example.boket.model;
+package com.example.boket.model.user;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,7 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 //TODO: move all user "logic" and firebase auth calls to a User Model.
-public class User {
+public class LocalUser implements User{
 
     private String uid;
     private String email;
@@ -25,11 +26,11 @@ public class User {
 
     private static final FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static final String TAG = User.class.getName();
+    private static final String TAG = LocalUser.class.getName();
     private static final String collection = "users";
-    private static User currentUser = null;
+    private static LocalUser currentUser = null;
 
-    private User(String uid, String email, String name, String location) {
+    private LocalUser(String uid, String email, String name, String location) {
         this.uid = uid;
         this.email = email;
         this.name = name;
@@ -80,13 +81,13 @@ public class User {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "createUserWithEmail:success");
                             //Load user locally
-                            User u = new User(mAuth.getUid(), email, name, location);
+                            LocalUser u = new LocalUser(mAuth.getUid(), email, name, location);
                             currentUser = u;
                             //Call to update name and other info in Firebase
                             updateName(name);
                             updateDb();
                             //Return current user
-                            callback.onSignupComplete(User.currentUser);
+                            callback.onSignupComplete(LocalUser.currentUser);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -110,9 +111,9 @@ public class User {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     FirebaseUserModel um  = documentSnapshot.toObject(FirebaseUserModel.class);
-                                    User user = new User(mAuth.getUid(), mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getDisplayName(), um.getLocation());
-                                    setCurrentUser(user);
-                                    callback.onLoginComplete(user);
+                                    LocalUser localUser = new LocalUser(mAuth.getUid(), mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getDisplayName(), um.getLocation());
+                                    setCurrentUser(localUser);
+                                    callback.onLoginComplete(localUser);
                                 }
                             });
                         } else {
@@ -122,18 +123,6 @@ public class User {
                         }
                     }
                 });
-    }
-
-    public void getUserDataByUid(String uid, LoadUserCallback callback){
-        DocumentReference docRef = db.collection(collection).document(uid);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                FirebaseUserModel um  = documentSnapshot.toObject(FirebaseUserModel.class);
-                User user = new User(um.getUid(), um.getEmail(), um.getName(), um.getLocation());
-                callback.onLoadComplete(user);
-            }
-        });
     }
 
     private static void updateDb(){
@@ -202,36 +191,33 @@ public class User {
         currentUser = null;
     }
 
-    public static User getCurrentUser(){
-        if (User.currentUser == null){
+    public static LocalUser getCurrentUser(){
+        if (LocalUser.currentUser == null){
             FirebaseUser u = mAuth.getCurrentUser();
             if (u != null){
-                User user = new User(u.getUid(), u.getEmail(), u.getDisplayName(), null);
-                User.setCurrentUser(user);
-                return user;
+                //TODO, need to load location
+                LocalUser localUser = new LocalUser(u.getUid(), u.getEmail(), u.getDisplayName(), null);
+                LocalUser.setCurrentUser(localUser);
+                return localUser;
             }else {
                 return null;
             }
         }else{
-            return User.currentUser;
+            return LocalUser.currentUser;
         }
     }
 
-    private static void setCurrentUser(User u){
-        User.currentUser = u;
+    private static void setCurrentUser(LocalUser u){
+        LocalUser.currentUser = u;
     }
 
     public interface SignupCallback{
-        void onSignupComplete(User user);
+        void onSignupComplete(LocalUser user);
         void onSignupFailed(String message);
     }
 
     public interface LoginCallback{
-        void onLoginComplete(User user);
+        void onLoginComplete(LocalUser user);
         void onLoginFailed(String message);
-    }
-
-    public interface LoadUserCallback{
-        void onLoadComplete(User user);
     }
 }

@@ -1,8 +1,8 @@
-package com.example.boket.model;
+package com.example.boket.model.user;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class FirebaseUserModel {
+public class FirebaseUserModel implements User {
     private String uid;
     private String email;
     private String name;
