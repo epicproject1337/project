@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.boket.R;
 import com.example.boket.model.Ad;
+import com.example.boket.model.user.LocalUser;
 
 import java.util.ArrayList;
 
@@ -82,7 +83,6 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
                     closeTheOther(i);
 
                 } else {
-                    System.out.println("måste kommma hit");
                     TransitionManager.beginDelayedTransition(vh.getCardView(), new AutoTransition());
                     vh.getExpandableLayout().setVisibility(View.GONE);
                 }
@@ -112,7 +112,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
                 intent.putExtra(Intent.EXTRA_EMAIL, recipients);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Jag skulle vilja köpa din bok, " + b.getBookSold());
                 intent.putExtra(Intent.EXTRA_TEXT, "Hej!\n\n" + "Jag såg din bokannons på den underbara appen " +
-                        "Booket och skulle vilja köpa, " + b.getBookSold() + "\n\nMed vänlig hälsning\n/" + "Booket men ska vara ett namn här");
+                        "Booket och skulle vilja köpa, " + b.getBookSold() + "\n\nMed vänlig hälsning\n/" + LocalUser.getCurrentUser().getName());
                 intent.setPackage("com.google.android.gm");
                 c.startActivity(intent);
 

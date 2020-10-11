@@ -24,9 +24,8 @@ import static com.example.boket.cameraUtil.common.BarcodeScanner.isValidISBN13;
 
 /**
  * @author Alexander Jyborn, Oscar Bennet
- *
+ * <p>
  * Activity class for presenting and creating an Ad from the data on the AddAd page
- *
  * @since 2020-09-08
  */
 public class AddAdActivity extends AppCompatActivity {
@@ -52,7 +51,7 @@ public class AddAdActivity extends AppCompatActivity {
         final ImageView bookImage = findViewById(R.id.bookImage);
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
+        if (bundle != null) {
             isbn = bundle.getString("BookNumber");
 
             Book book = new Book(isbn, new Book.OnLoadCallback() {
@@ -64,7 +63,7 @@ public class AddAdActivity extends AppCompatActivity {
                     authorTextView.setText(book.getAuthor());
                     releaseYearTextView.setText(book.getReleaseYear());
                     editionTextView.setText("Upplaga: " + book.getEdition());
-                    isbnTextView.setText("ISBN: " +book.getIsbn());
+                    isbnTextView.setText("ISBN: " + book.getIsbn());
                     Log.e("bookImage", book.getImage());
                     Glide.with(AddAdActivity.this).load(book.getImage()).into(bookImage);
                 }
@@ -80,9 +79,10 @@ public class AddAdActivity extends AppCompatActivity {
 
                 double price = Double.parseDouble(String.valueOf(priceEditText.getText()));
                 String condition = String.valueOf(conditionEditText.getText());
+                String city = String.valueOf(cityEditText.getText());
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                Ad ad = new Ad(userID, email, isbn, price, condition, false);
+                Ad ad = new Ad(userID, email, isbn, price, condition, city, false);
                 ad.save();
 
                 Intent backToSearch = new Intent(AddAdActivity.this, MainActivity.class);
@@ -101,7 +101,7 @@ public class AddAdActivity extends AppCompatActivity {
             priceEditText.setHint("Skriv pris");
             inputCorrect = false;
         }
-        if (conditionEditText.getText().length() <= 0){
+        if (conditionEditText.getText().length() <= 0) {
             conditionEditText.setHint("Skriv beskrivning av skicket");
             inputCorrect = false;
         }

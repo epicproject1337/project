@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.boket.MainActivity;
@@ -18,6 +19,7 @@ import com.example.boket.R;
 import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
+import com.example.boket.model.user.LocalUser;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.example.boket.ui.search.BookItem;
 import com.example.boket.ui.search.BookItemAdapter;
@@ -28,8 +30,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 /**
- *
- *
  * @author Albin Landgren
  * @since 2020-09-08
  */
@@ -40,6 +40,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private ItemAdapter itemAdapter;
+    private TextView profileName;
 
     /**
      * Required empty constructor
@@ -48,7 +49,6 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
     }
 
     /**
-     *
      * @param savedInstanceState
      */
     @Override
@@ -57,7 +57,6 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
     }
 
     /**
-     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -70,6 +69,9 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         // Inflate the layout for this fragment
+
+        profileName = view.findViewById(R.id.profileName);
+        profileName.setText(setRightText());
 
         // Add the following lines to create RecyclerView
         buyAds = view.findViewById(R.id.buyAds);
@@ -112,11 +114,22 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity)getActivity()).signOut();
+                ((MainActivity) getActivity()).signOut();
             }
         });
 
         return view;
+    }
+
+    private String setRightText() {
+        String returnString = LocalUser.getCurrentUser().getName();
+        for (int i = 0; i < returnString.length(); i++) {
+            if (returnString.charAt(i)== ' ') {
+                returnString = returnString.substring(0, i);
+                break;
+            }
+        }
+        return returnString+"'s profil";
     }
 
     /**

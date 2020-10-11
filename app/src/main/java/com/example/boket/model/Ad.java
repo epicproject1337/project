@@ -20,19 +20,20 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+
 /**
  * @author Pajam Khoshnam, Albin Landgren
- *
+ * <p>
  * An object representing an Ad.
  * Handles all the database adds/updates/gets for Ads.
- *
  * @since 2020-09-10
  */
-public class Ad{
+public class Ad {
     private int id; //TODO: Should we remove it?
     private String userId;
     private String email;
     private String isbn;
+    private String city;
     private double price;
     private String condition = null;
     private boolean archived;
@@ -53,26 +54,29 @@ public class Ad{
 
     /**
      * Create an Ad object with all the necessary fields.
-     * @param userId the user ID of the ad creator
-     * @param email the email of the ad creator
-     * @param isbn ISBN-number of the book which the ad is for.
-     * @param price Price for the book
+     *
+     * @param userId    the user ID of the ad creator
+     * @param email     the email of the ad creator
+     * @param isbn      ISBN-number of the book which the ad is for.
+     * @param price     Price for the book
      * @param condition Condition of the book
-     * @param archived If the ad should be marked as archived/sold. //TODO should always be false
-     *                 on creating?
+     * @param archived  If the ad should be marked as archived/sold. //TODO should always be false
+     *                  on creating?
      */
-    public Ad(String userId, String email, String isbn, double price, String condition, boolean archived) {
+    public Ad(String userId, String email, String isbn, double price, String condition, String city, boolean archived) {
         this.userId = userId;
         this.email = email;
         this.isbn = isbn;
         this.price = price;
         this.condition = condition;
         this.archived = archived;
+        this.city = city;
     }
 
     /**
      * Get all ads created by a specific user
-     * @param userId the user id of the creator
+     *
+     * @param userId   the user id of the creator
      * @param callback callback method which will receive an ArrayList of Ad with all the ads
      *                 belonging to the specific user.
      */
@@ -98,9 +102,10 @@ public class Ad{
 
     /**
      * Get all ads belonging to a specific book.
-     * @param isbn ISBN number of the book
+     *
+     * @param isbn     ISBN number of the book
      * @param callback method which will receive an ArrayList of Ad with all the ads
-     *      *                 belonging to the specific book.
+     *                 *                 belonging to the specific book.
      */
     public static void getAdsByISBN(String isbn, GetAdsCallback callback) {
 
@@ -144,6 +149,10 @@ public class Ad{
         return email;
     }
 
+    public String getCity() {
+        return city;
+    }
+
     /**
      * @return isbn number of the book that the ad is for.
      */
@@ -182,7 +191,6 @@ public class Ad{
     }
 
 
-
     /**
      * @return timestamp of when the ad was updated last.
      */
@@ -192,6 +200,7 @@ public class Ad{
 
     /**
      * Check if two ad objects represents the same ad
+     *
      * @param o Another ad object
      * @return true if two book objects represent the same book.
      */

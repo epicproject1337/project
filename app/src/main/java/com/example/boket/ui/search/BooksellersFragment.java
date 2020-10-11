@@ -131,15 +131,12 @@ public class BooksellersFragment extends Fragment {
                 for (int i = 0; i < adList.size(); i++) {
                     Ad ad = adList.get(i);
                     String state = ad.getCondition();
-                    Double price = ad.getPrice();
-                    //TODO lägg in säljarens email när det är fixat med User
-                    String sellerEmail = "pajamkh@gmail.com";
-                    //TODO lägg till booknamnet när det är fixat så man kan hämta booknamnet
-                    String bookSold = "Diskret matematik ";
+                    String price = Double.toString(ad.getPrice());
+                    String sellerEmail = ad.getEmail();
+                    String bookSold = String.valueOf(bookNameTextView.getText());
+                    String city = ad.getCity();
 
-                    //TODO fixa city i ad
-                    //String city =
-                    ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price.toString(), "Göteborg", v);
+                    ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price, city, v);
                     bookSellersList.add(aBookSeller);
                 }
                 if (adList.size() == 0) {

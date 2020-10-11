@@ -17,7 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 //TODO: move all user "logic" and firebase auth calls to a User Model.
-public class LocalUser implements User{
+public class LocalUser implements User {
 
     private String uid;
     private String email;
@@ -53,7 +53,7 @@ public class LocalUser implements User{
         return location;
     }
 
-    private void setLocation(String loc){
+    private void setLocation(String loc) {
         this.location = loc;
     }
 
@@ -65,12 +65,12 @@ public class LocalUser implements User{
     public static void signup(String name, String email, String emailConfirm, String password, String passwordConfirm, String location, SignupCallback callback) {
 
         //confirm email
-        if(!email.equals(emailConfirm)){
+        if (!email.equals(emailConfirm)) {
             callback.onSignupFailed("Email does not match");
             return;
         }
         //confirm password
-        if(!password.equals(passwordConfirm)){
+        if (!password.equals(passwordConfirm)) {
             callback.onSignupFailed("Password does not match");
             return;
         }
@@ -110,7 +110,7 @@ public class LocalUser implements User{
                             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    FirebaseUserModel um  = documentSnapshot.toObject(FirebaseUserModel.class);
+                                    FirebaseUserModel um = documentSnapshot.toObject(FirebaseUserModel.class);
                                     LocalUser localUser = new LocalUser(mAuth.getUid(), mAuth.getCurrentUser().getEmail(), mAuth.getCurrentUser().getDisplayName(), um.getLocation());
                                     setCurrentUser(localUser);
                                     callback.onLoginComplete(localUser);
@@ -125,8 +125,8 @@ public class LocalUser implements User{
                 });
     }
 
-    private static void updateDb(){
-        if(currentUser == null)
+    private static void updateDb() {
+        if (currentUser == null)
             return;
         //Create a new FirebaseUserModel for easier database insert/update.
         FirebaseUserModel um = new FirebaseUserModel(currentUser.uid, currentUser.email, currentUser.name, currentUser.location);
@@ -147,7 +147,7 @@ public class LocalUser implements User{
 
     public static void updateName(String name) {
         //Make sure there is a user logged in
-        if(currentUser == null)
+        if (currentUser == null)
             return;
 
         //Update name locally
@@ -173,9 +173,9 @@ public class LocalUser implements User{
 
     }
 
-    public static void updateLocation(String location){
+    public static void updateLocation(String location) {
         //Make sure there is a user logged in
-        if(currentUser == null)
+        if (currentUser == null)
             return;
 
         //Update location locally
@@ -191,33 +191,37 @@ public class LocalUser implements User{
         currentUser = null;
     }
 
-    public static LocalUser getCurrentUser(){
-        if (LocalUser.currentUser == null){
+    public static LocalUser getCurrentUser() {
+        if (LocalUser.currentUser == null) {
             FirebaseUser u = mAuth.getCurrentUser();
-            if (u != null){
+            if (u != null) {
                 //TODO, need to load location
                 LocalUser localUser = new LocalUser(u.getUid(), u.getEmail(), u.getDisplayName(), null);
                 LocalUser.setCurrentUser(localUser);
                 return localUser;
-            }else {
+            } else {
                 return null;
             }
-        }else{
+        } else {
             return LocalUser.currentUser;
         }
     }
 
-    private static void setCurrentUser(LocalUser u){
+    private static void setCurrentUser(LocalUser u) {
         LocalUser.currentUser = u;
     }
 
-    public interface SignupCallback{
+    public interface SignupCallback {
         void onSignupComplete(LocalUser user);
+
         void onSignupFailed(String message);
     }
 
-    public interface LoginCallback{
+    public interface LoginCallback {
         void onLoginComplete(LocalUser user);
+
         void onLoginFailed(String message);
     }
+
+
 }
