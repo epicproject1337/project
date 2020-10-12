@@ -34,6 +34,7 @@ public class Ad {
     private String userId;
     private String email;
     private String isbn;
+    private String imageUrl;
     private String city;
     private double price;
     private String condition = null;
@@ -162,6 +163,13 @@ public class Ad {
     }
 
     /**
+     * @return image link of the book that the ad is for.
+     */
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    /**
      * @return price for the book
      */
     public double getPrice() {
@@ -186,9 +194,16 @@ public class Ad {
      * Saves the current Ad object to the database.
      */
     public void save() {
-        //TODO : Add validation to make sure 1. all fields are set and valid
-        db.collection(collection).add(this);
-        Notifier.notifyUsersAboutNewAd(this.getIsbn());
+        Ad ad = this;
+        Book book = new Book(this.getIsbn(), new Book.OnLoadCallback() {
+            @Override
+            public void onLoadComplete(Book book) {
+                //TODO : Add validation to make sure 1. all fields are set and valid
+                ad.imageUrl = book.getImage();
+                db.collection(collection).add(ad);
+                //Notifier.notifyUsersAboutNewAd(this.getIsbn());
+            }
+        });
     }
 
 
