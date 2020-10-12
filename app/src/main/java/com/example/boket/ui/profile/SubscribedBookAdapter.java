@@ -26,7 +26,7 @@ import java.util.Random;
  * @since 2020-09-10
  */
 
-public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class SubscribedBookAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private Context context;
     static RecyclerViewClickListener itemListener;
     private ArrayList<Book> bookItems;
@@ -37,7 +37,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
      * @param itemListener ClickListener to enable onclick events
      * @param bookItems List of Book model instances
      */
-    public ItemAdapter(Context context, RecyclerViewClickListener itemListener, ArrayList<Book> bookItems) {
+    public SubscribedBookAdapter(Context context, RecyclerViewClickListener itemListener, ArrayList<Book> bookItems) {
         this.context = context;
         this.bookItems = bookItems;
         this.itemListener = itemListener;
@@ -73,7 +73,7 @@ public class ItemAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new RecyclerViewHolder(view);
+        return new RecyclerViewHolder(view, true);
     }
 
     /**

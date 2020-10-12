@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.boket.MainActivity;
 import com.example.boket.R;
@@ -21,10 +19,7 @@ import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
 import com.example.boket.model.user.LocalUser;
 import com.example.boket.ui.RecyclerViewClickListener;
-import com.example.boket.ui.search.BookItem;
-import com.example.boket.ui.search.BookItemAdapter;
 import com.example.boket.ui.search.BooksellersFragment;
-import com.example.boket.ui.search.SearchFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -39,7 +34,8 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
     private RecyclerView sellAds;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ItemAdapter itemAdapter;
+    private SubscribedBookAdapter subscribedBookAdapter;
+    private ManageAdAdapter manageAdAdapter;
     private TextView profileName;
 
     /**
@@ -82,14 +78,14 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
 
-        itemAdapter = new ItemAdapter(view.getContext(), this, new ArrayList<Book>());
-        buyAds.setAdapter(itemAdapter);
+        subscribedBookAdapter = new SubscribedBookAdapter(view.getContext(), this, new ArrayList<Book>());
+        buyAds.setAdapter(subscribedBookAdapter);
         RecyclerViewClickListener that = this;
         Subscription.getSubscribedBooks(mAuth.getUid(), new Subscription.OnLoadSubscribedBooksCallback() {
             @Override
             public void onCompleteCallback(ArrayList<Book> books) {
-                itemAdapter = new ItemAdapter(view.getContext(), that, books);
-                buyAds.setAdapter(itemAdapter);
+                subscribedBookAdapter = new SubscribedBookAdapter(view.getContext(), that, books);
+                buyAds.setAdapter(subscribedBookAdapter);
             }
         });
 
@@ -98,20 +94,12 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         LinearLayoutManager layoutManager2
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         sellAds.setLayoutManager(layoutManager2);
-
+        manageAdAdapter = new ManageAdAdapter(view.getContext(), this, new ArrayList<Ad>());
         Ad.getAdsByUser(mAuth.getUid(), new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-                ArrayList<Book> books = new ArrayList<>();
-                for (Ad ad : adList) {
-                    Book book = new Book(ad.getIsbn(), new Book.OnLoadCallback() {
-                        @Override
-                        public void onLoadComplete(Book book) {
-                            books.add(book);
-                            sellAds.setAdapter(new ItemAdapter(view.getContext(), that, books));
-                        }
-                    });
-                }
+                manageAdAdapter = new ManageAdAdapter(view.getContext(), that, adList);
+                sellAds.setAdapter(manageAdAdapter);
             }
         });
 
@@ -145,7 +133,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
      */
     @Override
     public void recyclerViewListClicked(View v, int position) {
-        Book book = itemAdapter.getItem(position);
+        Book book = subscribedBookAdapter.getItem(position);
         Bundle bundle = new Bundle();
         bundle.putString("BookNumber", book.getIsbn());
         BooksellersFragment booksellersFragment = new BooksellersFragment();
