@@ -60,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void showBookFromProfile(View view) {
-
-    }
-
     /**
      * Method to signout a user.
      */

@@ -1,27 +1,20 @@
 package com.example.boket.ui.profile;
 
-import android.media.Image;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.view.LayoutInflater;
+import android.widget.PopupMenu;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.boket.MainActivity;
 import com.example.boket.R;
-
-import java.util.List;
-
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.example.boket.ui.RecyclerViewClickListener;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
-import static com.example.boket.ui.profile.ItemAdapter.itemListener;
+import static com.example.boket.ui.profile.SubscribedBookAdapter.itemListener;
 
 /**
  * Represents an item in the RecyclerView on the profile page
@@ -32,21 +25,48 @@ import static com.example.boket.ui.profile.ItemAdapter.itemListener;
 public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ImageView view;
+    private ImageButton dotsButton;
+    private RecyclerViewClickListener dotsButtonClickListener;
 
     /**
      *
      * @param itemView
      */
-    public RecyclerViewHolder(@NonNull View itemView) {
+    public RecyclerViewHolder(@NonNull View itemView, boolean clickable, RecyclerViewClickListener dotsButtonClickListener) {
         super(itemView);
         view = itemView.findViewById(R.id.bookimage);
-        RecyclerView.ViewHolder that = this;
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                itemListener.recyclerViewListClicked(view, that.getLayoutPosition());
-            }
-        });
+        dotsButton = itemView.findViewById(R.id.dotsButton);
+        if (clickable) {
+            dotsButton.setVisibility(View.GONE);
+            RecyclerView.ViewHolder that = this;
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemListener.recyclerViewListClicked(view, that.getLayoutPosition());
+                }
+            });
+        } else {
+            this.dotsButtonClickListener = dotsButtonClickListener;
+            dotsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                default:
+                                    markAsSold();
+                                    return true;
+                            }
+                        }
+                    });
+                    MenuInflater inflater =  popupMenu.getMenuInflater();
+                    inflater.inflate(R.menu.manage_ad_menu, popupMenu.getMenu());
+                    popupMenu.show();
+                }
+            });
+        }
     }
 
     /**
@@ -55,6 +75,10 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
      */
     public ImageView getView() {
         return view;
+    }
+
+    public void markAsSold() {
+        dotsButtonClickListener.recyclerViewListClicked(itemView, this.getLayoutPosition());
     }
 
     /**
