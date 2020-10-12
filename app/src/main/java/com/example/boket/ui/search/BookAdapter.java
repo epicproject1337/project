@@ -83,7 +83,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
                     closeTheOther(i);
 
                 } else {
-                    TransitionManager.beginDelayedTransition(vh.getCardView(), new AutoTransition());
+                    //TransitionManager.beginDelayedTransition(vh.getCardView(), new AutoTransition());
                     vh.getExpandableLayout().setVisibility(View.GONE);
                 }
             }
