@@ -213,7 +213,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
      *
      * @param book
      */
-    public void sendISBN(BookItem book) {
+    private void sendISBN(BookItem book) {
         Bundle bundle = new Bundle();
         bundle.putString("BookNumber", book.getIsbn());
 

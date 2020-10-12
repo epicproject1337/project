@@ -13,6 +13,7 @@
 
         <TextView
             android:id="@+id/adAddHeader"
+            style="@style/LargeHeading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -20,10 +21,8 @@
             android:layout_marginTop="32dp"
             android:background="#FFFFFF"
             android:text="Lägg till annons"
-            android:textColor="#5F3DC4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textSize="36sp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <fragment
             android:id="@+id/fragment"

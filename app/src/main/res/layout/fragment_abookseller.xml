@@ -16,6 +16,7 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorLightPurple"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +28,12 @@
 
             <TextView
                 android:id="@+id/bookState"
+                style="@style/SmallestHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="50dp"
                 android:layout_marginRight="50dp"
                 android:text="Vilket skikt boken är i"
@@ -39,51 +41,66 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/price"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/frameLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="5dp"
-                android:text="pris"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bookState" />
+                app:layout_constraintTop_toBottomOf="@+id/bookState"
+                app:layout_constraintVertical_bias="0.0">
 
-            <TextView
-                android:id="@+id/city"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="156dp"
-                android:layout_marginLeft="150dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="Stad"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bookState" />
+                <TextView
+                    android:id="@+id/city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:text="Stad"
+                    android:textColor="@color/colorGray"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/price"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="pris"
+                    android:textColor="@color/colorGray"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
                 android:id="@+id/divider2"
                 android:layout_width="369dp"
                 android:layout_height="1dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:background="?android:attr/listDivider"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/price" />
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/expandableView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="16dp"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/price">
+                app:layout_constraintTop_toBottomOf="@+id/frameLayout2">
 
 
                 <ImageButton
                     android:id="@+id/contactSellerBtn"
+                    style="@style/DefaultImageButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -100,9 +117,11 @@
                     android:id="@+id/textView10"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:fontFamily="@font/inter_bold"
                     android:gravity="center"
                     android:text="Kontakta säljare"
                     android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
                     app:layout_constraintBottom_toBottomOf="@+id/contactSellerBtn"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/contactSellerBtn"

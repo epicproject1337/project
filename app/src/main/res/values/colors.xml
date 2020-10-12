@@ -7,6 +7,8 @@
     <color name="colorInput">#F1F3F5</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#5E5E5E</color>
+    <color name="colorDarkGray">#ADB5BD</color>
+    <color name="colorLightPurple">#F3F0FF</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

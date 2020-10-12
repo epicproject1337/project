@@ -93,10 +93,6 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
             }
         });
 
-        /*
-        currently not working
-
-
         sellAds = view.findViewById(R.id.sellAds);
         sellAds.setHasFixedSize(true);
         LinearLayoutManager layoutManager2
@@ -106,9 +102,18 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         Ad.getAdsByUser(mAuth.getUid(), new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-                sellAds.setAdapter(new ItemAdapter(view.getContext(), that, adList));
+                ArrayList<Book> books = new ArrayList<>();
+                for (Ad ad : adList) {
+                    Book book = new Book(ad.getIsbn(), new Book.OnLoadCallback() {
+                        @Override
+                        public void onLoadComplete(Book book) {
+                            books.add(book);
+                            sellAds.setAdapter(new ItemAdapter(view.getContext(), that, books));
+                        }
+                    });
+                }
             }
-        });*/
+        });
 
         ImageButton signOutButton = (ImageButton) view.findViewById(R.id.signOutButton);
         signOutButton.setOnClickListener(new View.OnClickListener() {
