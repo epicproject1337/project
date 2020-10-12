@@ -27,9 +27,8 @@ import java.util.Random;
  * @since 2020-09-10
  */
 
-public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
+public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> implements RecyclerViewClickListener{
     private Context context;
-    static RecyclerViewClickListener itemListener;
     private ArrayList<Ad> ads;
 
 
@@ -37,7 +36,7 @@ public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
      * @param context
      * @param ads List of Book model instances
      */
-    public ManageAdAdapter(Context context, RecyclerViewClickListener itemListener, ArrayList<Ad> ads) {
+    public ManageAdAdapter(Context context, RecyclerViewClickListener listener, ArrayList<Ad> ads) {
         this.context = context;
         this.ads = ads;
     }
@@ -72,7 +71,7 @@ public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new RecyclerViewHolder(view, false);
+        return new RecyclerViewHolder(view, false, this);
     }
 
     /**
@@ -82,7 +81,7 @@ public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
      */
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        Glide.with(context).load(ads.get(position).getImage()).into(holder.getView());
+        Glide.with(context).load(ads.get(position).getImageUrl()).into(holder.getView());
     }
 
     /**
@@ -94,4 +93,11 @@ public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
         return ads.size();
     }
 
+    @Override
+    public void recyclerViewListClicked(View v, int position) {
+        Ad ad = ads.get(position);
+        ad.setArchived(true);
+        //TODO save
+
+    }
 }

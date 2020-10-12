@@ -73,7 +73,7 @@ public class SubscribedBookAdapter extends RecyclerView.Adapter<RecyclerViewHold
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        return new RecyclerViewHolder(view, true);
+        return new RecyclerViewHolder(view, true, itemListener);
     }
 
     /**

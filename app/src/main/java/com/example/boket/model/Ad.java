@@ -92,7 +92,9 @@ public class Ad {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Ad ad = document.toObject(Ad.class);
-                        adList.add(ad);
+                        if (!ad.isArchived()) {
+                            adList.add(ad);
+                        }
                     }
                     callback.onGetAdsComplete(adList);
                 } else {
@@ -188,6 +190,13 @@ public class Ad {
      */
     public boolean isArchived() {
         return archived;
+    }
+
+    /**
+     *
+     */
+    public void setArchived(boolean value) {
+        this.archived = value;
     }
 
     /**
