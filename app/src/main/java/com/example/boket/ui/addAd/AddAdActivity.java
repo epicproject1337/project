@@ -53,7 +53,7 @@ public class AddAdActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             isbn = bundle.getString("BookNumber");
-
+            Log.e("isbn", isbn);
             Book book = new Book(isbn, new Book.OnLoadCallback() {
 
 

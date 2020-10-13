@@ -56,11 +56,52 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                loadingProgressBar.setVisibility(View.VISIBLE);
-                signup(nameEditText.getText().toString(), emailEditText.getText().toString(),
-                        emailConfirmEditText.getText().toString(), passwordEditText.getText().toString(),
-                        passwordConfirmEditText.getText().toString());
+                //loadingProgressBar.setVisibility(View.VISIBLE);
 
+                if (!checkInputs()) {
+                    Log.e("SIGNUP", "SIGNUP NOT VALID");
+                    return;
+                }
+
+                String name = nameEditText.getText().toString();
+                String email = emailEditText.getText().toString();
+                String emailConfirm = emailConfirmEditText.getText().toString();
+                String password = emailConfirmEditText.getText().toString();
+                String passwordConfirm = passwordConfirmEditText.getText().toString();
+
+                signup(name, email, emailConfirm, password, passwordConfirm);
+
+            }
+
+            private boolean checkInputs() {
+
+                boolean inputCorrect = true;
+                String name = nameEditText.getText().toString();
+                if (name.length() <= 0 || name.matches(".*\\d.*")) {
+                    inputCorrect = false;
+                    nameEditText.getText().clear();
+                    nameEditText.setHint("Skriv namn, inga nummer!");
+                }
+                String email = emailEditText.getText().toString();
+                if (email.length() <= 0 || !email.matches("^.+@.+\\..+$")) {
+                    inputCorrect = false;
+                    emailEditText.getText().clear();
+                    emailEditText.setHint("Inte giltig email!");
+                }
+                String emailconf = emailConfirmEditText.getText().toString();
+                if (!emailconf.equals(email)) {
+                    inputCorrect = false;
+                    emailConfirmEditText.getText().clear();
+                    emailConfirmEditText.setHint("Upprepa samma mail!");
+                }
+                String passConf = passwordConfirmEditText.getText().toString();
+                String pass = passwordEditText.getText().toString();
+                if (!passConf.equals(pass)) {
+                    inputCorrect = false;
+                    passwordConfirmEditText.getText().clear();
+                    passwordConfirmEditText.setHint("Upprepa samma lösenord!");
+                }
+                return inputCorrect;
             }
         });
 

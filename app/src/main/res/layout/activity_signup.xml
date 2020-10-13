@@ -116,9 +116,9 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:ems="10"
+        android:hint="Andres Andersson"
         android:inputType="textPersonName"
         android:selectAllOnFocus="true"
-        android:text="Andres Andersson"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -132,9 +132,9 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:ems="10"
+        android:hint="exampel@gmail.com"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
-        android:text="exampel@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -148,9 +148,9 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:ems="10"
+        android:hint="exampel@gmail.com"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
-        android:text="exampel@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -166,7 +166,6 @@
         android:ems="10"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
-        android:text="hej123"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
@@ -182,7 +181,6 @@
         android:ems="10"
         android:inputType="textPassword"
         android:selectAllOnFocus="true"
-        android:text="hej123"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />

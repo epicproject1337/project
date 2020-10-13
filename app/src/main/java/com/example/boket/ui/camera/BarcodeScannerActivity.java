@@ -235,6 +235,7 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                     Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
                 } else {
                     //Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
                 }
