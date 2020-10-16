@@ -128,8 +128,7 @@ public class BooksellersFragment extends Fragment {
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-                for (int i = 0; i < adList.size(); i++) {
-                    Ad ad = adList.get(i);
+                for (Ad ad: adList ) {
                     String state = ad.getCondition();
                     String price = Double.toString(ad.getPrice());
                     String sellerEmail = ad.getEmail();
