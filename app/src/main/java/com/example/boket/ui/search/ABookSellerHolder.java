@@ -32,6 +32,7 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
     private ConstraintLayout expandableLayout;
     private CardView cardView;
 
+
     private IABookSellerCL iaBookSellerCL;
 
     /**
@@ -48,6 +49,7 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
         this.contactSeller = v.findViewById(R.id.contactSellerBtn);
         this.expandableLayout = v.findViewById(R.id.expandableView);
         this.cardView = v.findViewById(R.id.cardView);
+
 
         /*
         contactSeller.setOnClickListener(new View.OnClickListener() {
