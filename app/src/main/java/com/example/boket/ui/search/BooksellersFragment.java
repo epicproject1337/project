@@ -100,6 +100,8 @@ public class BooksellersFragment extends Fragment {
             @Override
             public void onLoadComplete(Book book) {
                 bookNameTextView.setText(book.getName());
+                //System.out.println("book.getName(): "+book.getName());
+                //System.out.println("bookNameTextView: "+ String.valueOf(bookNameTextView.getText()));
                 bookAuthorTextView.setText(book.getAuthor());
                 releaseYearTextView.setText(book.getReleaseYear());
                 editionTextView.setText("Upplaga: " + book.getEdition());
@@ -128,12 +130,12 @@ public class BooksellersFragment extends Fragment {
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-                for (int i = 0; i < adList.size(); i++) {
-                    Ad ad = adList.get(i);
+                for (Ad ad: adList ) {
                     String state = ad.getCondition();
                     String price = Double.toString(ad.getPrice());
                     String sellerEmail = ad.getEmail();
                     String bookSold = String.valueOf(bookNameTextView.getText());
+                    //System.out.println("Boken som säljs är " + bookSold);
                     String city = ad.getCity();
 
                     ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price, city, v);
@@ -146,7 +148,7 @@ public class BooksellersFragment extends Fragment {
                 sortCheapestFirst(bookSellersList);
                 bookAdapter = new BookAdapter(c, bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter);
-                bookAdapter.setrV(adListRecyclerView);
+
 
             }
         });
