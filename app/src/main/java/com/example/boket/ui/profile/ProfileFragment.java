@@ -30,8 +30,8 @@ import java.util.ArrayList;
  */
 public class ProfileFragment extends Fragment implements RecyclerViewClickListener {
 
-    private RecyclerView buyAds;
-    private RecyclerView sellAds;
+    private RecyclerView subscribedBooksView;
+    private RecyclerView adsView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private SubscribedBookAdapter subscribedBookAdapter;
@@ -70,36 +70,36 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         profileName.setText(setRightText());
 
         // Add the following lines to create RecyclerView
-        buyAds = view.findViewById(R.id.buyAds);
-        buyAds.setHasFixedSize(true);
+        subscribedBooksView = view.findViewById(R.id.subscribedBooksView);
+        subscribedBooksView.setHasFixedSize(true);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        buyAds.setLayoutManager(layoutManager);
+        subscribedBooksView.setLayoutManager(layoutManager);
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
 
         subscribedBookAdapter = new SubscribedBookAdapter(view.getContext(), this, new ArrayList<Book>());
-        buyAds.setAdapter(subscribedBookAdapter);
+        subscribedBooksView.setAdapter(subscribedBookAdapter);
         RecyclerViewClickListener that = this;
         Subscription.getSubscribedBooks(mAuth.getUid(), new Subscription.OnLoadSubscribedBooksCallback() {
             @Override
             public void onCompleteCallback(ArrayList<Book> books) {
                 subscribedBookAdapter = new SubscribedBookAdapter(view.getContext(), that, books);
-                buyAds.setAdapter(subscribedBookAdapter);
+                subscribedBooksView.setAdapter(subscribedBookAdapter);
             }
         });
 
-        sellAds = view.findViewById(R.id.sellAds);
-        sellAds.setHasFixedSize(true);
+        adsView = view.findViewById(R.id.adsView);
+        adsView.setHasFixedSize(true);
         LinearLayoutManager layoutManager2
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        sellAds.setLayoutManager(layoutManager2);
+        adsView.setLayoutManager(layoutManager2);
         manageAdAdapter = new ManageAdAdapter(view.getContext(), this, new ArrayList<Ad>());
         Ad.getAdsByUser(mAuth.getUid(), new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
                 manageAdAdapter = new ManageAdAdapter(view.getContext(), that, adList);
-                sellAds.setAdapter(manageAdAdapter);
+                adsView.setAdapter(manageAdAdapter);
             }
         });
 
