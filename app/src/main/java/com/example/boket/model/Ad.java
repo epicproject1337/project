@@ -8,9 +8,12 @@ import androidx.annotation.RequiresApi;
 
 import com.example.boket.controller.Notifier;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,7 +33,10 @@ import java.util.Objects;
  * @since 2020-09-10
  */
 public class Ad {
-    private int id; //TODO: Should we remove it?
+
+    @DocumentId
+    private String id; //TODO: Should we remove it?
+
     private String userId;
     private String email;
     private String isbn;
@@ -79,22 +85,26 @@ public class Ad {
      * Get all ads created by a specific user
      *
      * @param userId   the user id of the creator
+     * @param archived Will return all ads if set to null, archived ads if set to true and
+     *                 non-archived ads if set to false.
      * @param callback callback method which will receive an ArrayList of Ad with all the ads
      *                 belonging to the specific user.
      */
-    public static void getAdsByUser(String userId, GetAdsCallback callback) {
+    public static void getAdsByUser(String userId, Boolean archived, GetAdsCallback callback) {
         final ArrayList<Ad> adList = new ArrayList<Ad>();
 
         Query docRef = db.collection(collection).whereEqualTo("userId", userId);
+        if(archived != null){
+            docRef = docRef.whereEqualTo("archived", archived);
+        }
+
         docRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Ad ad = document.toObject(Ad.class);
-                        if (!ad.isArchived()) {
-                            adList.add(ad);
-                        }
+                        adList.add(ad);
                     }
                     callback.onGetAdsComplete(adList);
                 } else {
@@ -103,6 +113,7 @@ public class Ad {
             }
         });
     }
+
 
     /**
      * Get all ads belonging to a specific book.
@@ -122,6 +133,7 @@ public class Ad {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Ad ad = document.toObject(Ad.class);
+                        System.out.println("ID: " + ad.getId());
                         adList.add(ad);
                     }
                     callback.onGetAdsComplete(adList);
@@ -132,10 +144,27 @@ public class Ad {
         });
     }
 
+    public void archiveAd(){
+        this.archived = true;
+        db.collection(collection).document(this.getId()).set(this).addOnSuccessListener(
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
     /**
      * @return the ad ID
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -190,13 +219,6 @@ public class Ad {
      */
     public boolean isArchived() {
         return archived;
-    }
-
-    /**
-     *
-     */
-    public void setArchived(boolean value) {
-        this.archived = value;
     }
 
     /**

@@ -96,7 +96,7 @@ public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> im
     @Override
     public void recyclerViewListClicked(View v, int position) {
         Ad ad = ads.get(position);
-        ad.setArchived(true);
+        ad.archiveAd();
         //TODO save
 
     }

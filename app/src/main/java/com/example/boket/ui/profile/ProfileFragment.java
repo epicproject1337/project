@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         sellAds.setLayoutManager(layoutManager2);
         manageAdAdapter = new ManageAdAdapter(view.getContext(), this, new ArrayList<Ad>());
-        Ad.getAdsByUser(mAuth.getUid(), new Ad.GetAdsCallback() {
+        Ad.getAdsByUser(mAuth.getUid(), false, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
                 manageAdAdapter = new ManageAdAdapter(view.getContext(), that, adList);
