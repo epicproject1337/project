@@ -18,9 +18,8 @@ import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
 import com.example.boket.ui.profile.ManageAdAdapter;
 import com.example.boket.ui.profile.SubscribedBookAdapter;
-import com.example.boket.ui.search.BookItemAdapter;
+
 import com.example.boket.ui.profile.ProfileFragment;
-import com.example.boket.ui.search.SearchViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.hamcrest.Matcher;
@@ -47,7 +46,6 @@ import static org.junit.Assert.assertThat;
 public class ProfileFragmentTest {
 
     ProfileFragment profileFragment;
-    SearchViewModel searchViewModel;
     RecyclerView subscribedBooksView;
     RecyclerView adsView;
     Timer timer = new Timer();
@@ -74,75 +72,7 @@ public class ProfileFragmentTest {
                 startProfileFragment();
             }
         }));
-
-        ViewAction va = fillRecyclerViews(profileFragment, this);
     }
-
-    public void setSubscribedBooksView(RecyclerView subscribedBooksView){
-        this.subscribedBooksView = subscribedBooksView;
-    }
-
-    public void setAdsView(RecyclerView adsView){
-        this.adsView = adsView;
-    }
-
-    @Test
-    public void testSubscribedBooksViewContainsItem(){
-        assertEquals(1, subscribedBooksView.getChildCount());
-    }
-
-    @Test
-    public void testAdsViewContainsItem(){
-        assertEquals(1, adsView.getChildCount());
-    }
-
-
-    public static ViewAction fillRecyclerViews(ProfileFragment profileFragment, ProfileFragmentTest profileFragmentTest) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
-
-            @Override
-            public String getDescription() {
-                return null;
-            }
-
-            @Override
-            public void perform(UiController uiController, View view) {
-                // Fill subscribed books recyclerview
-                Book book = new Book("123", "Testbook", "Testauthor", "1", "2019", "Image");
-                ArrayList<Book> books = new ArrayList<>();
-                books.add(book);
-                RecyclerView subscribedBooksView = view.findViewById(R.id.subscribedBooksView);
-                subscribedBooksView.setHasFixedSize(true);
-                LinearLayoutManager layoutManager
-                        = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-                SubscribedBookAdapter subscribedBookAdapter = new SubscribedBookAdapter(profileFragment.getContext(), profileFragment, books);
-                subscribedBooksView.setLayoutManager(layoutManager);
-                subscribedBooksView.setAdapter(subscribedBookAdapter);
-                profileFragmentTest.setSubscribedBooksView(subscribedBooksView);
-
-                // Fill ads recyclerview
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                Ad ad = new Ad(auth.getUid(), "test@mail.se", "12345", 100, "Great condition", "Gothenburg", false);
-                ArrayList<Ad> ads = new ArrayList<>();
-                ads.add(ad);
-                RecyclerView adsView = view.findViewById(R.id.adsView);
-                adsView.setHasFixedSize(true);
-                LinearLayoutManager layoutManager2
-                        = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-                adsView.setLayoutManager(layoutManager2);
-                ManageAdAdapter adAdapter = new ManageAdAdapter(profileFragment.getContext(), profileFragment, ads);
-                adsView.setAdapter(adAdapter);
-                profileFragmentTest.setAdsView(adsView);
-
-            }
-        };
-
-    }
-
 
     public static ViewAction doTaskInUIThread(final Runnable r) {
         return new ViewAction() {
@@ -163,30 +93,6 @@ public class ProfileFragmentTest {
 
             }
         };
-    }
-
-
-    @Test
-    public void testGetSubscribedBooks() throws Exception{
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                //Task that need to be done in UI Thread (below I am adding a fragment)
-
-                /*searchViewModel = ViewModelProviders.of(profileFragment).get(SearchViewModel.class);
-
-                ArrayList<Book> books = new ArrayList<>();
-                Book book = new Book("s", "s", "s", "s", "s", "s");
-                books.add(book);
-                searchViewModel.setBooks(books);
-
-                assertEquals(1, searchViewModel.getBooks().size());*/
-
-            }
-        };
-        onView(isRoot()).perform(doTaskInUIThread(r));
-
     }
 
     @Test
