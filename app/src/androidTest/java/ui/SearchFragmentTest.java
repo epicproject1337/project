@@ -33,6 +33,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
@@ -50,6 +51,7 @@ public class SearchFragmentTest {
     SearchViewModel searchViewModel;
     RecyclerView recyclerView;
     Timer timer = new Timer();
+
 
 
     @Rule
@@ -71,49 +73,9 @@ public class SearchFragmentTest {
             public void run() {
                 //Code to add your fragment or anytask that you want to do from UI Thread
                 startSearchFragment();
+
             }
         }));
-
-        fillRecyclerView(searchFragment, this);
-    }
-
-    public void setRecyclerView(RecyclerView recyclerView){
-        this.recyclerView = recyclerView;
-    }
-
-    @Test
-    public void testRecyclerViewContainsItem(){
-
-
-                assertEquals(1, recyclerView.getChildCount());
-
-    }
-
-
-    public static ViewAction fillRecyclerView(SearchFragment searchFragment, SearchFragmentTest searchFragmentTest) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
-
-            @Override
-            public String getDescription() {
-                return null;
-            }
-
-            @Override
-            public void perform(UiController uiController, View view) {
-                BookItem bookItem = new BookItem(searchFragment.getContext(), "s", "s", "s", "s", "s", "s");
-                ArrayList<BookItem> bookItems = new ArrayList<>();
-                bookItems.add(bookItem);
-                RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-                BookItemAdapter bookItemAdapter = new BookItemAdapter(searchFragment.getContext(), searchFragment, bookItems);
-                recyclerView.setAdapter(bookItemAdapter);
-                searchFragmentTest.setRecyclerView(recyclerView);
-
-            }
-        };
 
     }
 
@@ -164,7 +126,6 @@ public class SearchFragmentTest {
     }
 
 
-
     @Test
     public void testRecyclerViewIsVisible(){
         onView(withId(R.id.recyclerView)).check(matches(isDisplayed()));
@@ -172,23 +133,26 @@ public class SearchFragmentTest {
 
 
     @Test
-    public void testOnBookSearch() throws Exception{
-
+    public void testBookSearch() throws Exception{
 
         Runnable r = new Runnable() {
             @Override
             public void run() {
-
                 searchFragment.onQueryTextSubmit("Algebra");
+            }
+        };
+        onView(isRoot()).perform(doTaskInUIThread(r));
+
+        //Sleep thread so searched book can be added to recycler view before the test runs
+        try {
+            Thread.sleep(5*1000);
+
+        Runnable r2 = new Runnable() {
+            @Override
+            public void run() {
 
                 searchViewModel = ViewModelProviders.of(searchFragment).get(SearchViewModel.class);
                 //Task that need to be done in UI Thread
-
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
 
                 assertTrue(searchViewModel.getBooks().size() > 0);
@@ -196,9 +160,13 @@ public class SearchFragmentTest {
 
             }
         };
-        onView(isRoot()).perform(doTaskInUIThread(r));
-
+        onView(isRoot()).perform(doTaskInUIThread(r2));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
 
 

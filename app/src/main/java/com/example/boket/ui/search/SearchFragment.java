@@ -242,8 +242,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
      */
     @Override
     public boolean onQueryTextSubmit(String s) {
-        System.out.println(searchView.getQuery());
-
         searchBooks(s);
 
         return false;
