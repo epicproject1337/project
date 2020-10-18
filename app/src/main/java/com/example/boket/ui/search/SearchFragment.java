@@ -47,6 +47,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     private BookItemAdapter bookItemAdapter;
     private ImageButton cameraButton;
     private TextView noBookTextView;
+    private TextView hintText;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -64,18 +65,17 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
        View v = inflater.inflate(R.layout.fragment_search, container, false);
 
         searchView = v.findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(this);
-
         recyclerView = v.findViewById(R.id.recyclerView);
+        noBookTextView = v.findViewById(R.id.noBookTextView);
+        hintText = v.findViewById(R.id.hintText);
+        cameraButton = v.findViewById(R.id.cameraButton);
+
+        searchView.setOnQueryTextListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        noBookTextView = v.findViewById(R.id.noBookTextView);
-
-        cameraButton = v.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,6 +217,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
      */
     @Override
     public boolean onQueryTextSubmit(String s) {
+        hintText.setVisibility(View.INVISIBLE);
         searchBooks(s);
 
         return false;
