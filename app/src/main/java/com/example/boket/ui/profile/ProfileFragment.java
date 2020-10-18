@@ -19,7 +19,7 @@ import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
 import com.example.boket.model.user.LocalUser;
 import com.example.boket.ui.RecyclerViewClickListener;
-import com.example.boket.ui.search.BooksellersFragment;
+import com.example.boket.ui.bookSeller.BooksellersFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;

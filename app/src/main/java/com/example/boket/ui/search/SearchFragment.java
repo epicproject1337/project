@@ -25,6 +25,7 @@ import com.example.boket.controller.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.example.boket.ui.addAd.AddAdActivity;
 import com.example.boket.ui.addAd.SearchAddAd;
+import com.example.boket.ui.bookSeller.BooksellersFragment;
 import com.example.boket.ui.camera.BarcodeScannerActivity;
 
 import java.util.ArrayList;
@@ -121,11 +122,9 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         searchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     private void updateRecyclerView(ArrayList<BookItem> bookItems){
-
         RecyclerViewClickListener i = this;
         bookItemAdapter = new BookItemAdapter(getContext(), i, bookItems);
         recyclerView.setAdapter(bookItemAdapter);
@@ -149,9 +148,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                     }
                 });
 
-
-
-
             }
         }, 5*1000);
     }
@@ -169,15 +165,10 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 noBookTextView.setVisibility(View.INVISIBLE);
                 searchViewModel.setBooks(bookList);
                 updateRecyclerView(getBookItems());
-
             }
-
-
         });
 
-
         startIsBookFoundTimer();
-
 
     }
 
@@ -190,13 +181,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     @Override
     public void recyclerViewListClicked(View v, int position) {
         BookItem book = bookItemAdapter.getItem(position);
-        System.out.println(book.getBookTitle());
-
         sendISBN(book);
-
-
     }
-
 
     /**
      * Navigates and send the ISBN to either BookSeller or AddAd
@@ -220,7 +206,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                     .replace(R.id.nav_host_fragment, booksellersFragment)
                     .addToBackStack("SearchFragment")
                     .commit();
-
         }
     }
 
