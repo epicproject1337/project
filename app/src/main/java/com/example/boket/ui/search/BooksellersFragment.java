@@ -193,11 +193,6 @@ public class BooksellersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    public RecyclerView getRecyclerView() {
-        return adListRecyclerView;
-    }
-
 }
 
 
