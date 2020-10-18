@@ -41,17 +41,15 @@ import java.util.TimerTask;
 public class SearchFragment extends Fragment implements RecyclerViewClickListener, SearchView.OnQueryTextListener {
 
     private SearchViewModel searchViewModel;
-
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
-    }
-
     private SearchView searchView;
     private RecyclerView recyclerView;
     private BookItemAdapter bookItemAdapter;
     private ImageButton cameraButton;
     private TextView noBookTextView;
-    private Timer timer = new Timer();
+
+    public static SearchFragment newInstance() {
+        return new SearchFragment();
+    }
 
     /**
      * Creates the view of the search page
@@ -66,7 +64,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                              @Nullable Bundle savedInstanceState) {
 
 
-        View v = inflater.inflate(R.layout.fragment_search, container, false);
+       View v = inflater.inflate(R.layout.fragment_search, container, false);
 
         searchView = v.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(this);
@@ -90,15 +88,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 searchView.setIconified(false);
             }
         });
-
-        //Bad solution TODO better solution
-        Activity activity = getActivity();
-        if (activity instanceof SearchAddAd) {
-            ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
-            params.height = 1200;
-            recyclerView.setLayoutParams(params);
-        }
-
 
         return v;
     }
@@ -143,6 +132,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
     private void startIsBookFoundTimer(){
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
 
             @Override
