@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.Book;
 import com.example.boket.controller.Search;
@@ -79,7 +80,17 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                if(getActivity() instanceof MainActivity){
+                    bundle.putString("PrevPage", "searchFragment");
+                }
+                else if(getActivity() instanceof AddAdActivity){
+                    bundle.putString("PrevPage", "addAdActivity");
+                }
+
+
                 Intent intent = new Intent(getContext(), BarcodeScannerActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
