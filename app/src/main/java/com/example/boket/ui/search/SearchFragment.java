@@ -19,12 +19,14 @@ import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.Book;
 import com.example.boket.controller.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.example.boket.ui.addAd.AddAdActivity;
 import com.example.boket.ui.addAd.SearchAddAd;
+import com.example.boket.ui.bookSeller.BooksellersFragment;
 import com.example.boket.ui.camera.BarcodeScannerActivity;
 
 import java.util.ArrayList;
@@ -41,17 +43,16 @@ import java.util.TimerTask;
 public class SearchFragment extends Fragment implements RecyclerViewClickListener, SearchView.OnQueryTextListener {
 
     private SearchViewModel searchViewModel;
-
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
-    }
-
     private SearchView searchView;
     private RecyclerView recyclerView;
     private BookItemAdapter bookItemAdapter;
     private ImageButton cameraButton;
     private TextView noBookTextView;
-    private Timer timer = new Timer();
+    private TextView hintText;
+
+    public static SearchFragment newInstance() {
+        return new SearchFragment();
+    }
 
     /**
      * Creates the view of the search page
@@ -65,22 +66,31 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
-        View v = inflater.inflate(R.layout.fragment_search, container, false);
+       View v = inflater.inflate(R.layout.fragment_search, container, false);
 
         searchView = v.findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(this);
-
         recyclerView = v.findViewById(R.id.recyclerView);
+        noBookTextView = v.findViewById(R.id.noBookTextView);
+        hintText = v.findViewById(R.id.hintText);
+        cameraButton = v.findViewById(R.id.cameraButton);
+
+        searchView.setOnQueryTextListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        noBookTextView = v.findViewById(R.id.noBookTextView);
-
-        cameraButton = v.findViewById(R.id.cameraButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                if(getActivity() instanceof MainActivity){
+                    bundle.putString("PrevPage", "searchFragment");
+                }
+                else if(getActivity() instanceof AddAdActivity){
+                    bundle.putString("PrevPage", "addAdActivity");
+                }
+
+
                 Intent intent = new Intent(getContext(), BarcodeScannerActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -90,15 +100,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 searchView.setIconified(false);
             }
         });
-
-        //Bad solution TODO better solution
-        Activity activity = getActivity();
-        if (activity instanceof SearchAddAd) {
-            ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
-            params.height = 1200;
-            recyclerView.setLayoutParams(params);
-        }
-
 
         return v;
     }
@@ -132,17 +133,16 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         searchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     private void updateRecyclerView(ArrayList<BookItem> bookItems){
-
         RecyclerViewClickListener i = this;
         bookItemAdapter = new BookItemAdapter(getContext(), i, bookItems);
         recyclerView.setAdapter(bookItemAdapter);
     }
 
     private void startIsBookFoundTimer(){
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
 
             @Override
@@ -158,9 +158,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                         }
                     }
                 });
-
-
-
 
             }
         }, 5*1000);
@@ -179,15 +176,10 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 noBookTextView.setVisibility(View.INVISIBLE);
                 searchViewModel.setBooks(bookList);
                 updateRecyclerView(getBookItems());
-
             }
-
-
         });
 
-
         startIsBookFoundTimer();
-
 
     }
 
@@ -200,13 +192,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     @Override
     public void recyclerViewListClicked(View v, int position) {
         BookItem book = bookItemAdapter.getItem(position);
-        System.out.println(book.getBookTitle());
-
         sendISBN(book);
-
-
     }
-
 
     /**
      * Navigates and send the ISBN to either BookSeller or AddAd
@@ -230,7 +217,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                     .replace(R.id.nav_host_fragment, booksellersFragment)
                     .addToBackStack("SearchFragment")
                     .commit();
-
         }
     }
 
@@ -242,6 +228,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
      */
     @Override
     public boolean onQueryTextSubmit(String s) {
+        hintText.setVisibility(View.INVISIBLE);
         searchBooks(s);
 
         return false;

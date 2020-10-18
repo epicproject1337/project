@@ -1,12 +1,7 @@
-package com.example.boket.ui.search;
+package com.example.boket.ui.bookSeller;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.boket.R;
 import com.example.boket.ui.RecyclerViewClickListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -51,7 +50,7 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
     @NonNull
     @Override
     public BookItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_book_item, null);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_item, null);
         return new BookItemHolder(v);
     }
 

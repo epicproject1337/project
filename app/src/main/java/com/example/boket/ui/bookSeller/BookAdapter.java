@@ -1,8 +1,7 @@
-package com.example.boket.ui.search;
+package com.example.boket.ui.bookSeller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -12,16 +11,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.boket.R;
-import com.example.boket.model.Ad;
 import com.example.boket.model.user.LocalUser;
 
 import java.util.ArrayList;
-
-import io.grpc.internal.JsonUtil;
 
 /**
  * @author Tarik Porobic

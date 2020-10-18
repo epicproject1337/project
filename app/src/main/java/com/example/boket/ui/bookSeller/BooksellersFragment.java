@@ -1,4 +1,4 @@
-package com.example.boket.ui.search;
+package com.example.boket.ui.bookSeller;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
