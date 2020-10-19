@@ -3,14 +3,12 @@ package com.example.boket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.boket.model.user.LocalUser;
 import com.example.boket.ui.addAd.SearchAddAd;
 import com.example.boket.ui.login.LoginActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
-        }else{
-            //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
 
         setContentView(R.layout.activity_main);
@@ -63,23 +59,10 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Method to signout a user.
      */
-    //TODO: Move logic to user model.
     public void signOut() {
         LocalUser.signout();
-
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
-/*
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            this.finish();
-        }
-    }*/
-
-
 }
