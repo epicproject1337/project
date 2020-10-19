@@ -18,7 +18,8 @@ import com.example.boket.R;
 import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.boket.model.user.LocalUser;
+
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ import java.util.ArrayList;
  */
 public class BooksellersFragment extends Fragment {
 
-    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private LocalUser user = LocalUser.getCurrentUser();
     private static final String TAG = BooksellersFragment.class.getName();
     private String ISBN_number;
     private ImageView bookImageView;
@@ -105,8 +106,10 @@ public class BooksellersFragment extends Fragment {
                 releaseYearTextView.setText(book.getReleaseYear());
                 editionTextView.setText("Upplaga: " + book.getEdition());
                 isbnTextView.setText("ISBN: " + book.getIsbn());
-                Glide.with(v).load(book.getImage()).into(bookImageView);
-                Subscription.isSubscribed(book.getIsbn(), mAuth.getUid(), new Subscription.OnLoadCallback() {
+                if (v.isShown()) {
+                    Glide.with(v).load(book.getImage()).into(bookImageView);
+                }
+                Subscription.isSubscribed(book.getIsbn(), user.getUid(), new Subscription.OnLoadCallback() {
                     @Override
                     public void isSubscribedCallback(boolean isSubscribed) {
                         System.out.println(isSubscribed);
@@ -129,7 +132,7 @@ public class BooksellersFragment extends Fragment {
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-                for (Ad ad: adList ) {
+                for (Ad ad : adList) {
                     String state = ad.getCondition();
                     String price = Double.toString(ad.getPrice());
                     String sellerEmail = ad.getEmail();
@@ -170,10 +173,10 @@ public class BooksellersFragment extends Fragment {
 
     private void subscribeButtonClicked() {
         if (isSubscribedToBook) {
-            Subscription.unsubscribeUser(ISBN_number, mAuth.getUid());
+            Subscription.unsubscribeUser(ISBN_number, user.getUid());
             subscribeButton.setText("Prenumerera");
         } else {
-            Subscription.subscribeUser(ISBN_number, mAuth.getUid());
+            Subscription.subscribeUser(ISBN_number, user.getUid());
             subscribeButton.setText("Avprenumerera");
         }
         isSubscribedToBook = !isSubscribedToBook;
