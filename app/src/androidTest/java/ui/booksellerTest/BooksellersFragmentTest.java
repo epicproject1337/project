@@ -41,9 +41,13 @@ import java.util.concurrent.TimeUnit;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -79,19 +83,62 @@ public class BooksellersFragmentTest {
         fragmentTransaction.add(R.id.nav_host_fragment, fragment);
         fragmentTransaction.commit();
     }
-/*
+//TODO
+    //https://github.com/AAkira/ExpandableLayout/blob/master/library-ui-test/src/androidTest/java/com/github/aakira/expandablelayout/uitest/ExpandableRecyclerViewActivityTest.kt
+    /*
     @Test
-    public void testExpandableView() {
-        RecyclerView rv = onView(withId(R.id.adList));
-        onView(ViewMatchers.withId(R.id.adList))
-                .
+    public void testHoldersShow() {
+        RecyclerView rv = mActivity.findViewById(R.id.adList);
 
-            Espresso.onView(ViewMatchers.withId(R.id.adList))
-                    .perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.click()));
     }
 
 
- */
+    @Test
+    public void testExpandableView() {
+
+        onView(ViewMatchers.withId(R.id.adList))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0,
+                        click()));
+
+        onView(ViewMatchers.withId(R.id.adList))
+                .check(RecyclerViewActions.actionOnItemAtPosition(0,
+                        onView(ViewMatchers.withId(R.id.expandableView)).check(isDisplayed())));
+
+        onView(withId(R.id.expandableView)).check(matches(isDisplayed()));
+    }
+
+    */
+
+    @Test
+    public void testTextSubscribeBtn() throws InterruptedException {
+        Bundle bundle = booksellersFragment.getArguments();
+        assert bundle != null;
+        String bookISBN = bundle.getString("BookNumber");
+        boolean subscriptionChanged = Subscribed(bookISBN);
+        if (!subscriptionChanged) {
+            onView(withId(R.id.subscribeButton)).check(matches(withText("PRENUMERERA")));
+        } else {
+            onView(withId(R.id.subscribeButton)).check(matches(withText("AVPRENUMERERA")));
+        }
+    }
+
+    @Test
+    public void testTextSubscribeBtnClicked() throws InterruptedException {
+        Bundle bundle = booksellersFragment.getArguments();
+        assert bundle != null;
+        String bookISBN = bundle.getString("BookNumber");
+        boolean subscriptionChanged = Subscribed(bookISBN);
+        if (!subscriptionChanged) {
+            onView(withId(R.id.subscribeButton)).check(matches(withText("PRENUMERERA")));
+            onView(withId(R.id.subscribeButton)).perform(click());
+            onView(withId(R.id.subscribeButton)).check(matches(withText("AVPRENUMERERA")));
+        } else {
+            onView(withId(R.id.subscribeButton)).check(matches(withText("AVPRENUMERERA")));
+            onView(withId(R.id.subscribeButton)).perform(click());
+            onView(withId(R.id.subscribeButton)).check(matches(withText("PRENUMERERA")));
+        }
+    }
+
     @Test
     public void testSubscribeButtonClicked() throws InterruptedException {
         Bundle bundle = booksellersFragment.getArguments();
@@ -118,7 +165,7 @@ public class BooksellersFragmentTest {
         });
 
         lock.await(2, TimeUnit.MINUTES);
-        //Thread.sleep(1500);
+        Thread.sleep(1500);
         return subscribed[0];
     }
 
