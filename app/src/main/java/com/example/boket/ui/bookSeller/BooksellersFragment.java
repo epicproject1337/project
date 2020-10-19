@@ -1,4 +1,4 @@
-package com.example.boket.ui.search;
+package com.example.boket.ui.bookSeller;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,8 +18,8 @@ import com.example.boket.R;
 import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
-import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
+import com.example.boket.model.user.LocalUser;
+
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ import java.util.ArrayList;
  */
 public class BooksellersFragment extends Fragment {
 
-    private static FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private LocalUser user = LocalUser.getCurrentUser();
     private static final String TAG = BooksellersFragment.class.getName();
     private String ISBN_number;
     private ImageView bookImageView;
@@ -100,12 +100,16 @@ public class BooksellersFragment extends Fragment {
             @Override
             public void onLoadComplete(Book book) {
                 bookNameTextView.setText(book.getName());
+                //System.out.println("book.getName(): "+book.getName());
+                //System.out.println("bookNameTextView: "+ String.valueOf(bookNameTextView.getText()));
                 bookAuthorTextView.setText(book.getAuthor());
                 releaseYearTextView.setText(book.getReleaseYear());
                 editionTextView.setText("Upplaga: " + book.getEdition());
                 isbnTextView.setText("ISBN: " + book.getIsbn());
-                Glide.with(v).load(book.getImage()).into(bookImageView);
-                Subscription.isSubscribed(book.getIsbn(), mAuth.getUid(), new Subscription.OnLoadCallback() {
+                if (v.isShown()) {
+                    Glide.with(v).load(book.getImage()).into(bookImageView);
+                }
+                Subscription.isSubscribed(book.getIsbn(), user.getUid(), new Subscription.OnLoadCallback() {
                     @Override
                     public void isSubscribedCallback(boolean isSubscribed) {
                         System.out.println(isSubscribed);
@@ -128,12 +132,12 @@ public class BooksellersFragment extends Fragment {
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-                for (int i = 0; i < adList.size(); i++) {
-                    Ad ad = adList.get(i);
+                for (Ad ad : adList) {
                     String state = ad.getCondition();
                     String price = Double.toString(ad.getPrice());
                     String sellerEmail = ad.getEmail();
                     String bookSold = String.valueOf(bookNameTextView.getText());
+                    //System.out.println("Boken som säljs är " + bookSold);
                     String city = ad.getCity();
 
                     ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price, city, v);
@@ -146,7 +150,7 @@ public class BooksellersFragment extends Fragment {
                 sortCheapestFirst(bookSellersList);
                 bookAdapter = new BookAdapter(c, bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter);
-                bookAdapter.setrV(adListRecyclerView);
+
 
             }
         });
@@ -169,10 +173,10 @@ public class BooksellersFragment extends Fragment {
 
     private void subscribeButtonClicked() {
         if (isSubscribedToBook) {
-            Subscription.unsubscribeUser(ISBN_number, mAuth.getUid());
+            Subscription.unsubscribeUser(ISBN_number, user.getUid());
             subscribeButton.setText("Prenumerera");
         } else {
-            Subscription.subscribeUser(ISBN_number, mAuth.getUid());
+            Subscription.subscribeUser(ISBN_number, user.getUid());
             subscribeButton.setText("Avprenumerera");
         }
         isSubscribedToBook = !isSubscribedToBook;
@@ -191,11 +195,6 @@ public class BooksellersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    public RecyclerView getRecyclerView() {
-        return adListRecyclerView;
-    }
-
 }
 
 

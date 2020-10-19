@@ -29,8 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -50,7 +49,7 @@ public class SearchFragmentTest {
     SearchFragment searchFragment;
     SearchViewModel searchViewModel;
     RecyclerView recyclerView;
-    Timer timer = new Timer();
+
 
 
 
@@ -113,7 +112,7 @@ public class SearchFragmentTest {
                 searchViewModel = ViewModelProviders.of(searchFragment).get(SearchViewModel.class);
 
                 ArrayList<Book> books = new ArrayList<>();
-                Book book = new Book("s", "s", "s", "s", "s", "s");
+                Book book = new Book("9789144090504", "Algebra och diskret matematik", "Johan Jonasson, Stefan Lemurell", "2", "2013", "https://s1.adlibris.com/images/3075059/algebra-och-diskret-matematik.jpg");
                 books.add(book);
                 searchViewModel.setBooks(books);
 
@@ -152,11 +151,9 @@ public class SearchFragmentTest {
             public void run() {
 
                 searchViewModel = ViewModelProviders.of(searchFragment).get(SearchViewModel.class);
-                //Task that need to be done in UI Thread
 
-
+                //List of books is empty before search, list size larger than 1 show that search was successful
                 assertTrue(searchViewModel.getBooks().size() > 0);
-
 
             }
         };

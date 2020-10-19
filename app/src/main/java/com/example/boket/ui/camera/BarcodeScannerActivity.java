@@ -24,6 +24,7 @@ import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
 import com.example.boket.cameraUtil.common.GraphicOverlay;
 import com.example.boket.ui.addAd.AddAdActivity;
+import com.example.boket.ui.bookSeller.BooksellersFragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.ml.vision.FirebaseVision;
@@ -232,10 +233,22 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("BookNumber", isbn);
 
-                    Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                    finish();
+                    Bundle prevPageBundle = getIntent().getExtras();
+                    String prevPage = prevPageBundle.getString("prevPage");
+                    if(prevPage == "searchFragment"){
+                        BooksellersFragment booksellersFragment = new BooksellersFragment();
+                        booksellersFragment.setArguments(bundle);
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.nav_host_fragment, booksellersFragment)
+                                .commit();
+                    }
+                    else if(prevPage == "addAdActivity") {
+                        Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                        finish();
+                    }
                 } else {
                     //Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
                 }

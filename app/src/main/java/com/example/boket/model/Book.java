@@ -6,7 +6,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.boket.model.integrations.Algolia;
+import com.example.boket.controller.Search;
+import com.example.boket.controller.integrations.Algolia;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,7 +31,6 @@ public class Book {
 
     private String isbn;
     private String name;
-    //TODO: Author should be some kind of array/object.
     private String author;
     private String edition;
     private String releaseYear;
@@ -40,7 +40,6 @@ public class Book {
     private final String collection = "books";
 
     private static final String TAG = Book.class.getName();
-    private static final String bookIndex = "BOOKINDEX";
 
     public Book() {
     }
@@ -147,14 +146,13 @@ public class Book {
                     }
                 });
 
-        //Add to Algolia..
+        //Add to search index..
         try {
             JSONObject jObj = new JSONObject().put("objectID", this.isbn )
                     .put("isbn", this.isbn)
                     .put("name", this.name)
                     .put("author", this.author);
-            Algolia a = new Algolia(bookIndex);
-            a.addToIndex(jObj);
+            Search.addToIndex(jObj);
         } catch (JSONException e) {
             //TODO: Error handling
             e.printStackTrace();

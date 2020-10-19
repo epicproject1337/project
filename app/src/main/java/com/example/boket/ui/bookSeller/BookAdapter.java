@@ -1,8 +1,7 @@
-package com.example.boket.ui.search;
+package com.example.boket.ui.bookSeller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -12,16 +11,12 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.boket.R;
-import com.example.boket.model.Ad;
 import com.example.boket.model.user.LocalUser;
 
 import java.util.ArrayList;
-
-import io.grpc.internal.JsonUtil;
 
 /**
  * @author Tarik Porobic
@@ -30,9 +25,10 @@ import io.grpc.internal.JsonUtil;
  */
 public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
 
-    private RecyclerView rV;
     private ArrayList<ABookSeller> bookSellers;
+    private ArrayList<ABookSellerHolder> bookSellerHolder = new ArrayList<>();
     private Context c;
+
 
     /**
      * @param c           context of BooksellersFragment
@@ -54,7 +50,9 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     @Override
     public ABookSellerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_abookseller, null);
+
         ABookSellerHolder ABsH = new ABookSellerHolder(v);
+        bookSellerHolder.add(ABsH);
         //rV.add(ABsH);
         //System.out.println(rV.size());
         return ABsH;
@@ -73,18 +71,17 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onIABookSellerCL(View v, int i) {
-                ABookSellerHolder vh = (ABookSellerHolder) rV.findViewHolderForAdapterPosition(i);
-                //ABookSellerHolder vh = rV.get(i);
-                assert vh != null;
-                if (vh.getExpandableLayout().getVisibility() == View.GONE) {
-                    TransitionManager.beginDelayedTransition(vh.getCardView(), new AutoTransition());
-                    vh.getExpandableLayout().setVisibility(View.VISIBLE);
+                ABookSellerHolder aBsH = bookSellerHolder.get(i);
+
+                if (aBsH.getExpandableLayout().getVisibility() == View.GONE) {
+                    TransitionManager.beginDelayedTransition(aBsH.getCardView(), new AutoTransition());
+                    aBsH.getExpandableLayout().setVisibility(View.VISIBLE);
 
                     closeTheOther(i);
 
                 } else {
                     //TransitionManager.beginDelayedTransition(vh.getCardView(), new AutoTransition());
-                    vh.getExpandableLayout().setVisibility(View.GONE);
+                    aBsH.getExpandableLayout().setVisibility(View.GONE);
                 }
             }
 
@@ -119,19 +116,28 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             }
         });
         holder.getState().setText(bookSellers.get(i).getState());
-        holder.getPrice().setText(bookSellers.get(i).getPrice()+" kr");
+        holder.getPrice().setText(bookSellers.get(i).getPrice() + " kr");
         holder.getCity().setText(bookSellers.get(i).getCity());
 
 
     }
 
     private void closeTheOther(int i) {
+        /*
         for (int pos = 0; pos < bookSellers.size(); pos++) {
             if (pos != i) {
+
                 ABookSellerHolder vh = (ABookSellerHolder) rV.findViewHolderForAdapterPosition(pos);
                 //ABookSellerHolder vh = rV.get(i);
                 assert vh != null;
                 vh.getExpandableLayout().setVisibility(View.GONE);
+            }
+        }
+         */
+        for (int pos = 0; pos < bookSellerHolder.size(); pos++) {
+            if (pos != i) {
+                ABookSellerHolder aBSH = bookSellerHolder.get(pos);
+                aBSH.getExpandableLayout().setVisibility(View.GONE);
             }
         }
     }
@@ -144,9 +150,6 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
         return bookSellers.size();
     }
 
-    public void setrV(RecyclerView rV) {
-        this.rV = rV;
-    }
 
 
 }

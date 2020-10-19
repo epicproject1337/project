@@ -54,9 +54,6 @@ public class BookItem extends View {
 
     }
 
-
-
-
     private void init(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
@@ -66,10 +63,6 @@ public class BookItem extends View {
         a.recycle();
 
     }
-
-
-
-
 
     public String getBookTitle() {
         return bookTitle;
@@ -118,11 +111,5 @@ public class BookItem extends View {
     public void setImage(String image) {
         this.image = image;
     }
-    /*
-    @Override
-    public void onClick(View view) {
-        System.out.println(this.bookTitle);
-    }
 
- */
 }

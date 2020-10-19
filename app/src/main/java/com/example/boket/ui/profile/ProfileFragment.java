@@ -19,7 +19,7 @@ import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
 import com.example.boket.model.user.LocalUser;
 import com.example.boket.ui.RecyclerViewClickListener;
-import com.example.boket.ui.search.BooksellersFragment;
+import com.example.boket.ui.bookSeller.BooksellersFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         adsView.setLayoutManager(layoutManager2);
         manageAdAdapter = new ManageAdAdapter(view.getContext(), this, new ArrayList<Ad>());
-        Ad.getAdsByUser(mAuth.getUid(), new Ad.GetAdsCallback() {
+        Ad.getAdsByUser(mAuth.getUid(), false, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
                 manageAdAdapter = new ManageAdAdapter(view.getContext(), that, adList);

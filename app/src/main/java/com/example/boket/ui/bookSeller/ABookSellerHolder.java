@@ -1,12 +1,7 @@
-package com.example.boket.ui.search;
+package com.example.boket.ui.bookSeller;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
-import android.transition.AutoTransition;
-import android.transition.TransitionManager;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -32,6 +27,7 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
     private ConstraintLayout expandableLayout;
     private CardView cardView;
 
+
     private IABookSellerCL iaBookSellerCL;
 
     /**
@@ -48,6 +44,7 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
         this.contactSeller = v.findViewById(R.id.contactSellerBtn);
         this.expandableLayout = v.findViewById(R.id.expandableView);
         this.cardView = v.findViewById(R.id.cardView);
+
 
         /*
         contactSeller.setOnClickListener(new View.OnClickListener() {

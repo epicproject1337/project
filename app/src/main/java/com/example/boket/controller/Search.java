@@ -3,7 +3,7 @@ package com.example.boket.controller;
 import android.util.Log;
 
 import com.example.boket.model.Book;
-import com.example.boket.model.integrations.Algolia;
+import com.example.boket.controller.integrations.Algolia;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,9 +20,10 @@ import java.util.ArrayList;
 public class Search {
 
     private static final String bookIndex = "BOOKINDEX";
+    private static final Algolia algolia = new Algolia(bookIndex);
 
 
-    public Search() {
+    private Search() {
     }
 
     /**
@@ -33,9 +34,8 @@ public class Search {
      *                       with the given query.
      */
     public static void searchBooks(String query, SearchCallback searchCallback) {
-        Algolia algolia = new Algolia(bookIndex);
         ArrayList<Book> books = new ArrayList<Book>();
-        algolia.search(query, new ISearch.SearchCallback() {
+        algolia.search(query, new Algolia.SearchCallback() {
             @Override
             public void onSearchComplete(JSONObject content) {
                 try {
@@ -65,6 +65,9 @@ public class Search {
         });
     }
 
+    public static void addToIndex(JSONObject json) {
+        algolia.addToIndex(json);
+    }
 
 
     public interface SearchCallback {

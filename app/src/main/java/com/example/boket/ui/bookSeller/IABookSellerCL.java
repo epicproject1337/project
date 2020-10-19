@@ -1,4 +1,4 @@
-package com.example.boket.ui.search;
+package com.example.boket.ui.bookSeller;
 
 import android.view.View;
 
