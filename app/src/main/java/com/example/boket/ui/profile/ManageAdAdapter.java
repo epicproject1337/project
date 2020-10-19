@@ -97,7 +97,5 @@ public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> im
     public void recyclerViewListClicked(View v, int position) {
         Ad ad = ads.get(position);
         ad.archiveAd();
-        //TODO save
-
     }
 }

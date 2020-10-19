@@ -64,12 +64,11 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        // Inflate the layout for this fragment
 
         profileName = view.findViewById(R.id.profileName);
         profileName.setText(setRightText());
 
-        // Add the following lines to create RecyclerView
+        // Creating RecyclerView for subscribed books
         subscribedBooksView = view.findViewById(R.id.subscribedBooksView);
         subscribedBooksView.setHasFixedSize(true);
         LinearLayoutManager layoutManager
@@ -89,6 +88,8 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
             }
         });
 
+
+        // Creating RecyclerView for own ads
         adsView = view.findViewById(R.id.adsView);
         adsView.setHasFixedSize(true);
         LinearLayoutManager layoutManager2
@@ -103,6 +104,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
             }
         });
 
+        // Set onclick behavior for sign out button
         ImageButton signOutButton = (ImageButton) view.findViewById(R.id.signOutButton);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +116,9 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         return view;
     }
 
+    /**
+     * @return concatenated string containing the name of the user
+     */
     private String setRightText() {
         String returnString = LocalUser.getCurrentUser().getName();
         for (int i = 0; i < returnString.length(); i++) {
