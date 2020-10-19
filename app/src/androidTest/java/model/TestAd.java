@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.example.boket.model.Ad;
+import com.example.boket.model.user.User;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -20,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 
 public class TestAd {
     private Context context;
-    private FirebaseAuth mAuth;
 
     @Before
     public void init(){
@@ -28,21 +28,33 @@ public class TestAd {
     }
 
     @Test
-    public void CreateAd() throws InterruptedException {
+    public void CreateAdThenArchive() throws InterruptedException {
         CountDownLatch lock = new CountDownLatch(1);
         FirebaseApp.initializeApp(context);
-        mAuth = FirebaseAuth.getInstance();
-        Ad ad = new Ad(mAuth.getCurrentUser().getUid(), "test@gmail.com", "9789144090504", 120, "Giood", "göteborg", false);
+        User user = new MockUser();
+        Ad ad = new Ad(user.getUid(), user.getEmail(), "9789144090504", 120, "Giood", user.getLocation(), false);
         ad.save();
-        Ad.getAdsByISBN("9789144090504", new Ad.GetAdsCallback() {
+        TimeUnit.SECONDS.sleep(1);
+        Ad.getAdsByUser(user.getUid(), false, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
                 Ad loadedAd = adList.get(0);
-                Log.d("LoadAD", "SUCCESS:" + loadedAd.toString());
+                Log.d("onComplete", "SUCCESS:" + loadedAd.toString());
+                Log.d("onComplete", "SUCCESS:" + ad.toString());
                 assertEquals(ad, loadedAd);
-                lock.countDown();
+                loadedAd.archiveAd();
+                Ad.getAdsByUser(user.getUid(), false, new Ad.GetAdsCallback() {
+                    @Override
+                    public void onGetAdsComplete(ArrayList<Ad> adList) {
+                        Ad loadedAd = adList.get(0);
+                        Log.d("onComplete", "SUCCESS:" + loadedAd.toString());
+                        assertEquals(ad, loadedAd);
+                        lock.countDown();
+                    }
+                });
             }
         });
+        TimeUnit.SECONDS.sleep(1);
         lock.await(1, TimeUnit.MINUTES);
     }
 }

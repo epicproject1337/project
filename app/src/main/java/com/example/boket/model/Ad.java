@@ -249,7 +249,7 @@ public class Ad {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ad ad = (Ad) o;
-        return id == ad.id &&
+        return //id == ad.id &&
                 Double.compare(ad.price, price) == 0 &&
                 archived == ad.archived &&
                 userId.equals(ad.userId) &&
