@@ -51,11 +51,10 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     public ABookSellerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_abookseller, null);
 
-        ABookSellerHolder ABsH = new ABookSellerHolder(v);
-        bookSellerHolder.add(ABsH);
-        //rV.add(ABsH);
-        //System.out.println(rV.size());
-        return ABsH;
+        ABookSellerHolder aBookSellerHolder = new ABookSellerHolder(v);
+        bookSellerHolder.add(aBookSellerHolder);
+
+        return aBookSellerHolder;
     }
 
     /**
