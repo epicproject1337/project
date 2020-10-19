@@ -92,6 +92,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 Intent intent = new Intent(getContext(), BarcodeScannerActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
+
             }
         });
         searchView.setOnClickListener(new View.OnClickListener() {
@@ -202,7 +203,7 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
      */
     private void sendISBN(BookItem book) {
         Bundle bundle = new Bundle();
-        bundle.putString("BookNumber", book.getIsbn());
+        bundle.putString("isbn", book.getIsbn());
 
         Activity activity = getActivity();
         if (activity instanceof SearchAddAdActivity) {

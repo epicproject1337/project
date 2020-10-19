@@ -65,7 +65,7 @@ public class BooksellersFragmentTest {
         booksellersFragment = new BooksellersFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("BookNumber", DB_ISBN_generator());
+        bundle.putString("isbn", DB_ISBN_generator());
         booksellersFragment.setArguments(bundle);
         startFragment(booksellersFragment);
         subscribeBtn = onView(withId(R.id.subscribeButton));
@@ -96,7 +96,7 @@ public class BooksellersFragmentTest {
     public void testSubscribeButtonClicked() throws InterruptedException {
         Bundle bundle = booksellersFragment.getArguments();
         assert bundle != null;
-        String bookISBN = bundle.getString("BookNumber");
+        String bookISBN = bundle.getString("isbn");
         boolean subscriptionChanged = Subscribed(bookISBN);
 
         subscribeBtn.perform(click());

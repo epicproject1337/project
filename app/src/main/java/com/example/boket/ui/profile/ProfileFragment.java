@@ -140,7 +140,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
     public void recyclerViewListClicked(View v, int position) {
         Book book = subscribedBookAdapter.getItem(position);
         Bundle bundle = new Bundle();
-        bundle.putString("BookNumber", book.getIsbn());
+        bundle.putString("isbn", book.getIsbn());
         BooksellersFragment booksellersFragment = new BooksellersFragment();
         booksellersFragment.setArguments(bundle);
         getFragmentManager()
