@@ -9,11 +9,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor.BarcodeResultListener;
@@ -23,6 +26,7 @@ import com.example.boket.cameraUtil.common.CameraSource;
 import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
 import com.example.boket.cameraUtil.common.GraphicOverlay;
+import com.example.boket.model.Book;
 import com.example.boket.ui.addAd.AddAdActivity;
 import com.example.boket.ui.bookSeller.BooksellersFragment;
 import com.google.android.gms.common.ConnectionResult;
@@ -231,26 +235,26 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
                 if (BarcodeScanner.isValidISBN13(isbn)) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("BookNumber", isbn);
+                    bundle.putString("isbn", isbn);
 
                     Bundle prevPageBundle = getIntent().getExtras();
-                    String prevPage = prevPageBundle.getString("prevPage");
-                    if(prevPage == "searchFragment"){
+                    String prevPage = prevPageBundle.getString("PrevPage");
+
+                    if(prevPage.equals("searchFragment")){
                         BooksellersFragment booksellersFragment = new BooksellersFragment();
                         booksellersFragment.setArguments(bundle);
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.nav_host_fragment, booksellersFragment)
+                                .addToBackStack(null)
                                 .commit();
                     }
-                    else if(prevPage == "addAdActivity") {
+                    else if(prevPage.equals("searchAddAdActivity")) {
                         Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
                         finish();
                     }
-                } else {
-                    //Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
                 }
 
             }

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.example.boket.R;
 
 
-public class SearchAddAd extends AppCompatActivity {
+public class SearchAddAdActivity extends AppCompatActivity {
 
 
 

@@ -61,7 +61,7 @@ public class BooksellersFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_booksellers, container, false);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            ISBN_number = bundle.getString("BookNumber");
+            ISBN_number = bundle.getString("isbn");
 
         }
         init(v);

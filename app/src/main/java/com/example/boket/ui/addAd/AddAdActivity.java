@@ -52,11 +52,8 @@ public class AddAdActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            isbn = bundle.getString("BookNumber");
-            Log.e("isbn", isbn);
+            isbn = bundle.getString("isbn");
             Book book = new Book(isbn, new Book.OnLoadCallback() {
-
-
                 @Override
                 public void onLoadComplete(Book book) {
                     bookTitleTextView.setText(book.getName());
@@ -64,7 +61,6 @@ public class AddAdActivity extends AppCompatActivity {
                     releaseYearTextView.setText(book.getReleaseYear());
                     editionTextView.setText("Upplaga: " + book.getEdition());
                     isbnTextView.setText("ISBN: " + book.getIsbn());
-                    Log.e("bookImage", book.getImage());
                     Glide.with(AddAdActivity.this).load(book.getImage()).into(bookImage);
                 }
             });

@@ -3,14 +3,12 @@ package com.example.boket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.boket.model.user.LocalUser;
-import com.example.boket.ui.addAd.SearchAddAd;
+import com.example.boket.ui.addAd.SearchAddAdActivity;
 import com.example.boket.ui.login.LoginActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view the associated view.
      */
     public void startAddAdActivity(View view) {
-        Intent intent = new Intent(this, SearchAddAd.class);
+        Intent intent = new Intent(this, SearchAddAdActivity.class);
         startActivity(intent);
     }
 
