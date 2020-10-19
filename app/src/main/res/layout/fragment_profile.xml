@@ -34,7 +34,7 @@
         app:srcCompat="@drawable/signout" />
 
     <TextView
-        android:id="@+id/buyAdsText"
+        android:id="@+id/subscribedBooksViewText"
         style="@style/SmallestHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/buyAds"
+        android:id="@+id/subscribedBooksView"
         android:layout_width="0dp"
         android:layout_height="180dp"
         android:layout_marginStart="32dp"
@@ -58,10 +58,10 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buyAdsText" />
+        app:layout_constraintTop_toBottomOf="@+id/subscribedBooksViewText" />
 
     <TextView
-        android:id="@+id/sellAdsText"
+        android:id="@+id/adsViewText"
         style="@style/SmallestHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,10 +70,10 @@
         android:layout_marginTop="32dp"
         android:text="Annonser"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buyAds" />
+        app:layout_constraintTop_toBottomOf="@+id/subscribedBooksView" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/sellAds"
+        android:id="@+id/adsView"
         android:layout_width="0dp"
         android:layout_height="180dp"
         android:layout_marginStart="32dp"
@@ -85,5 +85,5 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sellAdsText" />
+        app:layout_constraintTop_toBottomOf="@+id/adsViewText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

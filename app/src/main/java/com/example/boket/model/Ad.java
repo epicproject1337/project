@@ -6,13 +6,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.boket.controller.Notifier;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentId;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -20,14 +18,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.ServerTimestamp;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
 /**
  * @author Pajam Khoshnam, Albin Landgren
- * <p>
  * An object representing an Ad.
  * Handles all the database adds/updates/gets for Ads.
  * @since 2020-09-10
@@ -35,7 +30,7 @@ import java.util.Objects;
 public class Ad {
 
     @DocumentId
-    private String id; //TODO: Should we remove it?
+    private String id;
 
     private String userId;
     private String email;
@@ -47,7 +42,6 @@ public class Ad {
     private boolean archived;
     @ServerTimestamp
     private Timestamp timeUpdated = null;
-    private Book book = null;
 
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String collection = "ads";
@@ -232,7 +226,6 @@ public class Ad {
                 //TODO : Add validation to make sure 1. all fields are set and valid
                 ad.imageUrl = book.getImage();
                 db.collection(collection).add(ad);
-                //Notifier.notifyUsersAboutNewAd(this.getIsbn());
             }
         });
     }
@@ -256,7 +249,7 @@ public class Ad {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ad ad = (Ad) o;
-        return id == ad.id &&
+        return //id == ad.id &&
                 Double.compare(ad.price, price) == 0 &&
                 archived == ad.archived &&
                 userId.equals(ad.userId) &&

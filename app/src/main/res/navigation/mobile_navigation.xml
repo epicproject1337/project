@@ -5,6 +5,7 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_search">
 
+
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.example.boket.ui.search.SearchFragment"

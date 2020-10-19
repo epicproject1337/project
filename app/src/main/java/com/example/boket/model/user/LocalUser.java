@@ -213,13 +213,11 @@ public class LocalUser implements User {
 
     public interface SignupCallback {
         void onSignupComplete(LocalUser user);
-
         void onSignupFailed(String message);
     }
 
     public interface LoginCallback {
         void onLoginComplete(LocalUser user);
-
         void onLoginFailed(String message);
     }
 

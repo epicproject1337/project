@@ -1,23 +1,19 @@
 package com.example.boket.ui.profile;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.boket.R;
 import com.example.boket.model.Book;
 import com.example.boket.ui.RecyclerViewClickListener;
-import com.example.boket.ui.search.BookItem;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Manages the RecyclerViews used for showing books on the profile page.

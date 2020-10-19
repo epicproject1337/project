@@ -77,6 +77,9 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
         return view;
     }
 
+    /**
+     * Handle click for mark as sold button
+     */
     public void markAsSold() {
         dotsButtonClickListener.recyclerViewListClicked(itemView, this.getLayoutPosition());
     }

@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
-        }else{
-            //Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
         }
 
         setContentView(R.layout.activity_main);
@@ -61,23 +59,10 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Method to signout a user.
      */
-    //TODO: Move logic to user model.
     public void signOut() {
         LocalUser.signout();
-
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
-/*
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            this.finish();
-        }
-    }*/
-
-
 }
