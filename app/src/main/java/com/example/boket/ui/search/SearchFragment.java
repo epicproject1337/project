@@ -25,7 +25,7 @@ import com.example.boket.model.Book;
 import com.example.boket.controller.Search;
 import com.example.boket.ui.RecyclerViewClickListener;
 import com.example.boket.ui.addAd.AddAdActivity;
-import com.example.boket.ui.addAd.SearchAddAd;
+import com.example.boket.ui.addAd.SearchAddAdActivity;
 import com.example.boket.ui.bookSeller.BooksellersFragment;
 import com.example.boket.ui.camera.BarcodeScannerActivity;
 
@@ -84,14 +84,15 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 if(getActivity() instanceof MainActivity){
                     bundle.putString("PrevPage", "searchFragment");
                 }
-                else if(getActivity() instanceof AddAdActivity){
-                    bundle.putString("PrevPage", "addAdActivity");
+                else if(getActivity() instanceof SearchAddAdActivity){
+                    bundle.putString("PrevPage", "searchAddAdActivity");
                 }
 
 
                 Intent intent = new Intent(getContext(), BarcodeScannerActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
+
             }
         });
         searchView.setOnClickListener(new View.OnClickListener() {
@@ -202,10 +203,10 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
      */
     private void sendISBN(BookItem book) {
         Bundle bundle = new Bundle();
-        bundle.putString("BookNumber", book.getIsbn());
+        bundle.putString("isbn", book.getIsbn());
 
         Activity activity = getActivity();
-        if (activity instanceof SearchAddAd) {
+        if (activity instanceof SearchAddAdActivity) {
             Intent intent = new Intent(activity, AddAdActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);

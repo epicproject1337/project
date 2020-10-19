@@ -54,9 +54,13 @@ public class Book {
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Book book = documentSnapshot.toObject(Book.class);
-                onLoadCallback.onLoadComplete(book);
-                Log.d(TAG, "SUCCESS:" + book.toString());
+                if(documentSnapshot.exists()) {
+                    Book book = documentSnapshot.toObject(Book.class);
+                    onLoadCallback.onLoadComplete(book);
+                    Log.d(TAG, "SUCCESS:" + book.toString());
+                } else {
+                    onLoadCallback.onLoadComplete(null);
+                }
             }
         });
 

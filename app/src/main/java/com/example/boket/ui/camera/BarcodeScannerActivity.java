@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor;
 import com.example.boket.cameraUtil.BarcodeScanningProcessor.BarcodeResultListener;
@@ -23,6 +27,8 @@ import com.example.boket.cameraUtil.common.CameraSource;
 import com.example.boket.cameraUtil.common.CameraSourcePreview;
 import com.example.boket.cameraUtil.common.FrameMetadata;
 import com.example.boket.cameraUtil.common.GraphicOverlay;
+import com.example.boket.controller.Search;
+import com.example.boket.model.Book;
 import com.example.boket.ui.addAd.AddAdActivity;
 import com.example.boket.ui.bookSeller.BooksellersFragment;
 import com.google.android.gms.common.ConnectionResult;
@@ -33,7 +39,10 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetector;
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -224,33 +233,44 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             @Override
             public void onSuccess(@Nullable Bitmap originalCameraImage, @NonNull List<FirebaseVisionBarcode> barcodes, @NonNull FrameMetadata frameMetadata, @NonNull GraphicOverlay graphicOverlay) {
                 String isbn = "";
+
                 for (FirebaseVisionBarcode barCode : barcodes)
                 {
                     isbn = barCode.getRawValue();
                 }
 
                 if (BarcodeScanner.isValidISBN13(isbn)) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("BookNumber", isbn);
+                    String finalIsbn = isbn;
+                    new Book(isbn, new Book.OnLoadCallback() {
+                        @Override
+                        public void onLoadComplete(Book book) {
+                            if (book != null) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("isbn", finalIsbn);
 
-                    Bundle prevPageBundle = getIntent().getExtras();
-                    String prevPage = prevPageBundle.getString("prevPage");
-                    if(prevPage == "searchFragment"){
-                        BooksellersFragment booksellersFragment = new BooksellersFragment();
-                        booksellersFragment.setArguments(bundle);
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.nav_host_fragment, booksellersFragment)
-                                .commit();
-                    }
-                    else if(prevPage == "addAdActivity") {
-                        Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        finish();
-                    }
-                } else {
-                    //Toast.makeText(BarcodeScannerActivity.this, "Inte giltig ISBN", Toast.LENGTH_LONG).show();
+                                Bundle prevPageBundle = getIntent().getExtras();
+                                String prevPage = prevPageBundle.getString("PrevPage");
+
+                                if(prevPage.equals("searchFragment")){
+                                    BooksellersFragment booksellersFragment = new BooksellersFragment();
+                                    booksellersFragment.setArguments(bundle);
+                                    getSupportFragmentManager()
+                                            .beginTransaction()
+                                            .replace(R.id.nav_host_fragment, booksellersFragment)
+                                            .addToBackStack(null)
+                                            .commit();
+                                }
+                                else if(prevPage.equals("searchAddAdActivity")) {
+                                    Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            } else {
+                                Toast.makeText(BarcodeScannerActivity.this, "BOK FINNS EJ I DATABASEN", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                 }
 
             }
