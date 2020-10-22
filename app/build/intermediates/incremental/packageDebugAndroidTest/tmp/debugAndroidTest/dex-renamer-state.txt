@@ -1,0 +1,7 @@
+#Thu Oct 22 13:52:18 CEST 2020
+base.0=C\:\\Users\\Alexander\\Desktop\\project\\app\\build\\intermediates\\dex\\debugAndroidTest\\mergeExtDexDebugAndroidTest\\classes.dex
+path.1=classes.dex
+renamed.1=classes2.dex
+path.0=classes.dex
+renamed.0=classes.dex
+base.1=C\:\\Users\\Alexander\\Desktop\\project\\app\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\classes.dex
