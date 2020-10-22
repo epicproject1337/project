@@ -1,19 +1,28 @@
 # Meeting Agenda
 Group: Grupp1337  
 Date: 2020-09-29  
-Chair:  
 Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
-# week 4 och meetingsweek4 möte 1
-## Objectives (5min)
-- Resolve any issues preventing the team to continue.
-- Short clear descriptions.
-## Reports from previous meeting (15min)
--  Each group member reports outcome of assigned issues, see also 'outcomes andassignments'.
-## Discussion items (35min)
--  Discuss the identified issues, and possibly new or more general issues (veryshort notes and/or keywords).
-## Outcomes and assignments (5min)
--  Outcomes from discussion items. Write down what's decided and why it wasdecided. Sync with other documentation (add terms to wordbook).
--  (re)Assign to each group member which issues to solve.
+## Objectives
+- We need to dicusss what we need to do before the peer review
+- We need to discuss our def of done
+## Reports from previous meeting
+
+## Discussion items
+- Peer review:
+  - UML
+  - SSD
+  - RAD
+  - Refactor domain model?
+  - Tests
+  - JAVADOC
+  - Do some polishing on the prototyp (styling, any functionality
+## Outcomes and assignments
+- Albin will be mainly responsible for the UML
+- Alexander and Oscar will be mainly responsible for SSD and refactoring the domain model
+- Tarik and Pajam will be mainly responisble for THE RAD AND SDD
+- We decided that we all need to keep working on adding unit tests
+- We decided that we all need to add JAVADOC to all our public functions aswell as header comments for all classes
+- Anyone that has time over will work on matching the styling of the prototype to the design we have on figma
+
 ## Wrap up
--  Write down any unresolved issues for next meeting.
--  Decide a time and location for next meeting.
+- Time for next meeting will be decided in our groupchat
