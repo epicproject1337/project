@@ -2,7 +2,6 @@
 Group: Grupp1337  
 Date: 2020-10-08   
 Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
-# week 3 och meetingsweek3 möte 2
 ## Objectives
 - We must discuss the goodreads API
 - We must discuss what we have to do before the peer review
