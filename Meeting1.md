@@ -1,20 +1,24 @@
 # Meeting Agenda
 Group: Grupp1337  
 Date: 2020-09-11  
-Chair:  
 Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
-# Det som står i week1 i gamla reports
 ## Objectives (5min)
-- Resolve any issues preventing the team to continue.
-- Short clear descriptions. hej
+- We need to discuss our user stories
+- We need to discuss the graphical prototype
+- Discuss use of APIS/Backends
+- Discuss if we should start coding
 ## Reports from previous meeting (15min)
--  Each group member reports outcome of assigned issues, see also 'outcomes andassignments'.
+- This is the first meeting
 ## Discussion items (35min)
--  Discuss the identified issues, and possibly new or more general issues (veryshort notes and/or keywords).
+- User stories: Login? Buy/sell? Camera? Communication with seller?
+- Graphical prototype: Figma?  
+- APIS/Backend: Goodreads?, adlibris?, firebase?
 ## Outcomes and assignments (5min)
--  Outcomes from discussion items. Write down what's decided and why it wasdecided. Sync with other documentation (add terms to wordbook).
--  (re)Assign to each group member which issues to solve.
+- We decided to take our own time to come up with user stories we think fit the project and add them to trello
+- We decided to use figma for the graphical prototype because we are already familiar with it
+- We decided to use firebase for our backend and goodreads for our book database
+- We all agreed to start coding in android studio to get used to the IDE and start getting a grasp of firebase
 ## Wrap up
--  Write down any unresolved issues for next meeting.
--  Decide a time and location for next meeting.
-Next meeting 2020-09-14, ZOOM
+-  We are not certain if we need to use a goodreads database but will further dicuss this
+
+- Next meeting 2020-09-14, ZOOM
