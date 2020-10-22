@@ -13,5 +13,6 @@ Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Paj
   - Research espresso testing.
 ## Outcomes and assignments
 - We need to look into espresso testing and figure out what is causing the problems.
+- We are going to keep polishing on app functionality.
 ## Wrap up
 - Next meeting later this week. Will be decided in the group chat. 
