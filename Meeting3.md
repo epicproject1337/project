@@ -1,8 +1,8 @@
 # Meeting Agenda
-Group: Grupp1337
-Date: 2020-09-25
-Chair:
-Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam
+Group: Grupp1337  
+Date: 2020-09-25  
+Chair:  
+Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
 # week2 och meetingweek2 möte 2
 ## Objectives (5min)
 - Resolve any issues preventing the team to continue.
