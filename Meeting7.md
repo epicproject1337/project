@@ -7,6 +7,7 @@ Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Paj
 ## Reports from previous meeting
 - We need to keep working on everything and polish it before we submit our RAD and SDD for peer review
 - We also need to keep adding tests
+- All public functions and classes are fully JAVADOCD
 ## Discussion items
 - Good progress have been done on the SDD and RAD we just need to look through them and discuss it with our supervisor and fix some minor things
 ## Outcomes and assignments
