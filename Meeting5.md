@@ -1,6 +1,6 @@
 # Meeting Agenda
 Group: Grupp1337  
-Date: 2020-10-08   
+Date: 2020-09-24   
 Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
 ## Objectives
 - We must discuss the goodreads API
