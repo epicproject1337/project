@@ -1,6 +1,6 @@
 # Meeting Agenda
 Group: Grupp1337  
-Date: 2020-09-25  
+Date: 2020-09-16  
 Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
 ## Objectives
 - Dicuss what we have done this week and what needs to be worked on further
