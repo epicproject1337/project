@@ -1,8 +1,7 @@
 # Meeting Agenda
 Group: Grupp1337  
-Date: 2020-09-29  
+Date: 2020-10-15  
 Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
-# week5 och meetingsweek 5 möte 2
 ## Objectives
 - We need to discuss new solutions for our UI testing problems. 
 ## Reports from previous meeting
