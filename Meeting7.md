@@ -1,6 +1,6 @@
 # Meeting Agenda
 Group: Grupp1337  
-Date: 2020-10-02
+Date: 2020-10-02  
 Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
 ## Objectives
 - Discuss whats left before the peer review
