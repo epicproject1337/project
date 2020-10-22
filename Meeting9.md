@@ -1,19 +1,18 @@
 # Meeting Agenda
 Group: Grupp1337  
 Date: 2020-09-29  
-Chair:  
 Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Pajam Khoshnam  
 # week5 och meetingsweek 5 möte 2
-## Objectives (5min)
-- Resolve any issues preventing the team to continue.
-- Short clear descriptions.
-## Reports from previous meeting (15min)
--  Each group member reports outcome of assigned issues, see also 'outcomes andassignments'.
-## Discussion items (35min)
--  Discuss the identified issues, and possibly new or more general issues (veryshort notes and/or keywords).
-## Outcomes and assignments (5min)
--  Outcomes from discussion items. Write down what's decided and why it wasdecided. Sync with other documentation (add terms to wordbook).
--  (re)Assign to each group member which issues to solve.
+## Objectives
+- We need to discuss new solutions for our UI testing problems. 
+## Reports from previous meeting
+- We've come further in the process of testing but there is still alot of problems.
+## Discussion items
+- UI testing:
+  - Try espresso recording test
+## Outcomes and assignments
+- We are going to try doing espresso recording tests for the tests of the UI. This makes testing easier because the test is recording an action.
+- We need to be done polishing the app's functions.
+- Next week are we going to write the last iteration of the RAD and SDD. 
 ## Wrap up
--  Write down any unresolved issues for next meeting.
--  Decide a time and location for next meeting.
+- Next meeting next week will be decided in the group chat. 
