@@ -6,7 +6,7 @@ Participants: Alexander Jyborn, Oscar Bennet, Albin Landgren, Tarik Porobic, Paj
 # Det som står i week1 i gamla reports
 ## Objectives (5min)
 - Resolve any issues preventing the team to continue.
-- Short clear descriptions.
+- Short clear descriptions. hej
 ## Reports from previous meeting (15min)
 -  Each group member reports outcome of assigned issues, see also 'outcomes andassignments'.
 ## Discussion items (35min)
