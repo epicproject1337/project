@@ -78,14 +78,6 @@ public class BooksellersFragment extends Fragment {
         TextView sorryText = v.findViewById(R.id.sorryText);
         TextView pressSubText = v.findViewById(R.id.pressSubText);
 
-
-        //testar
-        RecyclerView adListRecyclerView = v.findViewById(R.id.adList);
-        adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
-        BookAdapter b = new BookAdapter(this.getContext(), bookSellersList);
-        adListRecyclerView.swapAdapter(b,false);
-
         setRecyclerView(v, sorryText, pressSubText);
 
         setBookInfo(v, bookNameTextView, bookAuthorTextView, releaseYearTextView,
@@ -134,13 +126,17 @@ public class BooksellersFragment extends Fragment {
     private void setRecyclerView(View v, TextView sorryText,
                                  TextView pressSubText) throws InterruptedException {
 
+
+
         RecyclerView adListRecyclerView = v.findViewById(R.id.adList);
         adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
+        BookAdapter b = new BookAdapter(this.getContext(), bookSellersList);
+        adListRecyclerView.setAdapter(b);
         Context c = getContext();
 
-        final BookAdapter[] bookAdapter = new BookAdapter[1];
+        final BookAdapter[] bookAdapter = {b};
         //Thread.sleep(100);// Wait for the bookNameTextView to be set
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
@@ -162,11 +158,8 @@ public class BooksellersFragment extends Fragment {
                     }
                     sortCheapestFirst(bookSellersList);
                 }
-                //sortCheapestFirst(bookSellersList);
-
                 bookAdapter[0] = new BookAdapter(c, bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter[0]);
-                //adListRecyclerView.swapAdapter(bookAdapter[0],false);
             }
         });
     }

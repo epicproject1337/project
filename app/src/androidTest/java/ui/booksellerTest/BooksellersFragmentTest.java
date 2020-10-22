@@ -105,9 +105,10 @@ public class BooksellersFragmentTest {
         RecyclerView rv = mActivity.findViewById(R.id.adList);
         // adapterNotNull(rv);
         //Thread.sleep(2000);
-        int holders = rv.getAdapter().getItemCount();
+        RecyclerView.Adapter ad = rv.getAdapter();
+        int holders = ad.getItemCount();
         final int[] adListSize = new int[1];
-        Ad.getAdsByISBN(booksellersFragment.getArguments().getString("BookNumber"), new Ad.GetAdsCallback() {
+        Ad.getAdsByISBN(booksellersFragment.getArguments().getString("isbn"), new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
                 adListSize[0] = adList.size();
@@ -118,7 +119,7 @@ public class BooksellersFragmentTest {
         assertEquals(holders, adListSize[0]);
     }
 
-
+/*
     private void adapterNotNull(RecyclerView rv) throws InterruptedException {
         boolean bol = true;
         while (bol) {
@@ -192,7 +193,7 @@ public class BooksellersFragmentTest {
     public void testTextSubscribeBtn() throws InterruptedException {
         Bundle bundle = booksellersFragment.getArguments();
         assert bundle != null;
-        String bookISBN = bundle.getString("BookNumber");
+        String bookISBN = bundle.getString("isbn");
         boolean subscriptionChanged = Subscribed(bookISBN);
         if (!subscriptionChanged) {
             onView(withId(R.id.subscribeButton)).check(matches(withText("PRENUMERERA")));
@@ -205,7 +206,7 @@ public class BooksellersFragmentTest {
     public void testTextSubscribeBtnClicked() throws InterruptedException {
         Bundle bundle = booksellersFragment.getArguments();
         assert bundle != null;
-        String bookISBN = bundle.getString("BookNumber");
+        String bookISBN = bundle.getString("isbn");
         boolean subscriptionChanged = Subscribed(bookISBN);
         if (!subscriptionChanged) {
             onView(withId(R.id.subscribeButton)).check(matches(withText("PRENUMERERA")));
