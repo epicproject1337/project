@@ -82,7 +82,8 @@ public class AddAdActivity extends AppCompatActivity {
                 String city = String.valueOf(cityEditText.getText());
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                Ad ad = new Ad(userID, email, isbn, price, condition, city, false);
+                String bookTitle = String.valueOf(bookTitleTextView.getText());
+                Ad ad = new Ad(bookTitle, userID, email, isbn, price, condition, city, false);
                 ad.save();
 
                 Intent backToSearch = new Intent(AddAdActivity.this, MainActivity.class);

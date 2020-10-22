@@ -1,7 +1,12 @@
 package com.example.boket.ui.login;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,16 +31,17 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
 import org.w3c.dom.Text;
+
 /**
  * @author Pajam Khoshnam
- *
+ * <p>
  * The Activity for signing up a user
- *
  * @since 2020-09-07
  */
 public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = SignupActivity.class.getName();
+    private Drawable originTVcolor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +56,15 @@ public class SignupActivity extends AppCompatActivity {
         final EditText passwordConfirmEditText = findViewById(R.id.passwordConfirm);
         final Button signupButton = findViewById(R.id.signup);
         final Button goTologin = findViewById(R.id.goToLogin);
+        originTVcolor = nameEditText.getBackground();
 
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        setTVwriteListener(nameEditText);
+        setTVwriteListener(emailEditText);
+        setTVwriteListener(emailConfirmEditText);
+        setTVwriteListener(passwordEditText);
+        setTVwriteListener(passwordConfirmEditText);
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,36 +93,66 @@ public class SignupActivity extends AppCompatActivity {
                 if (name.length() <= 0 || name.matches(".*\\d.*")) {
                     inputCorrect = false;
                     nameEditText.getText().clear();
+                    nameEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
                     nameEditText.setHint("Skriv namn, inga nummer!");
                 }
                 String email = emailEditText.getText().toString();
                 if (email.length() <= 0 || !email.matches("^.+@.+\\..+$")) {
                     inputCorrect = false;
                     emailEditText.getText().clear();
+                    emailEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
                     emailEditText.setHint("Inte giltig email!");
                 }
                 String emailconf = emailConfirmEditText.getText().toString();
-                if (!emailconf.equals(email)) {
+                if (!emailconf.equals(email) || emailconf.isEmpty()) {
                     inputCorrect = false;
                     emailConfirmEditText.getText().clear();
+                    emailConfirmEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
                     emailConfirmEditText.setHint("Upprepa samma mail!");
+                }
+                String password = passwordEditText.getText().toString();
+                if (password.isEmpty()) {
+                    inputCorrect = false;
+                    passwordEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
+                    passwordEditText.setHint("Du måste ha ett lösenord!");
                 }
                 String passConf = passwordConfirmEditText.getText().toString();
                 String pass = passwordEditText.getText().toString();
-                if (!passConf.equals(pass)) {
+                if (!passConf.equals(pass) || passConf.isEmpty()) {
                     inputCorrect = false;
                     passwordConfirmEditText.getText().clear();
+                    passwordConfirmEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
                     passwordConfirmEditText.setHint("Upprepa samma lösenord!");
                 }
                 return inputCorrect;
             }
         });
 
+
         goTologin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 gotToLoginMethod();
+
+            }
+        });
+    }
+
+    private void setTVwriteListener(TextView tv) {
+        tv.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tv.setBackground(originTVcolor);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
@@ -129,6 +172,7 @@ public class SignupActivity extends AppCompatActivity {
                 //Update the UI
                 updateUiWithUser(user.getName());
             }
+
             @Override
             public void onSignupFailed(String message) {
                 showLoginFailed("Signup failed! Try again.. " + message);

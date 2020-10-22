@@ -22,6 +22,9 @@ import com.example.boket.model.user.LocalUser;
 
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Tarik Porobic
@@ -35,6 +38,7 @@ public class BooksellersFragment extends Fragment {
     private Button subscribeButton;
     private LocalUser user = LocalUser.getCurrentUser();
     private String ISBN_number;
+
 
     /**
      * Gets the ISBN number of the book from the previous screen (search) and initiate all buttons,
@@ -61,6 +65,7 @@ public class BooksellersFragment extends Fragment {
             e.printStackTrace();
         }
 
+
         return v;
     }
 
@@ -75,10 +80,19 @@ public class BooksellersFragment extends Fragment {
         TextView sorryText = v.findViewById(R.id.sorryText);
         TextView pressSubText = v.findViewById(R.id.pressSubText);
 
+
+        //testar
+        RecyclerView adListRecyclerView = v.findViewById(R.id.adList);
+        adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
+        BookAdapter b = new BookAdapter(this.getContext(), bookSellersList);
+        adListRecyclerView.swapAdapter(b,false);
+
+        setRecyclerView(v, sorryText, pressSubText);
+
         setBookInfo(v, bookNameTextView, bookAuthorTextView, releaseYearTextView,
                 editionTextView, isbnTextView, bookImageView);
 
-        setRecyclerView(v, bookNameTextView,sorryText,pressSubText);
 
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +120,6 @@ public class BooksellersFragment extends Fragment {
                 Subscription.isSubscribed(book.getIsbn(), user.getUid(), new Subscription.OnLoadCallback() {
                     @Override
                     public void isSubscribedCallback(boolean isSubscribed) {
-                        System.out.println(isSubscribed);
                         isSubscribedToBook = isSubscribed;
                         if (isSubscribed) {
                             subscribeButton.setText("Avprenumerera");
@@ -119,7 +132,8 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private void setRecyclerView(View v, TextView bookNameTextView, TextView sorryText,
+
+    private void setRecyclerView(View v, TextView sorryText,
                                  TextView pressSubText) throws InterruptedException {
 
         RecyclerView adListRecyclerView = v.findViewById(R.id.adList);
@@ -129,7 +143,7 @@ public class BooksellersFragment extends Fragment {
         Context c = getContext();
 
         final BookAdapter[] bookAdapter = new BookAdapter[1];
-        Thread.sleep(100);
+        //Thread.sleep(100);// Wait for the bookNameTextView to be set
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
@@ -142,19 +156,22 @@ public class BooksellersFragment extends Fragment {
                         String state = ad.getCondition();
                         String price = Double.toString(ad.getPrice());
                         String sellerEmail = ad.getEmail();
-                        String bookSold = String.valueOf(bookNameTextView.getText());
+                        String bookSold = ad.getBookTitle();
                         String city = ad.getCity();
 
                         ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price, city);
                         bookSellersList.add(aBookSeller);
                     }
+                    sortCheapestFirst(bookSellersList);
                 }
+                //sortCheapestFirst(bookSellersList);
 
-                sortCheapestFirst(bookSellersList);
                 bookAdapter[0] = new BookAdapter(c, bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter[0]);
+                //adListRecyclerView.swapAdapter(bookAdapter[0],false);
             }
         });
+
     }
 
 

@@ -32,7 +32,7 @@ public class TestAd {
         CountDownLatch lock = new CountDownLatch(1);
         FirebaseApp.initializeApp(context);
         mAuth = FirebaseAuth.getInstance();
-        Ad ad = new Ad(mAuth.getCurrentUser().getUid(), "test@gmail.com", "9789144090504", 120, "Giood", "göteborg", false);
+        Ad ad = new Ad("bookname",mAuth.getCurrentUser().getUid(), "test@gmail.com", "9789144090504", 120, "Giood", "göteborg", false);
         ad.save();
         Ad.getAdsByISBN("9789144090504", new Ad.GetAdsCallback() {
             @Override
