@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
 
     private ArrayList<ABookSeller> bookSellers;
-    private ArrayList<ABookSellerHolder> bookSellerHolder = new ArrayList<>();
+    private ArrayList<ABookSellerHolder> bookSellerHolderList = new ArrayList<>();
     private Context c;
 
 
@@ -51,11 +51,10 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     public ABookSellerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_abookseller, null);
 
-        ABookSellerHolder ABsH = new ABookSellerHolder(v);
-        bookSellerHolder.add(ABsH);
-        //rV.add(ABsH);
-        //System.out.println(rV.size());
-        return ABsH;
+        ABookSellerHolder aBookSellerHolder = new ABookSellerHolder(v);
+        bookSellerHolderList.add(aBookSellerHolder);
+
+        return aBookSellerHolder;
     }
 
     /**
@@ -71,7 +70,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onIABookSellerCL(View v, int i) {
-                ABookSellerHolder aBsH = bookSellerHolder.get(i);
+                ABookSellerHolder aBsH = bookSellerHolderList.get(i);
 
                 if (aBsH.getExpandableLayout().getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(aBsH.getCardView(), new AutoTransition());
@@ -80,7 +79,6 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
                     closeTheOther(i);
 
                 } else {
-                    //TransitionManager.beginDelayedTransition(vh.getCardView(), new AutoTransition());
                     aBsH.getExpandableLayout().setVisibility(View.GONE);
                 }
             }
@@ -88,19 +86,9 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onIABookSellerBtnCL(int i) {
-/*
-                //Intent intent = new Intent(Intent.ACTION_SEND);
-                //intent.setData(Uri.parse("riktapro@gmail.com"));//Till eller Från
-                //intent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-                intent.putExtra(Intent.EXTRA_CC, new String[]{"tarik.porobic@outlook.com"});//Till eller Från
-                intent.putExtra(Intent.EXTRA_BCC, new String[]{"tarik.porobic@outlook.com"});//Till eller från
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Jag skulle vilja köpa din bok, ");
-                intent.putExtra(Intent.EXTRA_TEXT, "Hej! \n" + "Jag är intresserad utav att köpa din bok, ");
 
-
- */
-                String[] recipients = new String[1];
                 ABookSeller b = bookSellers.get(i);
+                String[] recipients = new String[1];
                 recipients[0] = b.getSellerEmail();
 
 
@@ -109,12 +97,13 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
                 intent.putExtra(Intent.EXTRA_EMAIL, recipients);
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Jag skulle vilja köpa din bok, " + b.getBookSold());
                 intent.putExtra(Intent.EXTRA_TEXT, "Hej!\n\n" + "Jag såg din bokannons på den underbara appen " +
-                        "Booket och skulle vilja köpa, " + b.getBookSold() + "\n\nMed vänlig hälsning\n/" + LocalUser.getCurrentUser().getName());
+                        "Booket och skulle vilja köpa, " + b.getBookSold() +
+                        "\n\nMed vänlig hälsning\n/" + LocalUser.getCurrentUser().getName());
                 intent.setPackage("com.google.android.gm");
                 c.startActivity(intent);
-
             }
         });
+
         holder.getState().setText(bookSellers.get(i).getState());
         holder.getPrice().setText(bookSellers.get(i).getPrice() + " kr");
         holder.getCity().setText(bookSellers.get(i).getCity());
@@ -123,20 +112,9 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     }
 
     private void closeTheOther(int i) {
-        /*
-        for (int pos = 0; pos < bookSellers.size(); pos++) {
+        for (int pos = 0; pos < bookSellerHolderList.size(); pos++) {
             if (pos != i) {
-
-                ABookSellerHolder vh = (ABookSellerHolder) rV.findViewHolderForAdapterPosition(pos);
-                //ABookSellerHolder vh = rV.get(i);
-                assert vh != null;
-                vh.getExpandableLayout().setVisibility(View.GONE);
-            }
-        }
-         */
-        for (int pos = 0; pos < bookSellerHolder.size(); pos++) {
-            if (pos != i) {
-                ABookSellerHolder aBSH = bookSellerHolder.get(pos);
+                ABookSellerHolder aBSH = bookSellerHolderList.get(pos);
                 aBSH.getExpandableLayout().setVisibility(View.GONE);
             }
         }
@@ -149,7 +127,5 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     public int getItemCount() {
         return bookSellers.size();
     }
-
-
 
 }

@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 
 public class TestAd {
     private Context context;
+    private FirebaseAuth mAuth;
 
     @Before
     public void init(){
@@ -32,7 +33,7 @@ public class TestAd {
         CountDownLatch lock = new CountDownLatch(1);
         FirebaseApp.initializeApp(context);
         User user = new MockUser();
-        Ad ad = new Ad(user.getUid(), user.getEmail(), "9789144090504", 120, "Giood", user.getLocation(), false);
+        Ad ad = new Ad("bookname",user.getUid(), user.getEmail(), "9789144090504", 120, "Giood", user.getLocation(), false);
         ad.save();
         TimeUnit.SECONDS.sleep(1);
         Ad.getAdsByUser(user.getUid(), false, new Ad.GetAdsCallback() {
