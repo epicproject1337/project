@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
 
         subscribedBookAdapter = new SubscribedBookAdapter(view.getContext(), this, new ArrayList<Book>());
         subscribedBooksView.setAdapter(subscribedBookAdapter);
-        RecyclerViewClickListener that = this;
+        ProfileFragment that = this;
         Subscription.getSubscribedBooks(LocalUser.getCurrentUser().getUid(), new Subscription.OnLoadSubscribedBooksCallback() {
             @Override
             public void onCompleteCallback(ArrayList<Book> books) {
@@ -119,13 +119,15 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
      */
     private String setRightText() {
         String returnString = LocalUser.getCurrentUser().getName();
-        for (int i = 0; i < returnString.length(); i++) {
+        return returnString.split(" ", 2)[0].concat("'s profil");
+
+        /*for (int i = 0; i < returnString.length(); i++) {
             if (returnString.charAt(i)== ' ') {
                 returnString = returnString.substring(0, i);
                 break;
             }
         }
-        return returnString+"'s profil";
+        return returnString+"'s profil";*/
     }
 
     /**

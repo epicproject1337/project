@@ -10,6 +10,7 @@ import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -23,6 +24,7 @@ import com.example.boket.ui.search.SearchFragment;
 import com.example.boket.ui.search.SearchViewModel;
 
 import org.hamcrest.Matcher;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,9 +36,12 @@ import java.util.ArrayList;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -118,31 +123,64 @@ public class SearchFragmentTest {
 
     @Test
     public void testBookSearch() throws Exception {
+
+
+        bookSearch("algebra");
+
+        onView(withId(R.id.recyclerView)).check(new RecyclerViewItemCountAssertion(1));
+
+    }
+
+
+    @Test
+    public void testBookItemClicked(){
+
+
+
+        onView(withId(R.id.recyclerView)).check(new RecyclerViewItemCountAssertion(1));
+        //onView(withId(R.id.recyclerView)).perform(actionOnItemAtPosition(0, click()));
+        //onView(withId(R.id.recyclerView)).check(matches(hasDescendant(withId())));
+
+    }
+
+    public class RecyclerViewItemCountAssertion implements ViewAssertion {
+        private final int lowestValue;
+
+        public RecyclerViewItemCountAssertion(int lowestValue) {
+            this.lowestValue = lowestValue;
+        }
+
+        @Override
+        public void check(View view, NoMatchingViewException noViewFoundException) {
+            if (noViewFoundException != null) {
+                throw noViewFoundException;
+            }
+
+            RecyclerView recyclerView = (RecyclerView) view;
+            RecyclerView.Adapter adapter = recyclerView.getAdapter();
+            assertTrue(adapter.getItemCount() >= lowestValue);
+        }
+    }
+
+    public void bookSearch(String query){
+
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                searchFragment.onQueryTextSubmit("Algebra");
+                searchFragment.onQueryTextSubmit(query);
             }
         };
         onView(isRoot()).perform(doTaskInUIThread(r));
 
         //Sleep thread so searched book can be added to recycler view before the test runs
         try {
-            Thread.sleep(5 * 1000);
+            Thread.sleep(5*1000);
 
-            Runnable r2 = new Runnable() {
-                @Override
-                public void run() {
-                    searchViewModel = ViewModelProviders.of(searchFragment).get(SearchViewModel.class);
-
-                    //List of books is empty before search, list size larger than 1 show that search was successful
-                    assertTrue(searchViewModel.getBooks().size() > 0);
-                }
-            };
-            onView(isRoot()).perform(doTaskInUIThread(r2));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
 }
+

@@ -30,15 +30,17 @@ import java.util.Random;
 public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> implements RecyclerViewClickListener{
     private Context context;
     private ArrayList<Ad> ads;
+    private ProfileFragment profileFragment;
 
 
     /**
      * @param context
      * @param ads List of Book model instances
      */
-    public ManageAdAdapter(Context context, RecyclerViewClickListener listener, ArrayList<Ad> ads) {
+    public ManageAdAdapter(Context context, ProfileFragment profileFragment, ArrayList<Ad> ads) {
         this.context = context;
         this.ads = ads;
+        this.profileFragment = profileFragment;
     }
 
     /**
@@ -97,5 +99,7 @@ public class ManageAdAdapter extends RecyclerView.Adapter<RecyclerViewHolder> im
     public void recyclerViewListClicked(View v, int position) {
         Ad ad = ads.get(position);
         ad.archiveAd();
+        ads.remove(position);
+        notifyItemRemoved(position);
     }
 }
