@@ -45,12 +45,12 @@ public class TestAd {
                 Log.d("onComplete", "SUCCESS:" + ad.toString());
                 assertEquals(ad, loadedAd);
                 loadedAd.archiveAd();
-                Ad.getAdsByUser(user.getUid(), false, new Ad.GetAdsCallback() {
+                Ad.getAdsByUser(user.getUid(), true, new Ad.GetAdsCallback() {
                     @Override
                     public void onGetAdsComplete(ArrayList<Ad> adList) {
-                        Ad loadedAd = adList.get(0);
+                        Ad loadedAd2 = adList.get(0);
                         Log.d("onComplete", "SUCCESS:" + loadedAd.toString());
-                        assertEquals(ad, loadedAd);
+                        assertEquals(loadedAd, loadedAd2);
                         lock.countDown();
                     }
                 });

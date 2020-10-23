@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import android.content.Context;
 import android.util.Log;
@@ -35,7 +35,7 @@ public class TestSearch {
             @Override
             public void onSearchBooks(ArrayList<Book> bookList) {
                 Book searchedbook = bookList.get(0);
-                Book loadedBook = new Book("9789144090504", new Book.OnLoadCallback() {
+                Book loadedBook = new Book("9789144060545", new Book.OnLoadCallback() {
                     @Override
                     public void onLoadComplete(Book book) {
                         Log.d("TESTING", "SUCCESS:" + book.toString());
