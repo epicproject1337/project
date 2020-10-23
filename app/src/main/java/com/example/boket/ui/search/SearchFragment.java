@@ -77,6 +77,9 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         searchView.setOnQueryTextListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        bookItemAdapter = new BookItemAdapter(getContext(), this, new ArrayList<BookItem>());
+        recyclerView.setAdapter(bookItemAdapter);
+
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
