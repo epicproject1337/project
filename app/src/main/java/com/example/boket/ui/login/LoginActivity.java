@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,9 +27,8 @@ import com.example.boket.model.user.LocalUser;
 
 /**
  * @author Pajam Khoshnam
- *
+ * <p>
  * The Activity for logging in a user
- *
  * @since 2020-09-07
  */
 public class LoginActivity extends AppCompatActivity {
@@ -38,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private ProgressBar loadingProgressBar;
     private int mediumAnimationDuration;
-
 
 
     @Override
