@@ -2,7 +2,6 @@ package com.example.boket.ui.login;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -24,8 +23,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.user.LocalUser;
-
-import org.w3c.dom.Text;
 
 /**
  * @author Pajam Khoshnam

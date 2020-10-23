@@ -75,7 +75,7 @@ public class Subscription {
     /**
      * Check if a user is subscribed to a book
      * @param isbn isbn number of the book
-     * @param userId the user id of the
+     * @param userId the user id of the user
      * @param callback callback method that will receive the boolean return value.
      */
     public static void isSubscribed(String isbn, String userId, OnLoadCallback callback) {
