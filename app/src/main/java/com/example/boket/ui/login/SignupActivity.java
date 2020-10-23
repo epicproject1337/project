@@ -1,9 +1,11 @@
 package com.example.boket.ui.login;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.boket.MainActivity;
@@ -33,7 +36,7 @@ import org.w3c.dom.Text;
 public class SignupActivity extends AppCompatActivity {
 
     private static final String TAG = SignupActivity.class.getName();
-    private Drawable originTextColor;
+    //private Drawable originTextViewColor;
     private ProgressBar loadingProgressBar;
 
     @Override
@@ -49,7 +52,7 @@ public class SignupActivity extends AppCompatActivity {
         final EditText passwordConfirmEditText = findViewById(R.id.passwordConfirm);
         final Button signupButton = findViewById(R.id.signup);
         final Button goTologin = findViewById(R.id.goToLogin);
-        originTextColor = nameEditText.getBackground();
+        //originTextViewColor = nameEditText.getBackground();
 
         loadingProgressBar = findViewById(R.id.loading);
 
@@ -79,6 +82,7 @@ public class SignupActivity extends AppCompatActivity {
 
             }
 
+            @SuppressLint("ResourceAsColor")
             private boolean checkInputs() {
 
                 boolean inputCorrect = true;
@@ -87,7 +91,8 @@ public class SignupActivity extends AppCompatActivity {
                     inputCorrect = false;
                     nameEditText.getText().clear();
                     nameEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
-                    //nameEditText.setBackground(R.style.ErrorField);
+
+                    //nameEditText.setBackgroundColor());
                     nameEditText.setHint("Skriv namn, inga nummer!");
                 }
                 String email = emailEditText.getText().toString();
@@ -134,14 +139,17 @@ public class SignupActivity extends AppCompatActivity {
 
     private void setTextColorWriteListener(TextView tv) {
         tv.addTextChangedListener(new TextWatcher() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                tv.setBackground(originTextColor);
+                 tv.setBackgroundColor(Color.parseColor("#f1f3f5"));
+                //tv.setBackgroundColor(R.color.colorDefaultInput);
+
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                tv.setBackground(originTextColor);
+
             }
 
             @Override

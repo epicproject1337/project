@@ -89,13 +89,7 @@ public class BooksellersFragmentTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
-    /*
-    @Rule
-    public IntentsTestRule<MainActivity> intentsTestRule =
-            new IntentsTestRule<>(MainActivity.class);
 
-
-     */
     private MainActivity mActivity = null;
     private BooksellersFragment booksellersFragment = null;
     private LocalUser user = LocalUser.getCurrentUser();
@@ -108,7 +102,7 @@ public class BooksellersFragmentTest {
         booksellersFragment = new BooksellersFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("isbn", "9789144090504");//DB_ISBN_generator()
+        bundle.putString("isbn", DB_ISBN_generator());//"9789144090504"
         booksellersFragment.setArguments(bundle);
         startFragment(booksellersFragment);
         subscribeBtn = onView(withId(R.id.subscribeButton));
@@ -140,18 +134,18 @@ public class BooksellersFragmentTest {
         Thread.sleep(500);
         assertEquals(holders, adListSize[0]);
     }
-/*
+
     @Test
     public void testCorrectHolder() throws InterruptedException {
         Thread.sleep(1000);
         RecyclerView rv = mActivity.findViewById(R.id.adList);
-        Thread.sleep(1000);
         int holders = rv.getAdapter().getItemCount();
-        Thread.sleep(1000);
-        int randomPos = 0; //randomInt(holders);
-        Thread.sleep(1000);
-        ABookSellerHolder aBookSellerHolder = (ABookSellerHolder) rv.findViewHolderForLayoutPosition(randomPos);
-        Thread.sleep(1000);
+        if (holders == 0) {
+            assertTrue(true);
+        }
+        int randomPos = randomInt(holders);
+        Thread.sleep(2000);
+        ABookSellerHolder aBookSellerHolder = (ABookSellerHolder) rv.findViewHolderForAdapterPosition(randomPos);
         boolean correct = checkBookHolder(aBookSellerHolder, randomPos);
         assertTrue(correct);
     }
@@ -164,12 +158,13 @@ public class BooksellersFragmentTest {
             mockListener.wait(10000);
         }
         ArrayList<Ad> adArr = mockListener.getAdArr();
+
         Ad ad = adArr.get(pos);
 
-        if (ad.getCity().equals("här")) {
-            return true;
+        if (!aBookSellerHolder.getCity().getText().toString().equals(ad.getCity())) {
+            return false;
         }
-        if (!aBookSellerHolder.getPrice().getText().toString().equals(ad.getPrice())) {
+        if (!aBookSellerHolder.getPrice().getText().toString().equals(Double.toString(ad.getPrice()) + " kr")) {
             return false;
         }
 
@@ -180,8 +175,6 @@ public class BooksellersFragmentTest {
         return true;
 
     }
-
- */
 
 
     @Test
@@ -207,6 +200,11 @@ public class BooksellersFragmentTest {
         assertEquals(vh.getExpandableLayout().getVisibility(), visibilityCode);
     }
 
+    /**
+     * Problem
+     *
+     * @throws InterruptedException
+     */
     @Test
     public void testGmailOpens() throws InterruptedException {
 
@@ -375,7 +373,7 @@ public class BooksellersFragmentTest {
         @Override
         public void onGetAdsComplete(ArrayList<Ad> adList) {
             for (Ad ad : adList) {
-                adArr.add(ad);
+                adArr.add(0, ad);
             }
             synchronized (this) {
                 notifyAll();

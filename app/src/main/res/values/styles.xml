@@ -89,6 +89,10 @@
         <item name="android:background">@color/colorErrorRed</item>
     </style>
 
+    <style name="DefaultTextViewBackground" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@color/colorDefaultInput</item>
+    </style>
+
     <style name="FullscreenTheme" parent="AppTheme">
         <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
         <item name="android:windowActionBarOverlay">true</item>
