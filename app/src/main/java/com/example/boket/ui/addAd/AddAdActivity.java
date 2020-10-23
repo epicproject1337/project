@@ -69,7 +69,8 @@ public class AddAdActivity extends AppCompatActivity {
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkInputs(priceEditText, conditionEditText)) return;
+
+                if (!checkInputs(priceEditText, conditionEditText, cityEditText)) return;
 
                 double price = Double.parseDouble(String.valueOf(priceEditText.getText()));
                 String condition = String.valueOf(conditionEditText.getText());
@@ -88,7 +89,7 @@ public class AddAdActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkInputs(EditText priceEditText, EditText conditionEditText) {
+    private boolean checkInputs(EditText priceEditText, EditText conditionEditText, EditText cityEditText) {
         //TODO fixa styling till validering samt bättre validering
         boolean inputCorrect = true;
         if (priceEditText.getText().length() <= 0) {
@@ -97,6 +98,10 @@ public class AddAdActivity extends AppCompatActivity {
         }
         if (conditionEditText.getText().length() <= 0) {
             conditionEditText.setHint("Skriv beskrivning av skicket");
+            inputCorrect = false;
+        }
+        if (cityEditText.getText().length() <= 0) {
+            cityEditText.setHint("Skriv stad");
             inputCorrect = false;
         }
 

@@ -1,30 +1,30 @@
 package ui;
 
+
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
-import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.Book;
-import com.example.boket.ui.search.BookItem;
-import com.example.boket.ui.search.BookItemAdapter;
 import com.example.boket.ui.search.SearchFragment;
 import com.example.boket.ui.search.SearchViewModel;
 
+import org.hamcrest.Description;
 import org.hamcrest.Matcher;
-import org.junit.Assert;
+import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,34 +32,35 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
+import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
-import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertThat;
 
-@RunWith(AndroidJUnit4.class)
 @LargeTest
+@RunWith(AndroidJUnit4.class)
 public class SearchFragmentTest {
 
-    SearchFragment searchFragment;
-    SearchViewModel searchViewModel;
-    RecyclerView recyclerView;
+    private SearchFragment searchFragment;
+    private SearchViewModel searchViewModel;
 
     @Rule
-    public ActivityTestRule activityRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     private void startSearchFragment() {
-        MainActivity activity = (MainActivity) activityRule.getActivity();
+        MainActivity activity = (MainActivity) mActivityTestRule.getActivity();
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         searchFragment = new SearchFragment();
         transaction.add(searchFragment, "searchFragment");
@@ -71,7 +72,6 @@ public class SearchFragmentTest {
         onView(isRoot()).perform(doTaskInUIThread(new Runnable() {
             @Override
             public void run() {
-                //Code to add your fragment or anytask that you want to do from UI Thread
                 startSearchFragment();
 
             }
@@ -98,10 +98,11 @@ public class SearchFragmentTest {
     }
 
     @Test
-    public void testGetBooks() throws Exception {
+    public void testViewModelIsWorking() throws Exception {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+
                 //Task that need to be done in UI Thread (below I am adding a fragment)
                 searchViewModel = ViewModelProviders.of(searchFragment).get(SearchViewModel.class);
 
@@ -117,70 +118,76 @@ public class SearchFragmentTest {
     }
 
     @Test
-    public void testRecyclerViewIsVisible() {
-        onView(withId(R.id.recyclerView)).check(matches(isDisplayed()));
-    }
+    public void recyclerViewContainsBookItem(){
+        ViewInteraction appCompatImageView = onView(
+                allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageView")), withContentDescription("Search"),
+                        childAtPosition(
+                                allOf(withClassName(is("android.widget.LinearLayout")),
+                                        childAtPosition(
+                                                ViewMatchers.withId(R.id.searchView),
+                                                0)),
+                                1),
+                        isDisplayed()));
+        appCompatImageView.perform(click());
 
-    @Test
-    public void testBookSearch() throws Exception {
-
-
-        bookSearch("algebra");
-
-        onView(withId(R.id.recyclerView)).check(new RecyclerViewItemCountAssertion(1));
-
-    }
-
-
-    @Test
-    public void testBookItemClicked(){
+        ViewInteraction searchAutoComplete = onView(
+                allOf(withClassName(is("android.widget.SearchView$SearchAutoComplete")),
+                        childAtPosition(
+                                allOf(withClassName(is("android.widget.LinearLayout")),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.LinearLayout")),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        searchAutoComplete.perform(replaceText("Linjär algebra"), closeSoftKeyboard());
 
 
 
-        onView(withId(R.id.recyclerView)).check(new RecyclerViewItemCountAssertion(1));
-        //onView(withId(R.id.recyclerView)).perform(actionOnItemAtPosition(0, click()));
-        //onView(withId(R.id.recyclerView)).check(matches(hasDescendant(withId())));
+        ViewInteraction searchAutoComplete2 = onView(
+                allOf(withClassName(is("android.widget.SearchView$SearchAutoComplete")), withText("Linjär algebra"),
+                        childAtPosition(
+                                allOf(withClassName(is("android.widget.LinearLayout")),
+                                        childAtPosition(
+                                                withClassName(is("android.widget.LinearLayout")),
+                                                1)),
+                                0),
+                        isDisplayed()));
+        searchAutoComplete2.perform(pressImeActionButton());
 
-    }
-
-    public class RecyclerViewItemCountAssertion implements ViewAssertion {
-        private final int lowestValue;
-
-        public RecyclerViewItemCountAssertion(int lowestValue) {
-            this.lowestValue = lowestValue;
-        }
-
-        @Override
-        public void check(View view, NoMatchingViewException noViewFoundException) {
-            if (noViewFoundException != null) {
-                throw noViewFoundException;
-            }
-
-            RecyclerView recyclerView = (RecyclerView) view;
-            RecyclerView.Adapter adapter = recyclerView.getAdapter();
-            assertTrue(adapter.getItemCount() >= lowestValue);
-        }
-    }
-
-    public void bookSearch(String query){
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                searchFragment.onQueryTextSubmit(query);
-            }
-        };
-        onView(isRoot()).perform(doTaskInUIThread(r));
-
-        //Sleep thread so searched book can be added to recycler view before the test runs
         try {
-            Thread.sleep(5*1000);
-
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        ViewInteraction viewGroup = onView(
+                allOf(childAtPosition(
+                        childAtPosition(
+                                withId(R.id.recyclerView),
+                                0),
+                        0),
+                        isDisplayed()));
+        viewGroup.check(matches(isDisplayed()));
     }
 
-}
 
+
+    private static Matcher<View> childAtPosition(
+            final Matcher<View> parentMatcher, final int position) {
+
+        return new TypeSafeMatcher<View>() {
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("Child at position " + position + " in parent ");
+                parentMatcher.describeTo(description);
+            }
+
+            @Override
+            public boolean matchesSafely(View view) {
+                ViewParent parent = view.getParent();
+                return parent instanceof ViewGroup && parentMatcher.matches(parent)
+                        && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
+    }
+}

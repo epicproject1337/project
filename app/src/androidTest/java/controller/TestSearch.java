@@ -34,12 +34,11 @@ public class TestSearch {
         Search.searchBooks("Algebra", new Search.SearchCallback() {
             @Override
             public void onSearchBooks(ArrayList<Book> bookList) {
-                Book searchedbook = bookList.get(0);
                 Book loadedBook = new Book("9789144060545", new Book.OnLoadCallback() {
                     @Override
                     public void onLoadComplete(Book book) {
                         Log.d("TESTING", "SUCCESS:" + book.toString());
-                        assertEquals(searchedbook, book);
+                        assertEquals(bookList.contains(book), true);
                         lock.countDown();
                     }
                 });
