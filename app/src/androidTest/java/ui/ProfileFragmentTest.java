@@ -105,6 +105,9 @@ public class ProfileFragmentTest {
         onView(withId(R.id.adsView)).check(matches(isDisplayed()));
     }
 
+    /**
+     * Uncommented as the other test require user to be signed in
+     */
     @Test
     public void testSignOutButton() {
         /*assertTrue(LocalUser.getCurrentUser() != null);
@@ -192,10 +195,11 @@ public class ProfileFragmentTest {
      * Used to handle asynchronous callbacks synchronously in tests
      */
     class SubscribedMockListener implements Subscription.OnLoadSubscribedBooksCallback {
-        ArrayList<Book> books;
+        ArrayList<Book> books = new ArrayList<>();
         @Override
         public void onCompleteCallback(ArrayList<Book> books) {
-            this.books = books;
+            if (books != null)
+                this.books = books;
             synchronized (this) {
                 notifyAll();
             }
