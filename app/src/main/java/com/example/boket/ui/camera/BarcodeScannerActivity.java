@@ -75,9 +75,11 @@ public class BarcodeScannerActivity extends AppCompatActivity {
 
     boolean isCalled;
 
+    private Toast mToast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        mToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         if (getWindow() != null) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
@@ -245,13 +247,14 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                             if (book != null) {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("isbn", finalIsbn);
-
+                                mToast.cancel();
                                 Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Toast.makeText(BarcodeScannerActivity.this, "BOK FINNS EJ I DATABASEN", Toast.LENGTH_SHORT).show();
+                                mToast.setText("BOK FINNS EJ I DATABASEN");
+                                mToast.show();
                             }
                         }
 
