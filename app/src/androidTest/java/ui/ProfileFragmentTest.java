@@ -127,7 +127,7 @@ public class ProfileFragmentTest {
         }
 
         ArrayList<Book> books = mockListener.getBooks();
-        assertNotNull("Timed oud", books);
+        assertNotNull("Timed out", books);
 
         ViewAssertion v = new ViewAssertion() {
             @Override
