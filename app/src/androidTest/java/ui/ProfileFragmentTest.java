@@ -16,6 +16,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.example.boket.MainActivity;
 import com.example.boket.R;
+import com.example.boket.model.Ad;
 import com.example.boket.model.Book;
 import com.example.boket.model.Subscription;
 import com.example.boket.model.user.LocalUser;
@@ -41,8 +42,10 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThat;
 
@@ -111,22 +114,23 @@ public class ProfileFragmentTest {
         assertTrue(LocalUser.getCurrentUser() == null);*/
     }
 
-    private int getSubscribedBooks() throws InterruptedException {
-        CountDownLatch lock = new CountDownLatch(1);
-        final int[] expected = new int[1];
-        Subscription.getSubscribedBooks(LocalUser.getCurrentUser().getUid(), new Subscription.OnLoadSubscribedBooksCallback() {
-            @Override
-            public void onCompleteCallback(ArrayList<Book> books) {
-                expected[0] = books.size();
-                lock.countDown();
-            }
-        });
-        lock.await(1, TimeUnit.MINUTES);
-        return expected[0];
-    }
-
     @Test
-    public void  testAmountOfListElements() {
+    public void  testNumberOfSubscribedBooks() throws InterruptedException {
+        // Make sure that recyclerview is filled with data
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        SubscribedMockListener mockListener = new SubscribedMockListener();
+        Subscription.getSubscribedBooks(LocalUser.getCurrentUser().getUid(), mockListener);
+        synchronized (mockListener) {
+            mockListener.wait(10000);
+        }
+
+        ArrayList<Book> books = mockListener.getBooks();
+        assertNotNull("Timed oud", books);
+
         ViewAssertion v = new ViewAssertion() {
             @Override
             public void check(View view, NoMatchingViewException noViewFoundException) {
@@ -134,17 +138,87 @@ public class ProfileFragmentTest {
                     throw noViewFoundException;
                 }
                 RecyclerView rv = (RecyclerView) view;
-                try {
-                    int expected = getSubscribedBooks();
-                    int itemCount = rv.getAdapter().getItemCount();
-                    assertEquals(expected, itemCount);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                int expected = books.size();
+                int itemCount = rv.getAdapter().getItemCount();
+                assertEquals(expected, itemCount);
 
             }
         };
         onView(withId(R.id.subscribedBooksView)).check(v);
+    }
+
+    @Test
+    public void  testNumberOfAds() throws InterruptedException {
+        // Make sure that recyclerview is filled with data
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        AdsMockListener mockListener = new AdsMockListener();
+        Ad.getAdsByUser(LocalUser.getCurrentUser().getUid(), false, mockListener);
+        synchronized (mockListener) {
+            mockListener.wait(10000);
+        }
+
+        ArrayList<Ad> ads = mockListener.getAds();
+        assertNotNull("Timed oud", ads);
+
+        ViewAssertion v = new ViewAssertion() {
+            @Override
+            public void check(View view, NoMatchingViewException noViewFoundException) {
+                if (!(view instanceof RecyclerView)) {
+                    throw noViewFoundException;
+                }
+                RecyclerView rv = (RecyclerView) view;
+
+                int itemCount = rv.getAdapter().getItemCount();
+                assertEquals(ads.size(), itemCount);
+            }
+        };
+        onView(withId(R.id.adsView)).check(v);
+    }
+
+    @Test
+    public void testNameText() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String expected = LocalUser.getCurrentUser().getName().split(" ", 2)[0].concat("'s profil");
+        onView(withId(R.id.profileName)).check(matches(withText(expected)));
+    }
+
+    class SubscribedMockListener implements Subscription.OnLoadSubscribedBooksCallback {
+        ArrayList<Book> books;
+        @Override
+        public void onCompleteCallback(ArrayList<Book> books) {
+            this.books = books;
+            synchronized (this) {
+                notifyAll();
+            }
+        }
+
+        public ArrayList<Book> getBooks() {
+            return books;
+        }
+    }
+
+    class AdsMockListener implements Ad.GetAdsCallback {
+        ArrayList<Ad> ads;
+
+        public ArrayList<Ad> getAds() {
+            return ads;
+        }
+
+        @Override
+        public void onGetAdsComplete(ArrayList<Ad> adList) {
+            this.ads = adList;
+            synchronized (this) {
+                notifyAll();
+            }
+        }
     }
 
 }
