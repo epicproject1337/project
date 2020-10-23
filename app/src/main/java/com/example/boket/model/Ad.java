@@ -158,7 +158,6 @@ public class Ad {
     }
 
     /**
-     *
      * @return the bookTitle of the book being sold
      */
     public String getBookTitle() {
@@ -261,10 +260,10 @@ public class Ad {
         Ad ad = (Ad) o;
         return //id == ad.id &&
                 Double.compare(ad.price, price) == 0 &&
-                archived == ad.archived &&
-                userId.equals(ad.userId) &&
-                isbn.equals(ad.isbn) &&
-                condition.equals(ad.condition);
+                        archived == ad.archived &&
+                        userId.equals(ad.userId) &&
+                        isbn.equals(ad.isbn) &&
+                        condition.equals(ad.condition);
     }
 
     /**

@@ -22,6 +22,10 @@ import com.example.boket.model.user.LocalUser;
 
 
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import io.grpc.internal.JsonUtil;
 
 /**
  * @author Tarik Porobic
@@ -126,8 +130,6 @@ public class BooksellersFragment extends Fragment {
     private void setRecyclerView(View v, TextView sorryText,
                                  TextView pressSubText) throws InterruptedException {
 
-
-
         RecyclerView adListRecyclerView = v.findViewById(R.id.adList);
         adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -135,28 +137,24 @@ public class BooksellersFragment extends Fragment {
         BookAdapter b = new BookAdapter(this.getContext(), bookSellersList);
         adListRecyclerView.setAdapter(b);
         Context c = getContext();
-
         final BookAdapter[] bookAdapter = {b};
-        //Thread.sleep(100);// Wait for the bookNameTextView to be set
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
+                for (Ad ad : adList) {
+                    String state = ad.getCondition();
+                    String price = Double.toString(ad.getPrice());
+                    String sellerEmail = ad.getEmail();
+                    String bookSold = ad.getBookTitle();
+                    String city = ad.getCity();
 
+                    ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price, city);
+                    bookSellersList.add(aBookSeller);
+                }
+                sortCheapestFirst(bookSellersList);
                 if (adList.size() == 0) {
                     sorryText.setVisibility(View.VISIBLE);
                     pressSubText.setVisibility(View.VISIBLE);
-                } else {
-                    for (Ad ad : adList) {
-                        String state = ad.getCondition();
-                        String price = Double.toString(ad.getPrice());
-                        String sellerEmail = ad.getEmail();
-                        String bookSold = ad.getBookTitle();
-                        String city = ad.getCity();
-
-                        ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price, city);
-                        bookSellersList.add(aBookSeller);
-                    }
-                    sortCheapestFirst(bookSellersList);
                 }
                 bookAdapter[0] = new BookAdapter(c, bookSellersList);
                 adListRecyclerView.setAdapter(bookAdapter[0]);
