@@ -136,7 +136,7 @@
             android:id="@+id/conditionInput"
             style="@style/BasicInput"
             android:layout_width="347dp"
-            android:layout_height="132dp"
+            android:layout_height="48dp"
             android:layout_below="@+id/conditionText"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
