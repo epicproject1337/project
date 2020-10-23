@@ -23,8 +23,8 @@ import static android.content.ContentValues.TAG;
 /**
  * @author Pajam Khoshnam, Albin Landgren
  *
- * An object representing an Ad.
- * Handles all the database adds/updates/gets for Ads.
+ * An object representing users subscribtions to a book.
+ * Handles all the database adds/updates/gets for subscribtions.
  *
  * @since 2020-09-29
  */

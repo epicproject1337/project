@@ -165,7 +165,6 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: LoginActivity have same method. Merge somehow.
     private void updateUiWithUser(String displayName) {
         String welcome = "Welcome! " + displayName;
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
