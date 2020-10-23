@@ -74,13 +74,11 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         subscribedBooksView.setLayoutManager(layoutManager);
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
 
         subscribedBookAdapter = new SubscribedBookAdapter(view.getContext(), this, new ArrayList<Book>());
         subscribedBooksView.setAdapter(subscribedBookAdapter);
         RecyclerViewClickListener that = this;
-        Subscription.getSubscribedBooks(mAuth.getUid(), new Subscription.OnLoadSubscribedBooksCallback() {
+        Subscription.getSubscribedBooks(LocalUser.getCurrentUser().getUid(), new Subscription.OnLoadSubscribedBooksCallback() {
             @Override
             public void onCompleteCallback(ArrayList<Book> books) {
                 subscribedBookAdapter = new SubscribedBookAdapter(view.getContext(), that, books);
@@ -96,7 +94,7 @@ public class ProfileFragment extends Fragment implements RecyclerViewClickListen
                 = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
         adsView.setLayoutManager(layoutManager2);
         manageAdAdapter = new ManageAdAdapter(view.getContext(), this, new ArrayList<Ad>());
-        Ad.getAdsByUser(mAuth.getUid(), false, new Ad.GetAdsCallback() {
+        Ad.getAdsByUser(LocalUser.getCurrentUser().getUid(), false, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
                 manageAdAdapter = new ManageAdAdapter(view.getContext(), that, adList);
