@@ -1,20 +1,13 @@
 package com.example.boket.ui.login;
 
-import android.app.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,11 +21,7 @@ import android.widget.Toast;
 import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.user.LocalUser;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 /**
  * @author Pajam Khoshnam
  *
@@ -44,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getName();
     private ProgressBar loadingProgressBar;
+    private int mediumAnimationDuration;
 
 
     @Override
@@ -56,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final Button createAccountButton = findViewById(R.id.createAccount);
         loadingProgressBar = findViewById(R.id.loading);
-
+        mediumAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
         loginButton.setEnabled(true);
         createAccountButton.setEnabled(true);
@@ -75,7 +65,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingProgressBar.setAlpha(0f);
                 loadingProgressBar.setVisibility(View.VISIBLE);
+                loadingProgressBar.animate().alpha(1f).setDuration(mediumAnimationDuration).setListener(null);
                 signIn(usernameEditText.getText().toString(), passwordEditText.getText().toString());
             }
         });
@@ -99,7 +91,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onLoginFailed(String message) {
                 showLoginFailed("Login failed! " +  message);
-                loadingProgressBar.setVisibility(View.GONE);
+                loadingProgressBar.animate().alpha(0f).setDuration(mediumAnimationDuration).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        loadingProgressBar.setVisibility(View.GONE);
+                    }
+                });
             }
         });
     }
