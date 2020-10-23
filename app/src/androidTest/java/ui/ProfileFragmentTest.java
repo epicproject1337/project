@@ -43,6 +43,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertThat;
 
@@ -55,8 +56,6 @@ public class ProfileFragmentTest {
 
     private MainActivity mainActivity = null;
     ProfileFragment profileFragment;
-    /*RecyclerView subscribedBooksView;
-    RecyclerView adsView;*/
 
 
     private void startProfileFragment() {
@@ -111,22 +110,22 @@ public class ProfileFragmentTest {
         assertTrue(LocalUser.getCurrentUser() == null);*/
     }
 
-    private int getSubscribedBooks() throws InterruptedException {
-        CountDownLatch lock = new CountDownLatch(1);
-        final int[] expected = new int[1];
-        Subscription.getSubscribedBooks(LocalUser.getCurrentUser().getUid(), new Subscription.OnLoadSubscribedBooksCallback() {
-            @Override
-            public void onCompleteCallback(ArrayList<Book> books) {
-                expected[0] = books.size();
-                lock.countDown();
-            }
-        });
-        lock.await(1, TimeUnit.MINUTES);
-        return expected[0];
-    }
-
     @Test
-    public void  testAmountOfListElements() {
+    public void  testAmountOfListElements() throws InterruptedException {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        MockListener mockListener = new MockListener();
+        Subscription.getSubscribedBooks(LocalUser.getCurrentUser().getUid(), mockListener);
+        synchronized (mockListener) {
+            mockListener.wait(10000);
+        }
+
+        ArrayList<Book> books = mockListener.getBooks();
+        assertNotNull("Timed oud", books);
+
         ViewAssertion v = new ViewAssertion() {
             @Override
             public void check(View view, NoMatchingViewException noViewFoundException) {
@@ -134,17 +133,27 @@ public class ProfileFragmentTest {
                     throw noViewFoundException;
                 }
                 RecyclerView rv = (RecyclerView) view;
-                try {
-                    int expected = getSubscribedBooks();
-                    int itemCount = rv.getAdapter().getItemCount();
-                    assertEquals(expected, itemCount);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
+                int itemCount = rv.getAdapter().getItemCount();
+                assertEquals(books.size(), itemCount);
             }
         };
         onView(withId(R.id.subscribedBooksView)).check(v);
+    }
+
+    class MockListener implements Subscription.OnLoadSubscribedBooksCallback {
+        ArrayList<Book> books;
+        @Override
+        public void onCompleteCallback(ArrayList<Book> books) {
+            this.books = books;
+            synchronized (this) {
+                notifyAll();
+            }
+        }
+
+        public ArrayList<Book> getBooks() {
+            return books;
+        }
     }
 
 }
