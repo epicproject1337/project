@@ -83,9 +83,6 @@ public class Book {
         this.image = image;
     }
 
-    public Book(String isbn_number) {
-    }
-
     /**
      * @return book isbn number
      */
