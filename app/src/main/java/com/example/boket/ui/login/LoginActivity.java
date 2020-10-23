@@ -141,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onLoginFailed(String message) {
-                showLoginFailed("Login failed! " +  message);
+                showLoginFailed(message);
                 loadingProgressBar.animate().alpha(0f).setDuration(mediumAnimationDuration).setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -168,6 +168,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void showLoginFailed(String errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_LONG).show();
     }
 }
