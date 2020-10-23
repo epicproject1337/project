@@ -127,7 +127,7 @@ public class ProfileFragmentTest {
         }
 
         ArrayList<Book> books = mockListener.getBooks();
-        assertNotNull("Timed oud", books);
+        assertNotNull("Timed out", books);
 
         ViewAssertion v = new ViewAssertion() {
             @Override
@@ -188,6 +188,9 @@ public class ProfileFragmentTest {
         onView(withId(R.id.profileName)).check(matches(withText(expected)));
     }
 
+    /**
+     * Used to handle asynchronous callbacks synchronously in tests
+     */
     class SubscribedMockListener implements Subscription.OnLoadSubscribedBooksCallback {
         ArrayList<Book> books;
         @Override
@@ -203,6 +206,9 @@ public class ProfileFragmentTest {
         }
     }
 
+    /**
+     * Used to handle asynchronous callbacks synchronously in tests
+     */
     class AdsMockListener implements Ad.GetAdsCallback {
         ArrayList<Ad> ads;
 
@@ -216,21 +222,6 @@ public class ProfileFragmentTest {
             synchronized (this) {
                 notifyAll();
             }
-        }
-    }
-
-    class MockListener implements Subscription.OnLoadSubscribedBooksCallback {
-        ArrayList<Book> books;
-        @Override
-        public void onCompleteCallback(ArrayList<Book> books) {
-            this.books = books;
-            synchronized (this) {
-                notifyAll();
-            }
-        }
-
-        public ArrayList<Book> getBooks() {
-            return books;
         }
     }
 
