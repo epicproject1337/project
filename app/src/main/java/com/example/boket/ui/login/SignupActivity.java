@@ -1,6 +1,7 @@
 package com.example.boket.ui.login;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,9 +22,11 @@ import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.user.LocalUser;
 
+import org.w3c.dom.Text;
 
 /**
  * @author Pajam Khoshnam
+ * <p>
  * The Activity for signing up a user
  * @since 2020-09-07
  */
@@ -84,6 +87,7 @@ public class SignupActivity extends AppCompatActivity {
                     inputCorrect = false;
                     nameEditText.getText().clear();
                     nameEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
+                    //nameEditText.setBackground(R.style.ErrorField);
                     nameEditText.setHint("Skriv namn, inga nummer!");
                 }
                 String email = emailEditText.getText().toString();
@@ -132,7 +136,7 @@ public class SignupActivity extends AppCompatActivity {
         tv.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                tv.setBackground(originTextColor);
             }
 
             @Override

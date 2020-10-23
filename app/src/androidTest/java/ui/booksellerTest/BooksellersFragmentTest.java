@@ -68,6 +68,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import ui.ProfileFragmentTest;
+
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
@@ -124,7 +126,7 @@ public class BooksellersFragmentTest {
 
     @Test
     public void testHoldersRightAmount() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1000);
         RecyclerView rv = mActivity.findViewById(R.id.adList);
         int holders = rv.getAdapter().getItemCount();
         final int[] adListSize = new int[1];
@@ -138,6 +140,49 @@ public class BooksellersFragmentTest {
         Thread.sleep(500);
         assertEquals(holders, adListSize[0]);
     }
+/*
+    @Test
+    public void testCorrectHolder() throws InterruptedException {
+        Thread.sleep(1000);
+        RecyclerView rv = mActivity.findViewById(R.id.adList);
+        Thread.sleep(1000);
+        int holders = rv.getAdapter().getItemCount();
+        Thread.sleep(1000);
+        int randomPos = 0; //randomInt(holders);
+        Thread.sleep(1000);
+        ABookSellerHolder aBookSellerHolder = (ABookSellerHolder) rv.findViewHolderForLayoutPosition(randomPos);
+        Thread.sleep(1000);
+        boolean correct = checkBookHolder(aBookSellerHolder, randomPos);
+        assertTrue(correct);
+    }
+
+    private boolean checkBookHolder(ABookSellerHolder aBookSellerHolder, int pos) throws InterruptedException {
+        String isbn = booksellersFragment.getArguments().getString("isbn");
+        MockListenerAd mockListener = new MockListenerAd();
+        Ad.getAdsByISBN(isbn, mockListener);
+        synchronized (mockListener) {
+            mockListener.wait(10000);
+        }
+        ArrayList<Ad> adArr = mockListener.getAdArr();
+        Ad ad = adArr.get(pos);
+
+        if (ad.getCity().equals("här")) {
+            return true;
+        }
+        if (!aBookSellerHolder.getPrice().getText().toString().equals(ad.getPrice())) {
+            return false;
+        }
+
+        if (!aBookSellerHolder.getState().getText().toString().equals(ad.getCondition())) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+ */
+
 
     @Test
     public void testExpandableView() throws InterruptedException {
@@ -156,7 +201,7 @@ public class BooksellersFragmentTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(randomPos,
                         click()));
 
-        Thread.sleep(100);
+        Thread.sleep(500);
         ABookSellerHolder vh = (ABookSellerHolder) rv.findViewHolderForLayoutPosition(randomPos);
         int visibilityCode = 0; //if it is visible it returns 0 (java class)
         assertEquals(vh.getExpandableLayout().getVisibility(), visibilityCode);
@@ -231,21 +276,12 @@ public class BooksellersFragmentTest {
     }
 
     private boolean Subscribed(String bookISBN) throws InterruptedException {
-        CountDownLatch lock = new CountDownLatch(1);
-        final boolean[] subscribed = new boolean[1];
-
-        Subscription.isSubscribed(bookISBN, user.getUid(), new Subscription.OnLoadCallback() {
-
-            @Override
-            public void isSubscribedCallback(boolean isSubscribed) {
-                subscribed[0] = isSubscribed;
-                lock.countDown();
-            }
-        });
-
-        lock.await(1, TimeUnit.MINUTES);
-        Thread.sleep(500);
-        return subscribed[0];
+        MockListenerSubscribe mockListener = new MockListenerSubscribe();
+        Subscription.isSubscribed(bookISBN, user.getUid(), mockListener);
+        synchronized (mockListener) {
+            mockListener.wait(10000);
+        }
+        return mockListener.isSubscribed();
     }
 
     @Test
@@ -307,7 +343,7 @@ public class BooksellersFragmentTest {
 
     @After
     public void tearDown() throws Exception {
-        removeFragment(booksellersFragment);
+        //removeFragment(booksellersFragment);
     }
 
     public void removeFragment(Fragment fragment) {
@@ -317,6 +353,39 @@ public class BooksellersFragmentTest {
         fragmentTransaction.commit();
     }
 
+    class MockListenerSubscribe implements Subscription.OnLoadCallback {
+        boolean subscribed;
 
+        @Override
+        public void isSubscribedCallback(boolean isSubscribed) {
+            subscribed = isSubscribed;
+            synchronized (this) {
+                notifyAll();
+            }
+        }
+
+        public boolean isSubscribed() {
+            return subscribed;
+        }
+    }
+
+    class MockListenerAd implements Ad.GetAdsCallback {
+        ArrayList<Ad> adArr = new ArrayList<>();
+
+        @Override
+        public void onGetAdsComplete(ArrayList<Ad> adList) {
+            for (Ad ad : adList) {
+                adArr.add(ad);
+            }
+            synchronized (this) {
+                notifyAll();
+            }
+        }
+
+        public ArrayList<Ad> getAdArr() {
+            return adArr;
+        }
+
+    }
 
 }
