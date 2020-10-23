@@ -63,7 +63,6 @@ public class Book {
                 }
             }
         });
-
     }
 
     /**
@@ -82,9 +81,6 @@ public class Book {
         this.edition = edition;
         this.releaseYear = releaseYear;
         this.image = image;
-    }
-
-    public Book(String isbn_number) {
     }
 
     /**

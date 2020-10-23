@@ -40,7 +40,6 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
         return bookItems.get(position);
     }
 
-
     /**
      * Binds xml file to BookItemHolder
      * @param parent
@@ -100,7 +99,6 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.BookIt
 
             v.setOnClickListener(this);
         }
-
 
         /**
          * Handle clicks on book item

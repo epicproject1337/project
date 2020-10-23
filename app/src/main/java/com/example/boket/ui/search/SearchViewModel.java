@@ -31,5 +31,4 @@ public class SearchViewModel extends ViewModel {
         this.books = books;
     }
 
-
 }

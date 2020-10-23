@@ -31,21 +31,12 @@ import java.util.ArrayList;
  */
 public class BooksellersFragment extends Fragment {
 
+    private boolean isSubscribedToBook;
+    private Button subscribeButton;
     private LocalUser user = LocalUser.getCurrentUser();
     private static final String TAG = BooksellersFragment.class.getName();
     private String ISBN_number;
-    private ImageView bookImageView;
-    private TextView bookNameTextView;
-    private TextView bookAuthorTextView;
-    private TextView releaseYearTextView;
-    private TextView editionTextView;
-    private TextView isbnTextView;
-    private Button subscribeButton;
-    private BookAdapter bookAdapter;
-    private RecyclerView adListRecyclerView;
-    private boolean isSubscribedToBook;
-    private TextView sorryText;
-    private TextView pressSubText;
+
 
     /**
      * Gets the ISBN number of the book from the previous screen (search) and initiate all buttons,
@@ -63,29 +54,33 @@ public class BooksellersFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             ISBN_number = bundle.getString("isbn");
-
         }
-        init(v);
+
+        try {
+            init(v);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return v;
     }
 
-    private void init(View v) {
-        bookImageView = v.findViewById(R.id.bookImage);
-        bookNameTextView = v.findViewById(R.id.bookName);
-        bookAuthorTextView = v.findViewById(R.id.bookAuthor);
+    private void init(View v) throws InterruptedException {
         subscribeButton = v.findViewById(R.id.subscribeButton);
-        releaseYearTextView = v.findViewById(R.id.releaseYear);
-        editionTextView = v.findViewById(R.id.edition);
-        isbnTextView = v.findViewById(R.id.isbn);
-        sorryText = v.findViewById(R.id.sorryText);
-        pressSubText = v.findViewById(R.id.pressSubText);
+        ImageView bookImageView = v.findViewById(R.id.bookImage);
+        TextView bookNameTextView = v.findViewById(R.id.bookName);
+        TextView bookAuthorTextView = v.findViewById(R.id.bookAuthor);
+        TextView releaseYearTextView = v.findViewById(R.id.releaseYear);
+        TextView editionTextView = v.findViewById(R.id.edition);
+        TextView isbnTextView = v.findViewById(R.id.isbn);
+        TextView sorryText = v.findViewById(R.id.sorryText);
+        TextView pressSubText = v.findViewById(R.id.pressSubText);
 
-        setBookInfo(v);
+        setRecyclerView(v, sorryText, pressSubText);
 
-        adListRecyclerView = v.findViewById(R.id.adList);
-        adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        setBookSellersList(v);
+        setBookInfo(v, bookNameTextView, bookAuthorTextView, releaseYearTextView,
+                editionTextView, isbnTextView, bookImageView);
+
 
         subscribeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,24 +90,24 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private void setBookInfo(View v) {
+    private void setBookInfo(View v, TextView bookNameTextView, TextView bookAuthorTextView,
+                             TextView releaseYearTextView, TextView editionTextView,
+                             TextView isbnTextView, ImageView bookImageView) {
         Book book = new Book(ISBN_number, new Book.OnLoadCallback() {
             @Override
             public void onLoadComplete(Book book) {
                 bookNameTextView.setText(book.getName());
-                //System.out.println("book.getName(): "+book.getName());
-                //System.out.println("bookNameTextView: "+ String.valueOf(bookNameTextView.getText()));
                 bookAuthorTextView.setText(book.getAuthor());
                 releaseYearTextView.setText(book.getReleaseYear());
                 editionTextView.setText("Upplaga: " + book.getEdition());
                 isbnTextView.setText("ISBN: " + book.getIsbn());
+
                 if (v.isShown()) {
                     Glide.with(v).load(book.getImage()).into(bookImageView);
                 }
                 Subscription.isSubscribed(book.getIsbn(), user.getUid(), new Subscription.OnLoadCallback() {
                     @Override
                     public void isSubscribedCallback(boolean isSubscribed) {
-                        System.out.println(isSubscribed);
                         isSubscribedToBook = isSubscribed;
                         if (isSubscribed) {
                             subscribeButton.setText("Avprenumerera");
@@ -125,33 +120,44 @@ public class BooksellersFragment extends Fragment {
         });
     }
 
-    private void setBookSellersList(View v) {
+
+    private void setRecyclerView(View v, TextView sorryText,
+                                 TextView pressSubText) throws InterruptedException {
+
+
+
+        RecyclerView adListRecyclerView = v.findViewById(R.id.adList);
+        adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
+        BookAdapter b = new BookAdapter(this.getContext(), bookSellersList);
+        adListRecyclerView.setAdapter(b);
         Context c = getContext();
 
+        final BookAdapter[] bookAdapter = {b};
+        //Thread.sleep(100);// Wait for the bookNameTextView to be set
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-                for (Ad ad : adList) {
-                    String state = ad.getCondition();
-                    String price = Double.toString(ad.getPrice());
-                    String sellerEmail = ad.getEmail();
-                    String bookSold = String.valueOf(bookNameTextView.getText());
-                    //System.out.println("Boken som säljs är " + bookSold);
-                    String city = ad.getCity();
 
-                    ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price, city, v);
-                    bookSellersList.add(aBookSeller);
-                }
                 if (adList.size() == 0) {
                     sorryText.setVisibility(View.VISIBLE);
                     pressSubText.setVisibility(View.VISIBLE);
+                } else {
+                    for (Ad ad : adList) {
+                        String state = ad.getCondition();
+                        String price = Double.toString(ad.getPrice());
+                        String sellerEmail = ad.getEmail();
+                        String bookSold = ad.getBookTitle();
+                        String city = ad.getCity();
+
+                        ABookSeller aBookSeller = new ABookSeller(bookSold, sellerEmail, state, price, city);
+                        bookSellersList.add(aBookSeller);
+                    }
+                    sortCheapestFirst(bookSellersList);
                 }
-                sortCheapestFirst(bookSellersList);
-                bookAdapter = new BookAdapter(c, bookSellersList);
-                adListRecyclerView.setAdapter(bookAdapter);
-
-
+                bookAdapter[0] = new BookAdapter(c, bookSellersList);
+                adListRecyclerView.setAdapter(bookAdapter[0]);
             }
         });
     }
@@ -180,11 +186,6 @@ public class BooksellersFragment extends Fragment {
             subscribeButton.setText("Avprenumerera");
         }
         isSubscribedToBook = !isSubscribedToBook;
-    }
-
-    public void onIABookSellerCL(View v, int position) {
-
-
     }
 
     /**

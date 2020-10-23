@@ -32,6 +32,7 @@ public class Ad {
     @DocumentId
     private String id;
 
+    private String bookTitle;
     private String userId;
     private String email;
     private String isbn;
@@ -46,7 +47,6 @@ public class Ad {
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String collection = "ads";
     private static final String TAG = Ad.class.getName();
-
 
     /**
      * Create an "empty" Ad object with all the instance variables set to null.
@@ -65,7 +65,7 @@ public class Ad {
      * @param archived  If the ad should be marked as archived/sold. //TODO should always be false
      *                  on creating?
      */
-    public Ad(String userId, String email, String isbn, double price, String condition, String city, boolean archived) {
+    public Ad(String bookTitle, String userId, String email, String isbn, double price, String condition, String city, boolean archived) {
         this.userId = userId;
         this.email = email;
         this.isbn = isbn;
@@ -73,6 +73,7 @@ public class Ad {
         this.condition = condition;
         this.archived = archived;
         this.city = city;
+        this.bookTitle = bookTitle;
     }
 
     /**
@@ -88,7 +89,7 @@ public class Ad {
         final ArrayList<Ad> adList = new ArrayList<Ad>();
 
         Query docRef = db.collection(collection).whereEqualTo("userId", userId);
-        if(archived != null){
+        if (archived != null) {
             docRef = docRef.whereEqualTo("archived", archived);
         }
 
@@ -138,7 +139,7 @@ public class Ad {
         });
     }
 
-    public void archiveAd(){
+    public void archiveAd() {
         this.archived = true;
         db.collection(collection).document(this.getId()).set(this).addOnSuccessListener(
                 new OnSuccessListener<Void>() {
@@ -153,6 +154,13 @@ public class Ad {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
+    }
+
+    /**
+     * @return the bookTitle of the book being sold
+     */
+    public String getBookTitle() {
+        return bookTitle;
     }
 
     /**
@@ -230,7 +238,6 @@ public class Ad {
         });
     }
 
-
     /**
      * @return timestamp of when the ad was updated last.
      */
@@ -249,12 +256,13 @@ public class Ad {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ad ad = (Ad) o;
+
         return //id == ad.id &&
                 Double.compare(ad.price, price) == 0 &&
-                archived == ad.archived &&
-                userId.equals(ad.userId) &&
-                isbn.equals(ad.isbn) &&
-                condition.equals(ad.condition);
+                        archived == ad.archived &&
+                        userId.equals(ad.userId) &&
+                        isbn.equals(ad.isbn) &&
+                        condition.equals(ad.condition);
     }
 
     /**
@@ -269,4 +277,5 @@ public class Ad {
     public interface GetAdsCallback {
         void onGetAdsComplete(ArrayList<Ad> adList);
     }
+
 }

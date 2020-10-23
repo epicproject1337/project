@@ -23,8 +23,8 @@ import static android.content.ContentValues.TAG;
 /**
  * @author Pajam Khoshnam, Albin Landgren
  *
- * An object representing an Ad.
- * Handles all the database adds/updates/gets for Ads.
+ * An object representing users subscribtions to a book.
+ * Handles all the database adds/updates/gets for subscribtions.
  *
  * @since 2020-09-29
  */
@@ -75,7 +75,7 @@ public class Subscription {
     /**
      * Check if a user is subscribed to a book
      * @param isbn isbn number of the book
-     * @param userId the user id of the
+     * @param userId the user id of the user
      * @param callback callback method that will receive the boolean return value.
      */
     public static void isSubscribed(String isbn, String userId, OnLoadCallback callback) {
@@ -160,4 +160,5 @@ public class Subscription {
     public interface OnLoadSubscribedBooksCallback {
         void onCompleteCallback(ArrayList<Book> books);
     }
+
 }

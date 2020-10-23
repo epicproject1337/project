@@ -18,22 +18,15 @@ import com.example.boket.R;
 public class ABookSeller {
 
     private String state, price, city;
-    private ImageButton contactSeller;
-    private ConstraintLayout expandableLayout;
-    private CardView cardView;
     private String sellerEmail;
     private String bookSold;
 
-
-    public ABookSeller(String bookSold, String seller, String state, String price, String city, View v) {
+    public ABookSeller(String bookSold, String seller, String state, String price, String city) {
         this.state = state;
         this.price = price;
         this.city = city;
         this.sellerEmail = seller;
         this.bookSold = bookSold;
-        this.contactSeller = v.findViewById(R.id.contactSellerBtn);
-        this.expandableLayout = v.findViewById(R.id.expandableView);
-        this.cardView = v.findViewById(R.id.cardView);
     }
 
     /**
@@ -66,9 +59,5 @@ public class ABookSeller {
 
     public String getBookSold() {
         return bookSold;
-    }
-
-    public void setSellerEmail(String sellerEmail) {
-        this.sellerEmail = sellerEmail;
     }
 }

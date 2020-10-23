@@ -64,7 +64,6 @@ public class AddAdActivity extends AppCompatActivity {
                     Glide.with(AddAdActivity.this).load(book.getImage()).into(bookImage);
                 }
             });
-
         }
 
         publishButton.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +77,8 @@ public class AddAdActivity extends AppCompatActivity {
                 String city = String.valueOf(cityEditText.getText());
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-                Ad ad = new Ad(userID, email, isbn, price, condition, city, false);
+                String bookTitle = String.valueOf(bookTitleTextView.getText());
+                Ad ad = new Ad(bookTitle, userID, email, isbn, price, condition, city, false);
                 ad.save();
 
                 Intent backToSearch = new Intent(AddAdActivity.this, MainActivity.class);
@@ -87,7 +87,6 @@ public class AddAdActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Ad Succesfully uploaded!", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     private boolean checkInputs(EditText priceEditText, EditText conditionEditText, EditText cityEditText) {

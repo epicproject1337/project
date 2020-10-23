@@ -16,7 +16,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-//TODO: move all user "logic" and firebase auth calls to a User Model.
+/**
+ * @author Pajam Khoshnam
+ * An object representing the local User. Uses singleton pattern as there can only be one local user
+ * at any given time. Also provides some static methods such as login and signup.
+ * @since 2020-09-10
+ */
 public class LocalUser implements User {
 
     private String uid;
@@ -37,18 +42,30 @@ public class LocalUser implements User {
         this.location = location;
     }
 
+    /**
+     * @return the user ID
+     */
     public String getUid() {
         return uid;
     }
 
+    /**
+     * @return the users email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * @return the users name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the users location
+     */
     public String getLocation() {
         return location;
     }
@@ -62,6 +79,16 @@ public class LocalUser implements User {
     }
 
 
+    /**
+     * Signup a user
+     * @param name users name
+     * @param email users email
+     * @param emailConfirm confirm the email
+     * @param password users password
+     * @param passwordConfirm confirm the password
+     * @param location users location
+     * @param callback callback method or when signup is complete.
+     */
     public static void signup(String name, String email, String emailConfirm, String password, String passwordConfirm, String location, SignupCallback callback) {
 
         //confirm email
@@ -97,6 +124,12 @@ public class LocalUser implements User {
                 });
     }
 
+    /**
+     * method to sign in a user
+     * @param email users email
+     * @param password users password
+     * @param callback callback method for when the request is complete
+     */
     public static void login(String email, String password, LoginCallback callback) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -145,6 +178,10 @@ public class LocalUser implements User {
                 });
     }
 
+    /**
+     * Method to update the users name
+     * @param name users new name
+     */
     public static void updateName(String name) {
         //Make sure there is a user logged in
         if (currentUser == null)
@@ -173,6 +210,10 @@ public class LocalUser implements User {
 
     }
 
+    /**
+     * Method to update a users location
+     * @param location new location
+     */
     public static void updateLocation(String location) {
         //Make sure there is a user logged in
         if (currentUser == null)
@@ -186,11 +227,17 @@ public class LocalUser implements User {
 
     }
 
+    /**
+     * Method to signout a user
+     */
     public static void signout() {
         mAuth.signOut();
         currentUser = null;
     }
 
+    /**
+     * @return an instance of the current local user.
+     */
     public static LocalUser getCurrentUser() {
         if (LocalUser.currentUser == null) {
             FirebaseUser u = mAuth.getCurrentUser();
@@ -220,6 +267,5 @@ public class LocalUser implements User {
         void onLoginComplete(LocalUser user);
         void onLoginFailed(String message);
     }
-
 
 }

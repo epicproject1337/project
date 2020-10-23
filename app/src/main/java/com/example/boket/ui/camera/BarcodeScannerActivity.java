@@ -122,7 +122,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
     }
 
     private void startCameraSource() {
-
         // check that the device has play services available.
         int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
                 getApplicationContext());
@@ -146,7 +145,6 @@ public class BarcodeScannerActivity extends AppCompatActivity {
             }
         } else
             Log.d(TAG, "startCameraSource: not started");
-
     }
 
     /**

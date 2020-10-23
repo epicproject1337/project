@@ -77,6 +77,9 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         searchView.setOnQueryTextListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        bookItemAdapter = new BookItemAdapter(getContext(), this, new ArrayList<BookItem>());
+        recyclerView.setAdapter(bookItemAdapter);
+
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,7 +107,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
 
         return v;
     }
-
 
     private ArrayList<BookItem> getBookItems() {
         ArrayList<BookItem> bookItems = new ArrayList<>();
@@ -165,7 +167,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
     }
 
     private void searchBooks(String query) {
-
         //Clears recyclerview
         searchViewModel.getBooks().clear();
         updateRecyclerView(getBookItems());
@@ -181,7 +182,6 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         });
 
         startIsBookFoundTimer();
-
     }
 
     /**

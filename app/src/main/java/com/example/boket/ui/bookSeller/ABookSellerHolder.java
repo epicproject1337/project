@@ -27,7 +27,6 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
     private ConstraintLayout expandableLayout;
     private CardView cardView;
 
-
     private IABookSellerCL iaBookSellerCL;
 
     /**
@@ -45,35 +44,9 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
         this.expandableLayout = v.findViewById(R.id.expandableView);
         this.cardView = v.findViewById(R.id.cardView);
 
-
-        /*
-        contactSeller.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendMail();
-            }
-
-        });
-
-         */
-
         contactSeller.setOnClickListener(this);
         v.setOnClickListener(this);
     }
-/*
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void changeVisibility(){
-        if(expandableLayout.getVisibility()==View.GONE){
-            TransitionManager.beginDelayedTransition(cardView,new AutoTransition());
-            expandableLayout.setVisibility(View.VISIBLE);
-        }else{
-            TransitionManager.beginDelayedTransition(cardView,new AutoTransition());
-            expandableLayout.setVisibility(View.GONE);
-        }
-    }
-
-
- */
 
     /**
      * Expands the expandable view if it is not expanded and vice versa if the AbookSellerHolder is clicked
@@ -83,13 +56,22 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
-        //this.changeVisibility();
-
+        switch (view.getId()) {
+            case R.id.contactSellerBtn:
+                this.iaBookSellerCL.onIABookSellerBtnCL(getLayoutPosition());
+                break;
+            case R.id.book:
+                this.iaBookSellerCL.onIABookSellerCL(view, getLayoutPosition());
+                break;
+        }
+/*
         if (view.getId() == R.id.contactSellerBtn) {
             this.iaBookSellerCL.onIABookSellerBtnCL(getLayoutPosition());
         } else {
             this.iaBookSellerCL.onIABookSellerCL(view, getLayoutPosition());
         }
+
+ */
 
     }
 

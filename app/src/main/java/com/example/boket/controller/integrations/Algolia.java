@@ -42,4 +42,5 @@ public class Algolia {
     public interface SearchCallback {
         void onSearchComplete(JSONObject content);
     }
+
 }
