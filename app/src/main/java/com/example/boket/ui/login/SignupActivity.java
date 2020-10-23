@@ -1,5 +1,7 @@
 package com.example.boket.ui.login;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,6 +35,7 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = SignupActivity.class.getName();
     //private Drawable originTextViewColor;
     private ProgressBar loadingProgressBar;
+    private int mediumAnimationDuration;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class SignupActivity extends AppCompatActivity {
         //originTextViewColor = nameEditText.getBackground();
 
         loadingProgressBar = findViewById(R.id.loading);
+        mediumAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
 
         setTextColorWriteListener(nameEditText);
         setTextColorWriteListener(emailEditText);
@@ -69,10 +73,12 @@ public class SignupActivity extends AppCompatActivity {
                 String name = nameEditText.getText().toString();
                 String email = emailEditText.getText().toString();
                 String emailConfirm = emailConfirmEditText.getText().toString();
-                String password = emailConfirmEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
                 String passwordConfirm = passwordConfirmEditText.getText().toString();
 
+                loadingProgressBar.setAlpha(0f);
                 loadingProgressBar.setVisibility(View.VISIBLE);
+                loadingProgressBar.animate().alpha(1f).setDuration(mediumAnimationDuration).setListener(null);
                 signup(name, email, emailConfirm, password, passwordConfirm);
 
             }
@@ -163,7 +169,12 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onSignupFailed(String message) {
-                loadingProgressBar.setVisibility(View.GONE);
+                loadingProgressBar.animate().alpha(0f).setDuration(mediumAnimationDuration).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        loadingProgressBar.setVisibility(View.GONE);
+                    }
+                });
                 showLoginFailed("Signup failed! Try again.. " + message);
             }
         });

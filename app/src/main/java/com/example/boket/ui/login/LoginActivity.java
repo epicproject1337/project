@@ -133,12 +133,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onLoginComplete(LocalUser user) {
                 Log.d(TAG, "signInWithEmail:success");
-                updateUiWithUser(user.getEmail());
+                updateUiWithUser(user.getName());
             }
 
             @Override
             public void onLoginFailed(String message) {
-                showLoginFailed("Login failed! " + message);
+                showLoginFailed(message);
                 loadingProgressBar.animate().alpha(0f).setDuration(mediumAnimationDuration).setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
@@ -156,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void updateUiWithUser(String displayName) {
-        String welcome = "Welcome! " + displayName;
+        String welcome = "Välkommen " + displayName + "!";
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -165,6 +165,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void showLoginFailed(String errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_LONG).show();
     }
 }

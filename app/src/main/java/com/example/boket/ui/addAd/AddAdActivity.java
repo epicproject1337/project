@@ -84,7 +84,7 @@ public class AddAdActivity extends AppCompatActivity {
                 Intent backToSearch = new Intent(AddAdActivity.this, MainActivity.class);
                 startActivity(backToSearch);
                 finish();
-                Toast.makeText(getApplicationContext(), "Ad Succesfully uploaded!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Annonsen är uppladdad!", Toast.LENGTH_LONG).show();
             }
         });
     }
