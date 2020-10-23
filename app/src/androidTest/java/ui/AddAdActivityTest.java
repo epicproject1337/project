@@ -49,7 +49,7 @@ public class AddAdActivityTest {
                 protected Intent getActivityIntent() {
 
                     Bundle bundle = new Bundle();
-                    bundle.putString("isbn","9789144090504");
+                    bundle.putString("isbn", "9789144090504");
                     Intent result = new Intent();
                     result.putExtras(bundle);
                     return result;
@@ -77,7 +77,6 @@ public class AddAdActivityTest {
         publishButton.perform(scrollTo()).perform(click());
 
         intended(hasComponent(MainActivity.class.getName()));
-
     }
 
     @Test
