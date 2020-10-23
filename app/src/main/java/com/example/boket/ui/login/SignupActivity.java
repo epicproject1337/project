@@ -1,5 +1,6 @@
 package com.example.boket.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -71,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //loadingProgressBar.setVisibility(View.VISIBLE);
 
-                if (!checkInputs()) {
+                if (!checkInputs(v.getContext())) {
                     Log.e("SIGNUP", "SIGNUP NOT VALID");
                     return;
                 }
@@ -86,7 +87,7 @@ public class SignupActivity extends AppCompatActivity {
 
             }
 
-            private boolean checkInputs() {
+            private boolean checkInputs(Context c) {
 
                 boolean inputCorrect = true;
                 String name = nameEditText.getText().toString();
@@ -94,6 +95,7 @@ public class SignupActivity extends AppCompatActivity {
                     inputCorrect = false;
                     nameEditText.getText().clear();
                     nameEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
+                    //nameEditText.setBackground(R.style.ErrorField);
                     nameEditText.setHint("Skriv namn, inga nummer!");
                 }
                 String email = emailEditText.getText().toString();
@@ -142,12 +144,12 @@ public class SignupActivity extends AppCompatActivity {
         tv.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                tv.setBackground(originTVcolor);
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                tv.setBackground(originTVcolor);
+                //tv.setBackground(originTVcolor);
             }
 
             @Override
