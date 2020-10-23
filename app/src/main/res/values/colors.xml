@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#5F3DC4</color>
+
     <color name="colorPrimaryDark">#3700B3</color>
+
     <color name="colorAccent">#5F3DC4</color>
+
     <color name="colorBottomBar">#CED4DA</color>
+
     <color name="colorInput">#F1F3F5</color>
+
     <color name="colorWhite">#FFFFFF</color>
+
     <color name="colorGray">#5E5E5E</color>
+
     <color name="colorDarkGray">#ADB5BD</color>
+
     <color name="colorLightPurple">#F3F0FF</color>
 
+    <color name="colorErrorRed">#FFD6D6</color>
+
+    <color name="colorDefaultInput">#f1f3f5</color>
+
     <color name="black_overlay">#66000000</color>
+
 </resources>
