@@ -80,20 +80,15 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
         bookItemAdapter = new BookItemAdapter(getContext(), this, new ArrayList<BookItem>());
         recyclerView.setAdapter(bookItemAdapter);
 
+        if(getActivity() instanceof MainActivity){
+            cameraButton.setVisibility(View.INVISIBLE);
+        }
+
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                if(getActivity() instanceof MainActivity){
-                    bundle.putString("PrevPage", "searchFragment");
-                }
-                else if(getActivity() instanceof SearchAddAdActivity){
-                    bundle.putString("PrevPage", "searchAddAdActivity");
-                }
-
 
                 Intent intent = new Intent(getContext(), BarcodeScannerActivity.class);
-                intent.putExtras(bundle);
                 startActivity(intent);
 
             }
@@ -104,6 +99,8 @@ public class SearchFragment extends Fragment implements RecyclerViewClickListene
                 searchView.setIconified(false);
             }
         });
+
+
 
         return v;
     }

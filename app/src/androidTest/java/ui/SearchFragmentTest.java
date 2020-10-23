@@ -1,4 +1,4 @@
-package com.example.boket;
+package ui;
 
 
 import android.view.View;
@@ -10,10 +10,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.example.boket.MainActivity;
+import com.example.boket.R;
 import com.example.boket.model.Book;
 import com.example.boket.ui.search.SearchFragment;
 import com.example.boket.ui.search.SearchViewModel;
@@ -121,7 +124,7 @@ public class SearchFragmentTest {
                         childAtPosition(
                                 allOf(withClassName(is("android.widget.LinearLayout")),
                                         childAtPosition(
-                                                withId(R.id.searchView),
+                                                ViewMatchers.withId(R.id.searchView),
                                                 0)),
                                 1),
                         isDisplayed()));
