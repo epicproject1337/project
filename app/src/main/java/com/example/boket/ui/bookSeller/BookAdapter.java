@@ -31,7 +31,7 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
 
     /**
      * @param c           context of BooksellersFragment
-     * @param bookSellers List with bookSellers that will be presented in recyclerview
+     * @param bookSellers Arraylist with bookSellers that will be presented in recyclerview
      */
     public BookAdapter(Context c, ArrayList<ABookSeller> bookSellers) {
         this.bookSellers = bookSellers;
@@ -39,7 +39,8 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     }
 
     /**
-     * Binds the view "fragmen_abookseller" to a holder
+     * Binds the view "fragmen_abookseller" to a holder and saves all ABookSellerHolder into adapter's
+     * list
      *
      * @param parent   Android parameter
      * @param viewType Android parameter
@@ -57,7 +58,8 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     }
 
     /**
-     * Sets right information on the holder
+     * Sets right information on the holder, and has the code for what will happend if different things
+     * are clicked in the view holder
      *
      * @param holder that will go in the recyclerview
      * @param i      position in the recyclerview
@@ -66,6 +68,11 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     @Override
     public void onBindViewHolder(@NonNull ABookSellerHolder holder, int i) {
         holder.setIaBookSellerCL(new IABookSellerCL() {
+            /**
+             * Manages the expandableview so that only one holder is expanded
+             * @param v view of the viewholder
+             * @param i position of the holder in the recylcerview
+             */
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onIABookSellerCL(View v, int i) {
@@ -80,6 +87,10 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
                 }
             }
 
+            /**
+             * Opens up gmail and autogenerates a message for when you want to contact the seller
+             * @param i positon of the holder in recylcerview
+             */
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onIABookSellerBtnCL(int i) {

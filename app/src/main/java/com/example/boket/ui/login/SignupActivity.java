@@ -5,8 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,7 +17,7 @@ import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.boket.MainActivity;
@@ -143,7 +141,7 @@ public class SignupActivity extends AppCompatActivity {
             @SuppressLint("ResourceAsColor")
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                 tv.setBackgroundColor(Color.parseColor("#f1f3f5"));
+                tv.setBackgroundColor(Color.parseColor("#f1f3f5"));
 
             }
 
