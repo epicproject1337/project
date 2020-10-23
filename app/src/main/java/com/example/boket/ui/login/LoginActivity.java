@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private ProgressBar loadingProgressBar;
     private int mediumAnimationDuration;
-    private Drawable originTextViewColor;
 
 
 
@@ -53,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         final Button createAccountButton = findViewById(R.id.createAccount);
         loadingProgressBar = findViewById(R.id.loading);
         mediumAnimationDuration = getResources().getInteger(android.R.integer.config_mediumAnimTime);
-        originTextViewColor = usernameEditText.getBackground();
 
         setTextColorWriteListener(passwordEditText);
         setTextColorWriteListener(usernameEditText);
@@ -120,11 +118,11 @@ public class LoginActivity extends AppCompatActivity {
         tv.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tv.setBackgroundColor(Color.parseColor("#f1f3f5"));
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                tv.setBackground(originTextViewColor);
             }
 
             @Override

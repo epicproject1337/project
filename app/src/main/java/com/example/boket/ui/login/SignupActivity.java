@@ -88,8 +88,6 @@ public class SignupActivity extends AppCompatActivity {
                     inputCorrect = false;
                     nameEditText.getText().clear();
                     nameEditText.setBackgroundColor(Color.parseColor("#FFD6D6"));
-
-                    //nameEditText.setBackgroundColor());
                     nameEditText.setHint("Skriv namn, inga nummer!");
                 }
                 String email = emailEditText.getText().toString();
@@ -140,7 +138,6 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                  tv.setBackgroundColor(Color.parseColor("#f1f3f5"));
-                //tv.setBackgroundColor(R.color.colorDefaultInput);
 
             }
 

@@ -1,42 +1,22 @@
 package ui.booksellerTest;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.LocaleList;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.test.espresso.Espresso;
+import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.action.ViewActions;
-import androidx.test.espresso.intent.Intents;
-import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
-import com.bumptech.glide.Glide;
 import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.Ad;
@@ -45,9 +25,6 @@ import com.example.boket.model.Subscription;
 import com.example.boket.model.user.LocalUser;
 import com.example.boket.ui.bookSeller.ABookSellerHolder;
 import com.example.boket.ui.bookSeller.BooksellersFragment;
-import com.example.boket.ui.bookSeller.IABookSellerCL;
-import com.example.boket.ui.profile.ProfileFragment;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
@@ -56,30 +33,19 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
-import ui.ProfileFragmentTest;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.*;
@@ -102,7 +68,7 @@ public class BooksellersFragmentTest {
         booksellersFragment = new BooksellersFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("isbn", DB_ISBN_generator());//"9789144090504"
+        bundle.putString("isbn", "9789144090504");//"9789144090504"disk "9789144115610"  DB_ISBN_generator()
         booksellersFragment.setArguments(bundle);
         startFragment(booksellersFragment);
         subscribeBtn = onView(withId(R.id.subscribeButton));
@@ -122,6 +88,7 @@ public class BooksellersFragmentTest {
     public void testHoldersRightAmount() throws InterruptedException {
         Thread.sleep(1000);
         RecyclerView rv = mActivity.findViewById(R.id.adList);
+        Thread.sleep(1000);
         int holders = rv.getAdapter().getItemCount();
         final int[] adListSize = new int[1];
         Ad.getAdsByISBN(booksellersFragment.getArguments().getString("isbn"), new Ad.GetAdsCallback() {
@@ -139,13 +106,20 @@ public class BooksellersFragmentTest {
     public void testCorrectHolder() throws InterruptedException {
         Thread.sleep(1000);
         RecyclerView rv = mActivity.findViewById(R.id.adList);
+        Thread.sleep(1000);
         int holders = rv.getAdapter().getItemCount();
         if (holders == 0) {
             assertTrue(true);
+            return;
         }
         int randomPos = randomInt(holders);
+
+        onView(ViewMatchers.withId(R.id.adList))
+                .perform(RecyclerViewActions.scrollToPosition(randomPos));
+
         Thread.sleep(2000);
         ABookSellerHolder aBookSellerHolder = (ABookSellerHolder) rv.findViewHolderForAdapterPosition(randomPos);
+        Thread.sleep(2000);
         boolean correct = checkBookHolder(aBookSellerHolder, randomPos);
         assertTrue(correct);
     }
@@ -159,12 +133,12 @@ public class BooksellersFragmentTest {
         }
         ArrayList<Ad> adArr = mockListener.getAdArr();
 
-        Ad ad = adArr.get(pos);
 
+        Ad ad = adArr.get(pos);
         if (!aBookSellerHolder.getCity().getText().toString().equals(ad.getCity())) {
             return false;
         }
-        if (!aBookSellerHolder.getPrice().getText().toString().equals(Double.toString(ad.getPrice()) + " kr")) {
+        if (!aBookSellerHolder.getPrice().getText().toString().equals(ad.getPrice() + " kr")) {
             return false;
         }
 
@@ -179,23 +153,25 @@ public class BooksellersFragmentTest {
 
     @Test
     public void testExpandableView() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1000);
         RecyclerView rv = mActivity.findViewById(R.id.adList);
-
+        Thread.sleep(1000);
         int holders = rv.getAdapter().getItemCount();
         if (holders == 0) {
             assertTrue(true);
             return;
         }
-
-        int randomPos = randomInt(holders);
-
+        int randomPos = 0;
+        Thread.sleep(1000);
         onView(ViewMatchers.withId(R.id.adList))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(randomPos,
-                        click()));
-
-        Thread.sleep(500);
-        ABookSellerHolder vh = (ABookSellerHolder) rv.findViewHolderForLayoutPosition(randomPos);
+                .perform(RecyclerViewActions.scrollToPosition(randomPos));
+        Thread.sleep(1000);
+            onView(ViewMatchers.withId(R.id.adList))
+                    .perform(RecyclerViewActions.actionOnItemAtPosition(randomPos,
+                            click()));
+        Thread.sleep(1000);
+        ABookSellerHolder vh = (ABookSellerHolder) rv.findViewHolderForAdapterPosition(randomPos);
+        Thread.sleep(2000);
         int visibilityCode = 0; //if it is visible it returns 0 (java class)
         assertEquals(vh.getExpandableLayout().getVisibility(), visibilityCode);
     }
@@ -232,7 +208,7 @@ public class BooksellersFragmentTest {
 
     @Test
     public void testTextSubscribeBtn() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1500);
         Bundle bundle = booksellersFragment.getArguments();
         assert bundle != null;
         String bookISBN = bundle.getString("isbn");
@@ -249,6 +225,7 @@ public class BooksellersFragmentTest {
         Bundle bundle = booksellersFragment.getArguments();
         assert bundle != null;
         String bookISBN = bundle.getString("isbn");
+        Thread.sleep(1000);
         boolean subscriptionChanged = Subscribed(bookISBN);
         if (!subscriptionChanged) {
             onView(withId(R.id.subscribeButton)).check(matches(withText("PRENUMERERA")));
@@ -266,10 +243,12 @@ public class BooksellersFragmentTest {
         Bundle bundle = booksellersFragment.getArguments();
         assert bundle != null;
         String bookISBN = bundle.getString("isbn");
+        Thread.sleep(1000);
         boolean subscriptionChanged = Subscribed(bookISBN);
+        Thread.sleep(1000);
 
         subscribeBtn.perform(click());
-
+        Thread.sleep(1000);
         assertEquals(!subscriptionChanged, Subscribed(bookISBN));
     }
 
@@ -313,10 +292,29 @@ public class BooksellersFragmentTest {
         });
         lock.await(1, TimeUnit.MINUTES);
         TextView tv = mActivity.findViewById(R.id.bookName);
-        Thread.sleep(50);
+        Thread.sleep(500);
         String bookNameOnScreen = tv.getText().toString();
 
         assertEquals(bookName[0], bookNameOnScreen);
+    }
+
+    public static ViewAction doTaskInUIThread(final Runnable r) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return isRoot();
+            }
+
+            @Override
+            public String getDescription() {
+                return null;
+            }
+
+            @Override
+            public void perform(UiController uiController, View view) {
+                r.run();
+            }
+        };
     }
 
     @Test
@@ -373,14 +371,29 @@ public class BooksellersFragmentTest {
         @Override
         public void onGetAdsComplete(ArrayList<Ad> adList) {
             for (Ad ad : adList) {
-                adArr.add(0, ad);
+                adArr.add(ad);
             }
             synchronized (this) {
                 notifyAll();
             }
         }
 
+        private void sortCheapestFirst() {
+            for (int i = 0; i < adArr.size() - 1; i++) {
+                for (int j = 0; j < adArr.size() - 1 - i; j++) {
+                    Ad ad = adArr.get(j);
+                    Ad ad2 = adArr.get(j + 1);
+                    if (ad.getPrice() > ad2.getPrice()) {
+                        Ad tmp = ad;
+                        adArr.set(j, ad2);
+                        adArr.set(j + 1, tmp);
+                    }
+                }
+            }
+        }
+
         public ArrayList<Ad> getAdArr() {
+            sortCheapestFirst();
             return adArr;
         }
 
