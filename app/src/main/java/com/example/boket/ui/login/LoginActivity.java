@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onLoginComplete(LocalUser user) {
                 Log.d(TAG, "signInWithEmail:success");
-                updateUiWithUser(user.getEmail());
+                updateUiWithUser(user.getName());
             }
 
             @Override
@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void updateUiWithUser(String displayName) {
-        String welcome = "Welcome! " + displayName;
+        String welcome = "Välkommen " + displayName + "!";
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
