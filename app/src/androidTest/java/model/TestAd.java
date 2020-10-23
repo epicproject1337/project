@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 
 public class TestAd {
+
     private Context context;
     private FirebaseAuth mAuth;
 
@@ -58,4 +59,5 @@ public class TestAd {
         TimeUnit.SECONDS.sleep(1);
         lock.await(1, TimeUnit.MINUTES);
     }
+
 }

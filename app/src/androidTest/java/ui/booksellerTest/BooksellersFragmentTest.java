@@ -297,4 +297,5 @@ public class BooksellersFragmentTest {
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
     }
+
 }

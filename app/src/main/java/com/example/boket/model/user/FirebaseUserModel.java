@@ -33,4 +33,5 @@ public class FirebaseUserModel implements User {
     public String getLocation() {
         return location;
     }
+
 }

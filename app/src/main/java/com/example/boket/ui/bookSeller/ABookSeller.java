@@ -21,7 +21,6 @@ public class ABookSeller {
     private String sellerEmail;
     private String bookSold;
 
-
     public ABookSeller(String bookSold, String seller, String state, String price, String city) {
         this.state = state;
         this.price = price;

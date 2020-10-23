@@ -64,13 +64,11 @@ public class AddAdActivity extends AppCompatActivity {
                     Glide.with(AddAdActivity.this).load(book.getImage()).into(bookImage);
                 }
             });
-
         }
 
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (!checkInputs(priceEditText, conditionEditText)) return;
 
                 double price = Double.parseDouble(String.valueOf(priceEditText.getText()));
@@ -88,7 +86,6 @@ public class AddAdActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Ad Succesfully uploaded!", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     private boolean checkInputs(EditText priceEditText, EditText conditionEditText) {

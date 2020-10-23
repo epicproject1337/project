@@ -27,7 +27,6 @@ public class BookItem extends View {
     private String publishedYear;
     private String image;
 
-
     public BookItem(Context context) {
         super(context);
         init(null, 0);

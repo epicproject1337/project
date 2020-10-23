@@ -22,7 +22,6 @@ public class Search {
     private static final String bookIndex = "BOOKINDEX";
     private static final Algolia algolia = new Algolia(bookIndex);
 
-
     private Search() {
     }
 
@@ -69,8 +68,8 @@ public class Search {
         algolia.addToIndex(json);
     }
 
-
     public interface SearchCallback {
         void onSearchBooks(ArrayList<Book> bookList);
     }
+
 }

@@ -109,7 +109,6 @@ public class SearchFragmentTest {
             }
         };
         onView(isRoot()).perform(doTaskInUIThread(r));
-
     }
 
     @Test
@@ -145,4 +144,5 @@ public class SearchFragmentTest {
             e.printStackTrace();
         }
     }
+
 }

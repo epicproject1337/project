@@ -160,4 +160,5 @@ public class Subscription {
     public interface OnLoadSubscribedBooksCallback {
         void onCompleteCallback(ArrayList<Book> books);
     }
+
 }

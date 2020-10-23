@@ -29,7 +29,6 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
     private ArrayList<ABookSellerHolder> bookSellerHolderList = new ArrayList<>();
     private Context c;
 
-
     /**
      * @param c           context of BooksellersFragment
      * @param bookSellers List with bookSellers that will be presented in recyclerview
@@ -71,13 +70,11 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             @Override
             public void onIABookSellerCL(View v, int i) {
                 ABookSellerHolder aBsH = bookSellerHolderList.get(i);
-
                 if (aBsH.getExpandableLayout().getVisibility() == View.GONE) {
                     TransitionManager.beginDelayedTransition(aBsH.getCardView(), new AutoTransition());
                     aBsH.getExpandableLayout().setVisibility(View.VISIBLE);
 
                     closeTheOther(i);
-
                 } else {
                     aBsH.getExpandableLayout().setVisibility(View.GONE);
                 }
@@ -86,11 +83,9 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onIABookSellerBtnCL(int i) {
-
                 ABookSeller b = bookSellers.get(i);
                 String[] recipients = new String[1];
                 recipients[0] = b.getSellerEmail();
-
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
@@ -107,8 +102,6 @@ public class BookAdapter extends RecyclerView.Adapter<ABookSellerHolder> {
         holder.getState().setText(bookSellers.get(i).getState());
         holder.getPrice().setText(bookSellers.get(i).getPrice() + " kr");
         holder.getCity().setText(bookSellers.get(i).getCity());
-
-
     }
 
     private void closeTheOther(int i) {

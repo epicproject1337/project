@@ -85,4 +85,5 @@ public class AddAdActivityTest {
         conditionInput.check(matches(withHint("Skriv beskrivning av skicket")));
         priceInput.check(matches(withHint("Skriv pris")));
     }
+
 }

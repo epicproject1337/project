@@ -48,7 +48,6 @@ public class Ad {
     private static final String collection = "ads";
     private static final String TAG = Ad.class.getName();
 
-
     /**
      * Create an "empty" Ad object with all the instance variables set to null.
      */
@@ -240,7 +239,6 @@ public class Ad {
         });
     }
 
-
     /**
      * @return timestamp of when the ad was updated last.
      */
@@ -259,6 +257,7 @@ public class Ad {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ad ad = (Ad) o;
+
         return //id == ad.id &&
                 Double.compare(ad.price, price) == 0 &&
                 archived == ad.archived &&
@@ -279,4 +278,5 @@ public class Ad {
     public interface GetAdsCallback {
         void onGetAdsComplete(ArrayList<Ad> adList);
     }
+
 }

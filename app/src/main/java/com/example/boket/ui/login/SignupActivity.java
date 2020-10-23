@@ -130,7 +130,6 @@ public class SignupActivity extends AppCompatActivity {
 
 
         goTologin.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 gotToLoginMethod();

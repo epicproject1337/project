@@ -3,6 +3,7 @@ package model;
 import com.example.boket.model.user.User;
 
 public class MockUser implements User {
+
     @Override
     public String getUid() {
         return "DNdBWJjEjFa1yMaYncB6xsKptAl2";
@@ -22,4 +23,5 @@ public class MockUser implements User {
     public String getLocation() {
         return "Göteborg";
     }
+
 }

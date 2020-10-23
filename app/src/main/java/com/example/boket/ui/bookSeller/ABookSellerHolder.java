@@ -27,7 +27,6 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
     private ConstraintLayout expandableLayout;
     private CardView cardView;
 
-
     private IABookSellerCL iaBookSellerCL;
 
     /**
@@ -57,7 +56,6 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
             case R.id.contactSellerBtn:
                 this.iaBookSellerCL.onIABookSellerBtnCL(getLayoutPosition());

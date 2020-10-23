@@ -151,7 +151,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
-
         LocalUser.login(email, password, new LocalUser.LoginCallback() {
             @Override
             public void onLoginComplete(LocalUser user) {
