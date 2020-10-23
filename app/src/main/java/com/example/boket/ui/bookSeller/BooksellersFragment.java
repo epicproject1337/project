@@ -37,6 +37,7 @@ public class BooksellersFragment extends Fragment {
     private static final String TAG = BooksellersFragment.class.getName();
     private String ISBN_number;
 
+
     /**
      * Gets the ISBN number of the book from the previous screen (search) and initiate all buttons,
      * texts and so
@@ -122,6 +123,9 @@ public class BooksellersFragment extends Fragment {
 
     private void setRecyclerView(View v, TextView sorryText,
                                  TextView pressSubText) throws InterruptedException {
+
+
+
         RecyclerView adListRecyclerView = v.findViewById(R.id.adList);
         adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

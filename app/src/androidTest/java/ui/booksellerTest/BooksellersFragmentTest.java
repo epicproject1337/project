@@ -2,11 +2,25 @@ package ui.booksellerTest;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.LocaleList;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +36,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import com.bumptech.glide.Glide;
 import com.example.boket.MainActivity;
 import com.example.boket.R;
 import com.example.boket.model.Ad;
@@ -30,6 +45,7 @@ import com.example.boket.model.Subscription;
 import com.example.boket.model.user.LocalUser;
 import com.example.boket.ui.bookSeller.ABookSellerHolder;
 import com.example.boket.ui.bookSeller.BooksellersFragment;
+import com.example.boket.ui.bookSeller.IABookSellerCL;
 import com.example.boket.ui.profile.ProfileFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -40,9 +56,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -80,7 +101,7 @@ public class BooksellersFragmentTest {
 
 
     @Before
-    public void setUp() {
+    public void setUp() throws InterruptedException {
         mActivity = mActivityTestRule.getActivity();
         booksellersFragment = new BooksellersFragment();
 
@@ -93,20 +114,19 @@ public class BooksellersFragmentTest {
 
     }
 
-    private void startFragment(Fragment fragment) {
+    private void startFragment(Fragment fragment) throws InterruptedException {
         FragmentManager fragmentManager = mActivity.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.nav_host_fragment, fragment);
         fragmentTransaction.commit();
+
     }
-/*
+
     @Test
     public void testHoldersRightAmount() throws InterruptedException {
+        Thread.sleep(500);
         RecyclerView rv = mActivity.findViewById(R.id.adList);
-        // adapterNotNull(rv);
-        //Thread.sleep(2000);
-        RecyclerView.Adapter ad = rv.getAdapter();
-        int holders = ad.getItemCount();
+        int holders = rv.getAdapter().getItemCount();
         final int[] adListSize = new int[1];
         Ad.getAdsByISBN(booksellersFragment.getArguments().getString("isbn"), new Ad.GetAdsCallback() {
             @Override
@@ -115,36 +135,16 @@ public class BooksellersFragmentTest {
 
             }
         });
-        Thread.sleep(1000);
+        Thread.sleep(500);
         assertEquals(holders, adListSize[0]);
     }
 
-/*
-    private void adapterNotNull(RecyclerView rv) throws InterruptedException {
-        boolean bol = true;
-        while (bol) {
-
-            try {
-                if (rv.getAdapter() != null) {
-                    bol = false;
-                }
-            } catch (Exception e) {
-                Thread.sleep(100);
-                adapterNotNull(rv);
-            }
-
-        }
-    }
-
-/*
     @Test
     public void testExpandableView() throws InterruptedException {
+        Thread.sleep(500);
         RecyclerView rv = mActivity.findViewById(R.id.adList);
 
-        //adapterNotNull(rv);
-        //Thread.sleep(6000);
         int holders = rv.getAdapter().getItemCount();
-
         if (holders == 0) {
             assertTrue(true);
             return;
@@ -156,27 +156,23 @@ public class BooksellersFragmentTest {
                 .perform(RecyclerViewActions.actionOnItemAtPosition(randomPos,
                         click()));
 
-
+        Thread.sleep(100);
         ABookSellerHolder vh = (ABookSellerHolder) rv.findViewHolderForLayoutPosition(randomPos);
         int visibilityCode = 0; //if it is visible it returns 0 (java class)
         assertEquals(vh.getExpandableLayout().getVisibility(), visibilityCode);
-
-
     }
-/*
+
     @Test
-    public void testGmailOpens() {
+    public void testGmailOpens() throws InterruptedException {
+
+
         RecyclerView rv = mActivity.findViewById(R.id.adList);
-        adapterNotNull(rv);
+        //Thread.sleep(3000);
         if (rv.getAdapter().getItemCount() == 0) {
-            assertTrue(true);
+            assertTrue(false);
             return;
         }
-        onView(withId(R.id.contactSellerBtn)).perform(click());
 
-       intended(toPackage(("com.google.android.gm")));
-//https://developer.android.com/training/testing/espresso/intents
-        /*
         int randomPos = randomInt(rv.getAdapter().getItemCount());
 
         onView(ViewMatchers.withId(R.id.adList))
@@ -184,18 +180,21 @@ public class BooksellersFragmentTest {
                         click()));
 
         ABookSellerHolder vh = (ABookSellerHolder) rv.findViewHolderForAdapterPosition(randomPos);
-        ViewInteraction contactButton = vh.
+
+        // contactButton.performClick();
+        intended(toPackage(("com.google.android.gm")));
 
     }
- */
+
 
     @Test
     public void testTextSubscribeBtn() throws InterruptedException {
+        Thread.sleep(500);
         Bundle bundle = booksellersFragment.getArguments();
         assert bundle != null;
         String bookISBN = bundle.getString("isbn");
-        boolean subscriptionChanged = Subscribed(bookISBN);
-        if (!subscriptionChanged) {
+        boolean subscribed = Subscribed(bookISBN);
+        if (!subscribed) {
             onView(withId(R.id.subscribeButton)).check(matches(withText("PRENUMERERA")));
         } else {
             onView(withId(R.id.subscribeButton)).check(matches(withText("AVPRENUMERERA")));
@@ -244,8 +243,8 @@ public class BooksellersFragmentTest {
             }
         });
 
-        lock.await(2, TimeUnit.MINUTES);
-        Thread.sleep(1500);
+        lock.await(1, TimeUnit.MINUTES);
+        Thread.sleep(500);
         return subscribed[0];
     }
 
@@ -263,6 +262,27 @@ public class BooksellersFragmentTest {
     @Test
     public void testBookNameIsVisible() {
         onView(withId(R.id.bookName)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testCorrectBookName() throws InterruptedException {
+        CountDownLatch lock = new CountDownLatch(1);
+        assert booksellersFragment.getArguments() != null;
+        String isbn = booksellersFragment.getArguments().getString("isbn");
+        final String[] bookName = new String[1];
+        Book book = new Book(isbn, new Book.OnLoadCallback() {
+            @Override
+            public void onLoadComplete(Book book) {
+                bookName[0] = book.getName();
+                lock.countDown();
+            }
+        });
+        lock.await(1, TimeUnit.MINUTES);
+        TextView tv = mActivity.findViewById(R.id.bookName);
+        Thread.sleep(50);
+        String bookNameOnScreen = tv.getText().toString();
+
+        assertEquals(bookName[0], bookNameOnScreen);
     }
 
     @Test
@@ -288,7 +308,6 @@ public class BooksellersFragmentTest {
     @After
     public void tearDown() throws Exception {
         removeFragment(booksellersFragment);
-
     }
 
     public void removeFragment(Fragment fragment) {
@@ -297,5 +316,7 @@ public class BooksellersFragmentTest {
         fragmentTransaction.remove(fragment);
         fragmentTransaction.commit();
     }
+
+
 
 }
