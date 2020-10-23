@@ -246,31 +246,17 @@ public class BarcodeScannerActivity extends AppCompatActivity {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("isbn", finalIsbn);
 
-                                Bundle prevPageBundle = getIntent().getExtras();
-                                String prevPage = prevPageBundle.getString("PrevPage");
-
-                                if(prevPage.equals("searchFragment")){
-                                    BooksellersFragment booksellersFragment = new BooksellersFragment();
-                                    booksellersFragment.setArguments(bundle);
-                                    getSupportFragmentManager()
-                                            .beginTransaction()
-                                            .replace(R.id.nav_host_fragment, booksellersFragment)
-                                            .addToBackStack(null)
-                                            .commit();
-                                }
-                                else if(prevPage.equals("searchAddAdActivity")) {
-                                    Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                    finish();
-                                }
+                                Intent intent = new Intent(BarcodeScannerActivity.this, AddAdActivity.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(BarcodeScannerActivity.this, "BOK FINNS EJ I DATABASEN", Toast.LENGTH_SHORT).show();
                             }
                         }
+
                     });
                 }
-
             }
 
             @Override
