@@ -49,7 +49,7 @@ public class ABookSellerHolder extends RecyclerView.ViewHolder implements View.O
     }
 
     /**
-     * Expands the expandable view if it is not expanded and vice versa if the AbookSellerHolder is clicked
+     * Deligates all the click methods for ABookSellerHolder
      *
      * @param view of fragment_abookseller with the expanded/contracted "expandableLayout"
      */

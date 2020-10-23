@@ -53,7 +53,8 @@ public class BooksellersFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_booksellers, container, false);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            ISBN_number = bundle.getString("isbn");
+            ISBN_number = bundle.getString("isbn"); //Get the isbn number for the chosen
+            // book from the previous page
         }
 
         try {
@@ -94,6 +95,10 @@ public class BooksellersFragment extends Fragment {
                              TextView releaseYearTextView, TextView editionTextView,
                              TextView isbnTextView, ImageView bookImageView) {
         Book book = new Book(ISBN_number, new Book.OnLoadCallback() {
+            /**
+             * Sets all text views and book image
+             * @param book that the page is all about
+             */
             @Override
             public void onLoadComplete(Book book) {
                 bookNameTextView.setText(book.getName());
@@ -106,6 +111,10 @@ public class BooksellersFragment extends Fragment {
                     Glide.with(v).load(book.getImage()).into(bookImageView);
                 }
                 Subscription.isSubscribed(book.getIsbn(), user.getUid(), new Subscription.OnLoadCallback() {
+                    /**
+                     * Sets subscribebutton text
+                     * @param isSubscribed if the user is subscibed to the book
+                     */
                     @Override
                     public void isSubscribedCallback(boolean isSubscribed) {
                         isSubscribedToBook = isSubscribed;
@@ -123,23 +132,21 @@ public class BooksellersFragment extends Fragment {
 
     private void setRecyclerView(View v, TextView sorryText,
                                  TextView pressSubText) throws InterruptedException {
-
-
-
         RecyclerView adListRecyclerView = v.findViewById(R.id.adList);
         adListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         ArrayList<ABookSeller> bookSellersList = new ArrayList<>();
         BookAdapter b = new BookAdapter(this.getContext(), bookSellersList);
         adListRecyclerView.setAdapter(b);
         Context c = getContext();
-
         final BookAdapter[] bookAdapter = {b};
-        //Thread.sleep(100);// Wait for the bookNameTextView to be set
         Ad.getAdsByISBN(ISBN_number, new Ad.GetAdsCallback() {
+            /**
+             * Makes "booksellers" will will go into the adapter for the recylcerview, which also
+             * is initade in this method
+             * @param adList is a list of all ads for the book
+             */
             @Override
             public void onGetAdsComplete(ArrayList<Ad> adList) {
-
                 if (adList.size() == 0) {
                     sorryText.setVisibility(View.VISIBLE);
                     pressSubText.setVisibility(View.VISIBLE);
